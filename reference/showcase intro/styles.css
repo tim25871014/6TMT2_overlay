@@ -1,0 +1,226 @@
+@font-face {
+	font-family: 'Saira';
+	src: url('../_data/fonts/Saira-Medium.ttf');
+	font-weight: 400;
+}
+
+@font-face {
+	font-family: 'Saira';
+	src: url('../_data/fonts/Saira-Bold.ttf');
+	font-weight: 500;
+}
+
+@font-face {
+	font-family: 'Saira';
+	src: url('../_data/fonts/Saira-Black.ttf');
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: 'OleoScript';
+	src: url('../_data/fonts/OleoScript-Regular.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+	font-family: 'OleoScript';
+	src: url('../_data/fonts/OleoScript-Bold.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+	font-family: 'TP Sans';
+	src: url('../_data/fonts/TaipeiSansTCBeta-Bold.ttf');
+	unicode-range: U+4E00-9FFF; /*中文*/
+	font-weight: 700;
+}
+
+@font-face {
+	font-family: 'TP Sans';
+	src: url('../_data/fonts/Saira-Bold.ttf');
+	font-weight: 700; /*English or others*/
+}
+
+#background-video {
+	width: 1920px;
+	height: 1080px;
+	object-fit: cover;
+	position: fixed;
+	left: 0;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	z-index: -1;
+}
+
+:root {
+	--highlight: #ACBBDA;
+	--highlight-light: #C0CAE3;
+    --red: #ffa5a5;
+	--blue: #a0bbff;
+}
+
+body,
+html {
+	padding: 0;
+	margin: 0;
+	overflow-y: hidden;
+	font-family: 'Saira';
+}
+
+#main {
+	width: 1920px;
+	height: 1080px;
+	position: relative;
+	background-image: url('../_data/assets/showcase-main.png');
+}
+
+#advertisement {
+    position: absolute;
+    top: 33%;
+    left: 5.5%;
+    width: 900px;
+    height: 500px;
+    border-radius: 20px;
+    background-image: url('../_data/assets/ad.png');
+}
+
+#info-container {
+    position: absolute;
+    top: 25%;
+    right: 31.5%;
+    width: 700px;
+	border-radius: 10px;
+	z-index: -1;
+    /*background: rgba(0, 0, 0, 0.7)*/;
+}
+
+#countdown-container {
+    padding: 15px;
+    border-radius: 12px;
+    text-align: center;
+	margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+#timer {
+    font-size: 200px;
+    font-weight: 500;
+    color: var(--highlight-light);
+}
+
+#stage-name {
+    color: var(--highlight);
+	font-size: 60px;
+	font-weight: bold;
+	letter-spacing: 2px;
+    font-weight: 500;
+	font-family: 'OleoScript';
+}
+
+#team-info {
+    margin-left: 30px;
+	margin-right: 30px;
+	margin-bottom: 30px;
+    border-top:3px solid #FFFFFF;
+    border-bottom:3px solid #FFFFFF;
+    background: linear-gradient(to top, rgba(0, 0, 255, 0.2), rgba(255, 0, 0, 0.2));
+    border-radius: 12px;
+    width: 640px;
+    align-items: center;
+}
+
+.team {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    font-size: 28px;
+    font-weight: 600;
+    color: white;
+}
+
+.team.red {
+	margin-top: 45px;
+}
+
+.vs {
+    text-align:center;
+    font-size: 30px;
+    font-weight: bold;
+    color: var(--highlight);
+    opacity: 0.7;
+	margin-top: 15px;
+	margin-bottom: 25px;
+}
+
+.player {
+    text-align:center;
+    font-size: 25px;
+    font-weight: 400;
+    color: white;
+}
+
+.team-name {
+	text-align: center;
+	width: 400px;
+	font-weight: bold;
+	font-family: 'TP Sans';
+	/*text-transform: uppercase;*/
+	font-size: 45px;
+	line-height: 48px;
+	margin-bottom: 10px;
+}
+
+#red-team {
+    color: var(--red);
+}
+
+#blue-team {
+    color: var(--blue);
+}
+
+.flag {
+    transform: scale(1.7);
+}
+
+.flag-box {
+    width: 105px;
+    height: 105px;
+    margin: 0 0 0 25px;
+}
+
+#title {
+	position: absolute;
+	color: var(--highlight);
+	bottom: 32px;
+	left: 36px;
+	text-align: left;
+	/*text-transform: uppercase;*/
+	font-weight: 400;
+	letter-spacing: 1px;
+	font-size: 22px;
+}
+
+/*Scrollbar*/
+::-webkit-scrollbar {
+	width: 0px;
+	visibility: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+	margin-top: 25px;
+	margin-bottom: 25px;
+	visibility: 0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+	background: grey;
+	border-radius: 10px;
+}
+
+#empty {
+	margin-bottom: 60px;
+}
