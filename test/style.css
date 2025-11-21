@@ -1,0 +1,105 @@
+body {
+    width: 1920px;
+    height: 1080px;
+}
+
+#background {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-color: black;
+    z-index: -1;
+}
+
+#header {
+    height: 100px;
+    background: #999999;
+}
+
+#footer {
+    height: 100px;
+    background: #999999;
+}
+
+#content {
+    height: 880px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#pick-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+.pick-container {
+    display: flex;
+    gap: 20px;
+}
+
+.hexagon {
+    width: 150px;
+    height: 350px;
+
+    clip-path: polygon(
+            50% 0%,
+            100% 15%,
+            100% 85%,
+            50% 100%,
+            0% 85%,
+            0% 15%);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+
+}
+
+#blue_picks .hexagon {
+    background: linear-gradient(135deg, #1a4fff, #0d2fa3);
+    background-image: url("../_data/test_image/blue.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transform: translate(-42px, 33px);
+}
+
+#red_picks .hexagon {
+    background: linear-gradient(135deg, #ff2d2d, #9c0f0f);
+    background-image: url("../_data/test_image/red.png");
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    transform: translate(42px, -33px);
+}
+
+.hexagon::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    clip-path: inherit;
+    pointer-events: none;
+}
+
+#red_picks .hexagon::after {
+    background: linear-gradient(rgba(194, 43, 43, 0.3), rgba(255, 255, 255, 0.3));
+}
+
+#blue_picks .hexagon::after {
+    background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(61, 36, 200, 0.3));
+}
+
+.hexagon.gray {
+    background: linear-gradient(135deg, #777, #444);
+    background-image: url("../_data/test_image/red.png");
+    filter: grayscale(100%);
+    opacity: 0.85;
+}
