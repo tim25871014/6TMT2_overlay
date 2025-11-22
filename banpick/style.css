@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'Eras Bold ITC';
+    src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
+    font-weight: 700;
+}
+
 body {
     width: 1920px;
     height: 1080px;
@@ -12,17 +18,12 @@ body {
 }
 
 #header {
-    height: 100px;
-    background: #999999;
-}
-
-#footer {
-    height: 100px;
+    height: 172px;
     background: #999999;
 }
 
 #content {
-    height: 880px;
+    height: 720px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -32,7 +33,6 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 30px;
 }
 
 .pick-container {
@@ -41,53 +41,123 @@ body {
 }
 
 .hexagon {
-    width: 150px;
-    height: 350px;
+    width: 146px;
+    height: 326px;
+    position: relative;
 
     clip-path: polygon(50% 0%,
-            100% 15%,
-            100% 85%,
+            100% 13%,
+            100% 87%,
             50% 100%,
-            0% 85%,
-            0% 15%);
+            0% 87%,
+            0% 13%);
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    font-size: 18px;
-    font-weight: bold;
-    color: white;
+    background-size: cover, cover, 650% 100%, cover;
+    background-position: center, center, center, center;
 
+    font-size: 30px;
+    font-weight: bold;
+    font-family: 'Eras Bold ITC';
+    color: white;
+    margin-left: -10px;
+    transition: 1s;
+}
+
+.picks {
+    position: absolute;
+    margin-left: 5px;
+    font-size: 40px;
+    transform: translateY(100px);
+    filter: drop-shadow(2px 2px 4px #000000);
 }
 
 #blue_picks .hexagon {
-    background:
-        linear-gradient(rgba(255, 255, 255, 0.3), rgba(61, 36, 200, 0.3)),
-        url("../_data/test_image/blue.png"),
-        linear-gradient(135deg, #1a4fff, #0d2fa3);
-
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    transform: translate(-42px, 33px);
+    transform: translate(39px, 17px);
 }
 
 #red_picks .hexagon {
-    background:
-        linear-gradient(rgba(194, 43, 43, 0.3), rgba(255, 255, 255, 0.3)),
-        url("../_data/test_image/red.png"),
-        linear-gradient(135deg, #ff2d2d, #9c0f0f);
-
-    background-size: cover;
-    background-position: center;
-    position: relative;
-    transform: translate(42px, -33px);
+    transform: translate(-39px, -17px);
 }
 
 .hexagon.gray {
-    background: linear-gradient(135deg, #777, #444);
-    background-image: url("../_data/test_image/red.png");
     filter: grayscale(100%);
     opacity: 0.85;
 }
+
+
+
+/* Footer 按鈕區域 */
+
+#footer {
+    height: 188px;
+    width: 1920px;
+    background: #999999;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#chat {
+    position: absolute;
+
+    width: 740px;
+    height: 188px;
+    background: #222;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+
+/* 右側按鈕區 */
+#panel {
+    position: absolute;
+    right: 130px;
+
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.button-row {
+    transform: translateY(-10px);
+    display: flex;
+    gap: 6px;
+}
+
+.mode-btn {
+    width: 70px;
+    height: 30px;
+
+    border-radius: 6px;
+    border: 2px solid white;
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Eras Bold ITC';
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+
+    cursor: pointer;
+    transition: 0.2s;
+
+    user-select: none;
+}
+
+#NM1 .mode-btn {border: 2px solid #2c75ff;}
+#NM2 .mode-btn {border: 2px solid #2c75ff;}
+#HD .mode-btn {border: 2px solid #f59e0b;}
+#HR .mode-btn {border: 2px solid #dc2626;}
+#DT .mode-btn {border: 2px solid #7c3aed;}
+
+/* 按下變色 */
+.mode-btn.picked { background: gray; color: #444444; border: 2px solid #222222 !important;}
