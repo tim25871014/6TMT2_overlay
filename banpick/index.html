@@ -10,7 +10,14 @@
 
 <body>
     <div id="background"></div>
-    <div id="header">Header</div>
+    <div id="header">
+        <div id="blue-points"></div>
+        <div id="red-points"></div>
+        <div id="blue-name">藍隊 Player Blue</div>
+        <div id="red-name">紅隊 Player Red</div>
+        <img id="blue-flag" src="https://assets.ppy.sh/old-flags/XX.png">
+        <img id="red-flag" src="https://assets.ppy.sh/old-flags/XX.png">
+    </div>
 
     <div id="content">
         <div id="pick-wrapper">
@@ -20,7 +27,7 @@
     </div>
 
     <div id="footer">
-        <div id="chat-container"><div id="chat">聊天室</div></div>
+        <div id="chat-container"><div id="chat"></div></div>
         <div id="panel">
             <div id="NM1" class="button-row"></div>
             <div id="NM2" class="button-row"></div>
@@ -30,6 +37,7 @@
         </div>
     </div>
 
+    <script src="../_data/deps/headerHandler.js"></script>
     <script src="script.js"></script>
 </body>
 

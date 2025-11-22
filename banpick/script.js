@@ -1,13 +1,10 @@
-let stageInfo, mappool;
+let stageInfo, mappool, teams;
 
 (async () => {
     $.ajaxSetup({ cache: false });
     stageInfo = await $.getJSON('../_data/beatmaps.json');
+    teams = await $.getJSON('../_data/teams.json');
     mappool = stageInfo.beatmaps;
-    generateHexPicks("blue_picks", "Blue");
-    generateHexPicks("red_picks", "Red");
-    updateHexContent("blue_picks", "Blue");
-    updateHexContent("red_picks", "Red");
 })();
 
 // 防止右鍵選單彈出
@@ -18,66 +15,43 @@ window.addEventListener('contextmenu', (e) => e.preventDefault());
 let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
 // CHAT
-let chat_container = document.getElementById('chat-container');
-let chat = document.getElementById('chat');
-let loadedChatLen = 0;
+
 
 // 處理來自tosu的訊息
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
+    let tourneyMng = data.tourney.manager;
+    if (!tourneyMng) return;
+    
+    // 這寫函數都寫在 _data/deps/headerHandler.js 裡
+    updateTeamNames(tourneyMng);
+    updateScoreBars(tourneyMng);
+    updateSeeding(tourneyMng);
+    updateScore(tourneyMng);
+    updateTeamInfo(tourneyMng);
+    updateChat(tourneyMng);
 
-    // 更新聊天室
-    const chatLen = data.tourney.manager.chat.length;
-    if (loadedChatLen != chatLen) {
-
-        if (loadedChatLen == 0 || (loadedChatLen > 0 && loadedChatLen > chatLen)) {
-            chat.innerHTML = '';
-            loadedChatLen = 0;
-        }
-
-        for (let i = loadedChatLen; i < chatLen; i++) {
-            const chatMsg = data.tourney.manager.chat[i];
-
-            if (chatMsg.name == 'BanchoBot' && chatMsg.messageBody.startsWith('Match history')) continue;
-
-            let chatLine = document.createElement('div');
-            chatLine.setAttribute('class', 'chat');
-
-            let chatTime = document.createElement('div');
-            chatTime.setAttribute('class', 'chatTime');
-
-            let chatName = document.createElement('div');
-            chatName.setAttribute('class', 'chatName');
-
-            let chatText = document.createElement('div');
-            chatText.setAttribute('class', 'chatText');
-
-            chatTime.innerText = chatMsg.time;
-            chatName.innerText = chatMsg.name + ': \xa0';
-            chatText.innerText = chatMsg.messageBody;
-
-            chatName.classList.add(chatMsg.team);
-
-            chatLine.append(chatTime);
-            chatLine.append(chatName);
-            chatLine.append(chatText);
-            chat.append(chatLine);
-
-        }
-
-        loadedChatLen = data.tourney.manager.chat.length;
-        chat.scrollTop = chat.scrollHeight;
+    if (hexNum !== Math.floor(tourneyMng.bestOF / 2) + 3) {
+        hexNum = Math.floor(tourneyMng.bestOF / 2) + 3;
+        generateHexPicks("blue_picks", "Blue");
+        generateHexPicks("red_picks", "Red");
+        updateHexContent("blue_picks", "Blue");
+        updateHexContent("red_picks", "Red");
     }
 };
 
+
 ///////////////////////////
 
+// 生成bp顯示區
+let hexNum = 0;
 function generateHexPicks(containerId, prefix) {
     const container = document.getElementById(containerId);
-    let K = 10;
-    const grayIndexes = [2, 5, 8];
+    let grayIndexes = [];
+    if (hexNum == 8) grayIndexes = [2, 5]; // BO11時規律不一樣
+    else grayIndexes = [2, 5, 8];
 
-    for (let i = 1; i <= K; i++) {
+    for (let i = 1; i <= hexNum; i++) {
         const hex = document.createElement("div");
         const picks = document.createElement("div");
         picks.className = "picks";
@@ -91,7 +65,7 @@ function generateHexPicks(containerId, prefix) {
     }
 }
 
-// 更新bp顯示
+// 更新bp顯示內容
 function updateHexContent(containerId, prefix) {
     const container = document.getElementById(containerId);
     const hexes = container.querySelectorAll(".hexagon");
@@ -126,7 +100,15 @@ function updateHexContent(containerId, prefix) {
         } else {
             const sequence = (idx - 1) % 3;
             const group = Math.floor((idx - 1) / 3);
-            if (sequence === 0) { // ban
+            console.log(idx);
+            if (hexNum == 8 && idx == 7) { // BO11特例：最後一個是pick
+                const pickIndex = 4;
+                if (pick_list[pickIndex]) {
+                    content = pick_list[pickIndex];
+                    bg4 = "url(\"../_data/img/picked.png\"),"
+                }
+            }
+            else if (sequence === 0) { // ban
                 if (ban_list[group]) {
                     content = ban_list[group];
                     bg4 = "url(\"../_data/img/banned.png\"),"
@@ -145,7 +127,6 @@ function updateHexContent(containerId, prefix) {
         const mapSetId = mapInfo ? mapInfo.beatmapset_id : "Unknown Set ID";
         
         if (mapId !== "Unknown ID") {
-            console.log("Map Info:", mapId);
             bg2 = `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),`
             bg3 = isBlue ? "url(\"../_data/img/blue_hexagon.png\")," :
                            "url(\"../_data/img/red_hexagon.png\"),"
@@ -155,8 +136,6 @@ function updateHexContent(containerId, prefix) {
         hex.style.backgroundImage = bg5 + bg4 + bg3 + bg2 + bg1;
     });
 }
-
-
 
 ///////////////////////////
 
@@ -172,6 +151,7 @@ const rows = [
     { containerId: "DT",  names: ["DT1", "DT2", "DT3", "DT4", "DT5"] }
 ];
 
+// 生成bp按鈕並加入事件監聽
 rows.forEach(row => {
     const container = document.getElementById(row.containerId);
 
@@ -223,11 +203,10 @@ function handleButtonClick(e, name) {
     else if (e.altKey) addToList(isLeft ? blue_protect_list : red_protect_list, name); // alt：Protect
     else addToList(isLeft ? blue_pick_list : red_pick_list, name); // 一般點擊：Pick
 
-    console.log("Pick:", name);
     printLists();
 }
 
-
+// 印出目前各 list 狀態（除錯用）
 function printLists() {
     console.log("===== 狀態更新 =====");
     console.log("blue_pick_list:", blue_pick_list);

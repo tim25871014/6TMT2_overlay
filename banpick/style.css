@@ -11,12 +11,12 @@
 }
 
 @font-face {
-    font-family: 'TP Sans';
-    src: url('../_data/fonts/TaipeiSansTCBeta-Regular.ttf');
+    font-family: 'Maoken Assorted Sans';
+    src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
     font-weight: 400;
-    unicode-range: U+4E00-9FFF; /*中文*/
+    unicode-range: U+4E00-9FFF;
+    /*中文*/
 }
-
 
 body {
     width: 1920px;
@@ -32,8 +32,18 @@ body {
 }
 
 #header {
+    width: 1920px;
     height: 172px;
     background: #999999;
+
+    opacity: 100%;
+    transition: ease-in-out 500ms;
+    z-index: 1;
+    letter-spacing: 1px;
+    font-size: 42px;
+    letter-spacing: 0px;
+    color: black;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.1));
 }
 
 #content {
@@ -186,7 +196,7 @@ body {
     width: 97%;
     height: 90%;
     overflow: hidden;
-    font-family: "TP Sans", "Eras Demi ITC", sans-serif;
+    font-family: "Maoken Assorted Sans", "Eras Demi ITC", sans-serif;
 }
 
 
@@ -216,4 +226,102 @@ body {
     white-space: normal;
     word-wrap: break-word;
     overflow: hidden;
+}
+
+/* header */
+
+#blue-name {
+    font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
+    position: absolute;
+    left: 150px;
+    top: 22px;
+    transition: ease-in-out 500ms;
+    text-align: left;
+    color: blue;
+}
+
+#red-name {
+    font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
+    position: absolute;
+    right: 150px;
+    top: 22px;
+    transition: ease-in-out 500ms;
+    text-align: right;
+    color: red;
+}
+
+#blue-points {
+    position: absolute;
+    left: 148px;
+    top: 80px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    padding: 4px;
+    transition: 300ms ease-out;
+}
+
+#red-points {
+    position: absolute;
+    right: 148px;
+    top: 80px;
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    padding: 4px;
+    transition: 300ms ease-out;
+}
+
+.star-b {
+    z-index: 100;
+    width: 15px;
+    height: 15px;
+    background-color: none;
+    margin-right: 8px;
+    transition: 200ms ease;
+    border: 3px solid blue;
+    border-radius: 10px;
+}
+
+.star-r {
+    z-index: 100;
+    width: 15px;
+    height: 15px;
+    background-color: none;
+    margin-left: 8px;
+    transition: 200ms ease;
+    border: 3px solid red;
+    border-radius: 10px;
+}
+
+#red-flag {
+    opacity: 1s;
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    left: 40px;
+    top: 33px;
+    border-radius: 6px;
+    outline: 3px solid var(--red);
+    outline-offset: 4px;
+}
+
+#blue-flag {
+    opacity: 1;
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    right: 40px;
+    top: 33px;
+    border-radius: 6px;
+    outline: 3px solid var(--blue);
+    outline-offset: 4px;
+}
+
+.seed {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: 'Eras Demi ITC';
+    font-size: 20px;
+    color: white;
 }
