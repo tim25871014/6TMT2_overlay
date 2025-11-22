@@ -11,11 +11,16 @@ let stageInfo, mappool;
 })();
 
 // 防止右鍵選單彈出
-document.addEventListener("contextmenu", e => {
-    if (e.target.classList.contains("mode-btn")) {
-        e.preventDefault();
-    }
-});
+window.addEventListener('contextmenu', (e) => e.preventDefault());
+
+
+//let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
+let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
+
+socket.onmessage = async (event) => {
+    let data = JSON.parse(event.data);
+    console.log("Received data:", data);
+};
 
 ///////////////////////////
 

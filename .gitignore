@@ -1,1 +1,3 @@
-./reference
+reference/
+node_modules/
+debug/
