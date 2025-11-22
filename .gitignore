@@ -1,3 +1,5 @@
 reference/
 node_modules/
 debug/
+package.json
+package-lock.json
