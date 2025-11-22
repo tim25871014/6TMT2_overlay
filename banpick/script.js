@@ -17,9 +17,57 @@ window.addEventListener('contextmenu', (e) => e.preventDefault());
 //let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
 let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
+// CHAT
+let chat_container = document.getElementById('chat-container');
+let chat = document.getElementById('chat');
+let loadedChatLen = 0;
+
+// 處理來自tosu的訊息
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
-    console.log("Received data:", data);
+
+    // 更新聊天室
+    const chatLen = data.tourney.manager.chat.length;
+    if (loadedChatLen != chatLen) {
+
+        if (loadedChatLen == 0 || (loadedChatLen > 0 && loadedChatLen > chatLen)) {
+            chat.innerHTML = '';
+            loadedChatLen = 0;
+        }
+
+        for (let i = loadedChatLen; i < chatLen; i++) {
+            const chatMsg = data.tourney.manager.chat[i];
+
+            if (chatMsg.name == 'BanchoBot' && chatMsg.messageBody.startsWith('Match history')) continue;
+
+            let chatLine = document.createElement('div');
+            chatLine.setAttribute('class', 'chat');
+
+            let chatTime = document.createElement('div');
+            chatTime.setAttribute('class', 'chatTime');
+
+            let chatName = document.createElement('div');
+            chatName.setAttribute('class', 'chatName');
+
+            let chatText = document.createElement('div');
+            chatText.setAttribute('class', 'chatText');
+
+            chatTime.innerText = chatMsg.time;
+            chatName.innerText = chatMsg.name + ': \xa0';
+            chatText.innerText = chatMsg.messageBody;
+
+            chatName.classList.add(chatMsg.team);
+
+            chatLine.append(chatTime);
+            chatLine.append(chatName);
+            chatLine.append(chatText);
+            chat.append(chatLine);
+
+        }
+
+        loadedChatLen = data.tourney.manager.chat.length;
+        chat.scrollTop = chat.scrollHeight;
+    }
 };
 
 ///////////////////////////
@@ -59,29 +107,36 @@ function updateHexContent(containerId, prefix) {
 
         // 預設內容
         let content = "";
-        // 預設背景
-        let background = `
-            url("../_data/img/transparent_hexagon.png"),
-            url("../_data/img/black_hexagon.png")`;
-
-        if (hex.classList.contains("gray")) {
-            console.log("Gray hexagon at index", idx);
-            background = `
-            url("../_data/img/transparent_hexagon.png"),
-            url("../_data/img/gray_hexagon.png")`;
-        }
         
-
+        // 預設背景
+        let bg1 = hex.classList.contains("gray") ?
+            "url(\"../_data/img/gray_hexagon.png\")" :
+            "url(\"../_data/img/black_hexagon.png\")";
+        let bg2 = "";
+        let bg3 = "";
+        let bg4 = "";
+        let bg5 = "url(\"../_data/img/transparent_hexagon.png\"),";
+        
+        // bp順序: protect -> ban -> pick -> pick -> ban -> pick -> pick ...
         if (idx === 0) { // protect
-            if (protect_list[0]) content = protect_list[0];
+            if (protect_list[0]) {
+                content = protect_list[0];
+                bg4 = "url(\"../_data/img/protected.png\"),"
+            }
         } else {
             const sequence = (idx - 1) % 3;
             const group = Math.floor((idx - 1) / 3);
             if (sequence === 0) { // ban
-                if (ban_list[group]) content = ban_list[group];
+                if (ban_list[group]) {
+                    content = ban_list[group];
+                    bg4 = "url(\"../_data/img/banned.png\"),"
+                }
             } else {  // pick
                 const pickIndex = group * 2 + (sequence === 1 ? 0 : 1);
-                if (pick_list[pickIndex]) content = pick_list[pickIndex];
+                if (pick_list[pickIndex]) {
+                    content = pick_list[pickIndex];
+                    bg4 = "url(\"../_data/img/picked.png\"),"
+                }
             }
         }
 
@@ -91,24 +146,13 @@ function updateHexContent(containerId, prefix) {
         
         if (mapId !== "Unknown ID") {
             console.log("Map Info:", mapId);
-            
-            if (isBlue) {
-                background = `
-                url("../_data/img/transparent_hexagon.png"),
-                url("../_data/img/blue_hexagon.png"),
-                url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),
-                url("../_data/img/black_hexagon.png")`;
-            } else {
-                background = `
-                url("../_data/img/transparent_hexagon.png"),
-                url("../_data/img/red_hexagon.png"),
-                url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),
-                url("../_data/img/black_hexagon.png")`;
-            }
+            bg2 = `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),`
+            bg3 = isBlue ? "url(\"../_data/img/blue_hexagon.png\")," :
+                           "url(\"../_data/img/red_hexagon.png\"),"
         }
 
         picks.textContent = content;
-        hex.style.backgroundImage = background;
+        hex.style.backgroundImage = bg5 + bg4 + bg3 + bg2 + bg1;
     });
 }
 
