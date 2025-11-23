@@ -27,24 +27,11 @@ body {
     width: 1920px;
     height: 1080px;
     position: absolute;
-    background-color: black;
+    background-image: url('../_data/img/background.png');
     z-index: -1;
 }
 
-#header {
-    width: 1920px;
-    height: 172px;
-    background: #999999;
-
-    opacity: 100%;
-    transition: ease-in-out 500ms;
-    z-index: 1;
-    letter-spacing: 1px;
-    font-size: 42px;
-    letter-spacing: 0px;
-    color: black;
-    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.1));
-}
+/* 主要內容區域 */
 
 #content {
     height: 720px;
@@ -100,34 +87,85 @@ body {
 }
 
 #blue_picks .hexagon {
-    transform: translate(41px, 17px);
+    transform: translate(41px, 7px);
 }
 
 #red_picks .hexagon {
-    transform: translate(-41px, -17px);
+    transform: translate(-41px, -27px);
 }
 
 .hexagon.gray {
     filter: grayscale(100%);
 }
 
-/* Footer 按鈕區域 */
+/* Footer */
 
 #footer {
     height: 188px;
     width: 1920px;
-    background: #999999;
     position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* now playing */
+
+#now-playing {
+    position: absolute;
+    left: 0px;
+    height: 188px;
+    width: 480px;
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    font-size: 20px;
+    text-align: center;
+}
+
+#np-text {
+    position: absolute;
+    left: 32px;
+    top: 10px;
+    font-family: 'Eras Demi ITC';
+    font-size: 20px;
+    color: white;
+    filter: drop-shadow(2px 2px 4px #000000);
+}
+
+#np-identifier {
+    position: absolute;
+    left: 27px;
+    top: 25px;
+    font-family: 'Eras Bold ITC';
+    font-size: 80px;
+    color: #dddddd;
+    margin-top: 20px;
+    filter: drop-shadow(5px 5px 8px #000000);
+    transition: 0.2s;
+}
+
+.scroll-box {
+    position: absolute;
+    left: 32px;
+    top: 125px;
+    width: 520px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.scroll-content {
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    color: white;
+    font-size: 40px;
+    display: inline-block;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 4px #000000);
+    transition: 0.2s;
+}
+
 /* 右側按鈕區 */
 #panel {
     position: absolute;
-    right: 130px;
-
+    right: 110px;
     display: flex;
     flex-direction: column;
     gap: 5px;
@@ -136,6 +174,7 @@ body {
 .button-row {
     transform: translateY(-10px);
     display: flex;
+    justify-content: left;
     gap: 6px;
 }
 
@@ -230,71 +269,95 @@ body {
 
 /* header */
 
+#header {
+    width: 1920px;
+    height: 172px;
+
+    transition: ease-in-out 500ms;
+    z-index: 1;
+    letter-spacing: 0px;
+    color: black;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.1));
+}
+
+#stage-name {
+    font-family: 'Eras Bold ITC';
+    position: absolute;
+    width: 100%;
+    top: 140px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    color: white;
+    text-transform: none;
+}
+
 #blue-name {
     font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
     position: absolute;
     left: 150px;
-    top: 22px;
+    top: 33px;
+    font-size: 44px;
     transition: ease-in-out 500ms;
     text-align: left;
-    color: blue;
+    color: #9EB4DD;
 }
 
 #red-name {
     font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
     position: absolute;
     right: 150px;
-    top: 22px;
+    top: 33px;
+    font-size: 44px;
     transition: ease-in-out 500ms;
     text-align: right;
-    color: red;
+    color: #F2A1A1;
 }
 
 #blue-points {
     position: absolute;
     left: 148px;
-    top: 80px;
+    top: 85px;
     display: flex;
     flex-direction: row;
     width: fit-content;
     padding: 4px;
+    gap: 3px;
     transition: 300ms ease-out;
 }
 
 #red-points {
     position: absolute;
     right: 148px;
-    top: 80px;
+    top: 85px;
     display: flex;
     flex-direction: row-reverse;
     width: fit-content;
     padding: 4px;
+    gap: 3px;
     transition: 300ms ease-out;
 }
 
 .star-b {
     z-index: 100;
-    width: 15px;
-    height: 15px;
-    background-color: none;
-    margin-right: 8px;
+    width: 27px;
+    height: 27px;
     transition: 200ms ease;
-    border: 3px solid blue;
     border-radius: 10px;
 }
 
 .star-r {
     z-index: 100;
-    width: 15px;
-    height: 15px;
+    width: 27px;
+    height: 27px;
     background-color: none;
-    margin-left: 8px;
     transition: 200ms ease;
-    border: 3px solid red;
     border-radius: 10px;
 }
 
-#red-flag {
+#blue-flag {
     opacity: 1s;
     position: absolute;
     width: 85px;
@@ -306,7 +369,7 @@ body {
     outline-offset: 4px;
 }
 
-#blue-flag {
+#red-flag {
     opacity: 1;
     position: absolute;
     width: 85px;
@@ -321,7 +384,7 @@ body {
 .seed {
     margin-left: 10px;
     margin-right: 10px;
-    font-family: 'Eras Demi ITC';
-    font-size: 20px;
+    font-family: 'Eras Bold ITC';
+    font-size: 25px;
     color: white;
 }

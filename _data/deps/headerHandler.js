@@ -1,31 +1,22 @@
-// 更新隊伍名稱
-let red_name = document.getElementById('red-name');
-let blue_name = document.getElementById('blue-name');
-let nameRed = 'Red Team', nameBlue = '藍隊';
-function updateTeamNames(tourneyMng) {
-    if (nameBlue !== tourneyMng.teamName.left && tourneyMng.teamName.left) {
-        nameBlue = tourneyMng.teamName.left || 'Blue';
-    }
-    if (nameRed !== tourneyMng.teamName.right && tourneyMng.teamName.right) {
-        nameRed = tourneyMng.teamName.right || 'Red';
-    }
-}
-
 // 更新種子序
 let seedAdded = false;
 let red_points = document.getElementById('red-points');
 let blue_points = document.getElementById('blue-points');
-function updateSeeding(tourneyMng) {
+function updateSeeding(tourneyMng, players) {
     if (seedAdded) return;
     seedAdded = true;
-    let seedBlue = document.createElement('div');
-    let seedRed = document.createElement('div');
-    seedBlue.className = 'seed';
-    seedRed.className = 'seed';
-    seedBlue.innerText = 'Blue Seed';
-    seedRed.innerText = 'Red Seed';
-    document.getElementById('blue-points').appendChild(seedBlue);
-    document.getElementById('red-points').appendChild(seedRed);
+    let blue_seed = document.createElement('div');
+    let red_seed = document.createElement('div');
+
+    let seedBlue = players.find(p => p.username === tourneyMng.teamName.left)?.seed || 'N/A';
+    let seedRed = players.find(p => p.username === tourneyMng.teamName.right)?.seed || 'N/A';
+
+    blue_seed.className = 'seed';
+    red_seed.className = 'seed';
+    blue_seed.innerText = seedBlue;
+    red_seed.innerText = seedRed;
+    document.getElementById('blue-points').appendChild(blue_seed);
+    document.getElementById('red-points').appendChild(red_seed);
 }
 
 // 更新分數條顯示
@@ -65,46 +56,46 @@ function updateScore(tourneyMng) {
     if (starsBlue !== tourneyMng.stars.left) {
         starsBlue = tourneyMng.stars.left;
         for (let i = 1; i <= starsBlue; i++) {
-            document.getElementById(`blue${i}`).style.backgroundColor = 'blue';
+            document.getElementById(`blue${i}`).style.backgroundImage = 'url("../_data/img/star_white.png")';
         }
         for (let i = starsBlue + 1; i <= firstTo; i++) {
-            document.getElementById(`blue${i}`).style.backgroundColor = 'unset';
+            document.getElementById(`blue${i}`).style.backgroundImage = 'url("../_data/img/star_transparent.png")';
         }
     }
     if (starsRed !== tourneyMng.stars.right) {
         starsRed = tourneyMng.stars.right;
         for (let i = 1; i <= starsRed; i++) {
-            document.getElementById(`red${i}`).style.backgroundColor = 'red';
+            document.getElementById(`red${i}`).style.backgroundImage = 'url("../_data/img/star_white.png")';
         }
         for (let i = starsRed + 1; i <= firstTo; i++) {
-            document.getElementById(`red${i}`).style.backgroundColor = 'unset';
+            document.getElementById(`red${i}`).style.backgroundImage = 'url("../_data/img/star_transparent.png")';
         }
     }
 }
 
 // 更新隊名與隊旗資訊
+let red_name = document.getElementById('red-name');
+let blue_name = document.getElementById('blue-name');
+let nameRed = 'Red Team', nameBlue = '藍隊';
 let red_flag = document.getElementById('red-flag');
 let blue_flag = document.getElementById('blue-flag');
 function updateTeamInfo(tourneyMng) {
     if (!red_flag || !blue_flag) return;
-    if (teams && nameBlue !== tourneyMng.teamName.left && tourneyMng.teamName.left) {
-        console.log("test");
-        nameBlue = tourneyMng.teamName.left || 'Blue Team';
-        console.log(nameBlue);
-        blue_name.innerHTML = nameBlue;
-        let team = teams.find(t => t.team == nameBlue);
-        console.log(team);
-        flagBlue = team?.flag || null;
-        if (flagBlue) blue_flag.src = `../_data/assets/flags/${flagBlue}.png`;
-        else blue_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
-    }
-    if (teams && nameRed !== tourneyMng.teamName.right && tourneyMng.teamName.right) {
-        nameRed = tourneyMng.teamName.right || 'Red Team';
+    if (players && nameRed !== tourneyMng.teamName.left && tourneyMng.teamName.left) {
+        nameRed = tourneyMng.teamName.left || 'Red Team';
         red_name.innerHTML = nameRed;
-        let team = teams.find(t => t.team == nameRed);
-        flagRed = team?.flag || null;
-        if (flagRed) red_flag.src = `../_data/assets/flags/${flagRed}.png`;
+        let player = players.find(t => t.username == nameRed);
+        flagRed = player?.id || null;
+        if (flagRed) red_flag.src = `https://a.ppy.sh/${player.id}`;
         else red_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
+    }
+    if (players && nameBlue !== tourneyMng.teamName.right && tourneyMng.teamName.right) {
+        nameBlue = tourneyMng.teamName.right || 'Blue Team';
+        blue_name.innerHTML = nameBlue;
+        let player = players.find(t => t.username == nameBlue);
+        flagBlue = player?.id || null;
+        if (flagBlue) blue_flag.src = `https://a.ppy.sh/${player.id}`;
+        else blue_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
     }
 }
 

@@ -1,38 +1,112 @@
-let stageInfo, mappool, teams;
+let stageInfo, mappool, players;
+//let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
+let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
 (async () => {
     $.ajaxSetup({ cache: false });
     stageInfo = await $.getJSON('../_data/beatmaps.json');
-    teams = await $.getJSON('../_data/teams.json');
+    players = await $.getJSON('../_data/players.json');
     mappool = stageInfo.beatmaps;
+
+    // 初始化比賽資訊
+    updateStageInfo(stageInfo);
+    updateMappool(mappool);
+    generateButtons();
+    setupScroll();
 })();
 
-// 防止右鍵選單彈出
+// 禁用右鍵選單
 window.addEventListener('contextmenu', (e) => e.preventDefault());
 
+// 建立跑馬燈效果
+const box = document.getElementById("scrollBox");
+const content = document.getElementById("scrollContent");
+function setupScroll() {
+    const boxWidth = box.clientWidth;
+    const contentWidth = content.scrollWidth;
 
-//let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
-let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
+    if (contentWidth <= boxWidth) { // 停止動畫
+        content.style.animation = '';
+        content.style.transform = 'translateX(0)';
+        return;
+    }
+    const scrollDistance = contentWidth - boxWidth;
+    const pauseTime = 3; 
+    const scrollTime = scrollDistance / 20;
+    const totalTime = scrollTime + 2 * pauseTime;
+    const startPercent = (pauseTime / totalTime) * 100;
+    const endPercent = ((pauseTime + scrollTime) / totalTime) * 100;
 
-// CHAT
+    const style = document.createElement("style");
+    style.innerHTML = `
+    @keyframes jumpScroll {
+        0% {transform: translateX(0);}
+        ${startPercent}% {transform: translateX(0);}
+        ${endPercent}% {transform: translateX(-${scrollDistance}px);}
+        100% {transform: translateX(-${scrollDistance}px);}
+    }`;
+    document.head.appendChild(style);
+    content.style.animation = `jumpScroll ${totalTime}s linear infinite`;
+}
 
+// 更新正在進行的譜面資訊
+let np_id = 0;
+const np_text = document.getElementById("np-text");
+const np_scroll = document.getElementById("scrollContent");
+const np_identifier = document.getElementById("np-identifier");
+const np_container = document.getElementById("now-playing");
+function updateNowPlaying(beatmapMng) {
+    if (!beatmapMng) return;
+    if (np_id === beatmapMng.id) return;
+    np_id = beatmapMng.id;
+    const title = beatmapMng.metadata.artist + " - " + beatmapMng.metadata.title;
+    np_scroll.innerText = title;
+    np_text.innerText = "♪ Now Playing";
+
+    // find identifier from mappool
+    const mapInfo = mappool.find(map => map.beatmap_id === np_id);
+    np_identifier.innerText = mapInfo ? mapInfo.identifier : "";
+
+    // 
+    if (beatmapMng && beatmapMng.set) {
+        const setId = beatmapMng.set;
+        np_container.style.backgroundImage = `url('https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg')`;
+        np_container.style.backgroundPosition = 'center';
+        np_container.style.backgroundSize = 'cover';
+        np_container.style.backgroundRepeat = 'no-repeat';
+
+        np_container.style.maskImage = 'linear-gradient(75deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 95%)';
+        np_container.style.maskRepeat = 'no-repeat';
+        np_container.style.maskPosition = 'center';
+        np_container.style.maskSize = 'cover';
+    }
+
+    setupScroll();
+}
 
 // 處理來自tosu的訊息
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
     let tourneyMng = data.tourney.manager;
+    let beatmapMng = data.menu.bm;
     if (!tourneyMng) return;
     
-    // 這寫函數都寫在 _data/deps/headerHandler.js 裡
-    updateTeamNames(tourneyMng);
+    // 這些函數都寫在 _data/deps/headerHandler.js 裡
+    // 必須先載入那個檔案才能用
     updateScoreBars(tourneyMng);
-    updateSeeding(tourneyMng);
+    updateSeeding(tourneyMng, players);
     updateScore(tourneyMng);
     updateTeamInfo(tourneyMng);
     updateChat(tourneyMng);
+    updateNowPlaying(beatmapMng, mappool);
 
-    if (hexNum !== Math.floor(tourneyMng.bestOF / 2) + 3) {
-        hexNum = Math.floor(tourneyMng.bestOF / 2) + 3;
+    // 即時根據bo數更新bp顯示區數量
+    let targetNum = 0;
+    if (tourneyMng.bestOF == 9) targetNum = 7;
+    else if (tourneyMng.bestOF == 11) targetNum = 8;
+    else targetNum = 10;
+    if (hexNum !== targetNum) {
+        hexNum = targetNum;
         generateHexPicks("blue_picks", "Blue");
         generateHexPicks("red_picks", "Red");
         updateHexContent("blue_picks", "Blue");
@@ -42,6 +116,13 @@ socket.onmessage = async (event) => {
 
 
 ///////////////////////////
+
+// 更新比賽輪次
+const stage_name = document.getElementById('stage-name');
+function updateStageInfo(stageInfo) {
+    if (!stage_name) return;
+    stage_name.innerHTML = stageInfo.stage || "Stage";
+}
 
 // 生成bp顯示區
 let hexNum = 0;
@@ -100,7 +181,6 @@ function updateHexContent(containerId, prefix) {
         } else {
             const sequence = (idx - 1) % 3;
             const group = Math.floor((idx - 1) / 3);
-            console.log(idx);
             if (hexNum == 8 && idx == 7) { // BO11特例：最後一個是pick
                 const pickIndex = 4;
                 if (pick_list[pickIndex]) {
@@ -142,35 +222,50 @@ function updateHexContent(containerId, prefix) {
 let blue_pick_list = [], red_pick_list = [];
 let blue_ban_list = [], red_ban_list = [];
 let blue_protect_list = [], red_protect_list = [];
+let rows = [];
 
-const rows = [
-    { containerId: "NM1", names: ["NM1", "NM2", "NM3", "NM4", "NM5"] },
-    { containerId: "NM2", names: ["NM6", "NM7"] },
-    { containerId: "HD",  names: ["HD1", "HD2", "HD3", "HD4"] },
-    { containerId: "HR",  names: ["HR1", "HR2", "HR3", "HR4"] },
-    { containerId: "DT",  names: ["DT1", "DT2", "DT3", "DT4", "DT5"] }
-];
+// 偵測圖譜數量
+function updateMappool(mappool) {
+
+    const idSet = new Set(mappool.map(b => b.identifier));
+    rows = [
+        { containerId: "NM1", names: ["NM1", "NM2", "NM3", "NM4", "NM5"] },
+        { containerId: "NM2", names: ["NM6", "NM7"] },
+        { containerId: "HD", names: ["HD1", "HD2", "HD3", "HD4"] },
+        { containerId: "HR", names: ["HR1", "HR2", "HR3", "HR4"] },
+        { containerId: "DT", names: ["DT1", "DT2", "DT3", "DT4", "DT5"] }
+    ];
+
+    // 只留下存在於beatmaps的圖譜
+    rows = rows.map(row => ({
+        containerId: row.containerId,
+        names: row.names.filter(name => idSet.has(name))
+    }));
+}
+
 
 // 生成bp按鈕並加入事件監聽
-rows.forEach(row => {
-    const container = document.getElementById(row.containerId);
+function generateButtons() {
+    rows.forEach(row => {
+        const container = document.getElementById(row.containerId);
 
-    row.names.forEach(name => {
-        const btn = document.createElement("div");
-        btn.className = "mode-btn default";
-        btn.innerText = name;
+        row.names.forEach(name => {
+            const btn = document.createElement("div");
+            btn.className = "mode-btn default";
+            btn.innerText = name;
 
-        // 左鍵按下或右鍵按下會執行這個
-        btn.addEventListener("mousedown", (e) => {
-            handleButtonClick(e, name);
-            updateButtonColor(btn, name);
-            updateHexContent("blue_picks", "Blue");
-            updateHexContent("red_picks", "Red");
+            // 左鍵按下或右鍵按下會執行這個
+            btn.addEventListener("mousedown", (e) => {
+                handleButtonClick(e, name);
+                updateButtonColor(btn, name);
+                updateHexContent("blue_picks", "Blue");
+                updateHexContent("red_picks", "Red");
+            });
+
+            container.appendChild(btn);
         });
-
-        container.appendChild(btn);
     });
-});
+}
     
 function updateButtonColor(btn, id) {
     btn.classList.remove("picked");

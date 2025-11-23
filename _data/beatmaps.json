@@ -237,19 +237,6 @@
         },
         {
             "beatmap_id": 4502850,
-            "identifier": "HR4",
-            "mods": "FM",
-            "sr": 5.51,
-            "bpm": 202,
-            "title": "Prismatic Lollipops",
-            "artist": "DJ Mashiro",
-            "difficulty": "pop",
-            "beatmapset_id": 2139490,
-            "creator": "yaspo",
-            "version": "pop"
-        },
-        {
-            "beatmap_id": 4502850,
             "identifier": "DT5",
             "mods": "FM",
             "sr": 5.51,
