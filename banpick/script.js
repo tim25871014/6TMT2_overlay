@@ -128,6 +128,10 @@ function updateStageInfo(stageInfo) {
 let hexNum = 0;
 function generateHexPicks(containerId, prefix) {
     const container = document.getElementById(containerId);
+    
+    // 清空現有內容
+    while(container.firstChild) container.removeChild(container.firstChild);
+
     let grayIndexes = [];
     if (hexNum == 8) grayIndexes = [2, 5]; // BO11時規律不一樣
     else grayIndexes = [2, 5, 8];
