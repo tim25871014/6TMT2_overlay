@@ -1,3 +1,10 @@
+// 更新比賽輪次
+const stage_name = document.getElementById('stage-name');
+function updateStageInfo(stageInfo) {
+    if (!stage_name) return;
+    stage_name.innerHTML = stageInfo.stage || "Stage";
+}
+
 // 更新種子序
 let seedAdded = false;
 let red_points = document.getElementById('red-points');

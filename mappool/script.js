@@ -31,7 +31,7 @@ function setupScroll() {
         return;
     }
     const scrollDistance = contentWidth - boxWidth;
-    const pauseTime = 3; 
+    const pauseTime = 3;
     const scrollTime = scrollDistance / 20;
     const totalTime = scrollTime + 2 * pauseTime;
     const startPercent = (pauseTime / totalTime) * 100;
@@ -90,7 +90,7 @@ socket.onmessage = async (event) => {
     let tourneyMng = data.tourney.manager;
     let beatmapMng = data.menu.bm;
     if (!tourneyMng) return;
-    
+
     // 這些函數都寫在 _data/deps/headerHandler.js 裡
     // 必須先載入那個檔案才能用
     updateScoreBars(tourneyMng);
@@ -121,9 +121,9 @@ socket.onmessage = async (event) => {
 let hexNum = 0;
 function generateHexPicks(containerId, prefix) {
     const container = document.getElementById(containerId);
-    
+
     // 清空現有內容
-    while(container.firstChild) container.removeChild(container.firstChild);
+    while (container.firstChild) container.removeChild(container.firstChild);
 
     let grayIndexes = [];
     if (hexNum == 8) grayIndexes = [2, 5]; // BO11時規律不一樣
@@ -159,7 +159,7 @@ function updateHexContent(containerId, prefix) {
 
         // 預設內容
         let content = "";
-        
+
         // 預設背景
         let bg1 = hex.classList.contains("gray") ?
             "url(\"../_data/img/gray_hexagon.png\")" :
@@ -168,7 +168,7 @@ function updateHexContent(containerId, prefix) {
         let bg3 = "";
         let bg4 = "";
         let bg5 = "url(\"../_data/img/transparent_hexagon.png\"),";
-        
+
         // bp順序: protect -> ban -> pick -> pick -> ban -> pick -> pick ...
         if (idx === 0) { // protect
             if (protect_list[0]) {
@@ -202,11 +202,11 @@ function updateHexContent(containerId, prefix) {
         const mapInfo = mappool.find(map => map.identifier === content);
         const mapId = mapInfo ? mapInfo.beatmap_id : "Unknown ID";
         const mapSetId = mapInfo ? mapInfo.beatmapset_id : "Unknown Set ID";
-        
+
         if (mapId !== "Unknown ID") {
             bg2 = `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),`
             bg3 = isBlue ? "url(\"../_data/img/blue_hexagon.png\")," :
-                           "url(\"../_data/img/red_hexagon.png\"),"
+                "url(\"../_data/img/red_hexagon.png\"),"
         }
 
         picks.textContent = content;
@@ -297,7 +297,7 @@ function handleButtonClick(e, name) {
             if (index !== -1) list.splice(index, 1);
         });
     }
-   
+
     const isLeft = (e.button === 0);
     if (e.shiftKey) removeFromAll(name); // shift：從全部 list 移除
     else if (e.ctrlKey) addToList(isLeft ? blue_ban_list : red_ban_list, name); // ctrl：Ban
