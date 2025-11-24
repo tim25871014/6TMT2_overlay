@@ -15,7 +15,19 @@ usage: clone this repo under tosu/static/ and run tosu
 
 需要準備的資料
 players.json
-mappools.json
+beatmaps.json
+格式請參考_data/的範例
+
+畫面大小
+overlay 1920×1080px
+玩家遊戲畫面 960×720px
+
+bp畫面/圖池畫面使用方法
+滑鼠左/右鍵：操作紅、藍方
+ctrl+點擊：ban圖
+alt+點擊：保圖
+普通點擊：選圖
+shift+點擊：取消
 
 ## For Developers 
 
