@@ -38,64 +38,111 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    position: relative;
+    display: flex;
 }
 
-#pick-wrapper {
+#panel {
+    transform: translateY(-5px);
+    position: absolute;
     display: flex;
     flex-direction: column;
-    align-items: center;
+    gap: 18px;
 }
 
-.pick-container {
+#MODS {
+    width: 1235px;
     display: flex;
-    gap: 20px;
+    flex-direction: column;
+    gap: 18px;
 }
 
-.hexagon {
-    width: 153px;
-    height: 341px;
+#TB {
+    position: absolute;
+    right: 30px;
+    top: 35%;
+    display: flex;
+    justify-content: center;
+    color: white;
+}
+
+.button-row {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.mode-btn {
+    width: 235px;
+    height: 140px;
+
+    border-radius: 20px;
+    background-position: center;
+    background-size: cover;
+
+    display: flex;
     position: relative;
 
-    clip-path: polygon(50% 0%,
-            100% 13%,
-            100% 87%,
-            50% 100%,
-            0% 87%,
-            0% 13%);
+    cursor: pointer;
+    transition: 0.4s;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    user-select: none;
+}
 
-    background-size: cover, cover, 650% 100%, cover;
-    background-position: center, center, center, center;
+#NM .mode-btn {box-shadow: inset 0 0 0 3px #a5c6e9;}
+#HD .mode-btn {box-shadow: inset 0 0 0 3px #f1eba1;}
+#HR .mode-btn {box-shadow: inset 0 0 0 3px #eda3a3;}
+#DT .mode-btn {box-shadow: inset 0 0 0 3px #c0a2c8;}
+#TB .mode-btn {
+    border-radius: 30px;
+    width: 430px;
+    height: 350px;
+    box-shadow: inset 0 0 0 3px #999999;
+}
 
+.mode-btn.banned {
+    filter: brightness(50%);
+    transform: scale(0.95);
+    color: #444444;
+    box-shadow: inset 0 0 0 3px #222222 !important;
+}
+
+.mode-btn.picked {transform: scale(0.95);}
+.mode-btn.picked.red-team {box-shadow: inset 0 0 0 3px #9b0c1366 !important;}
+.mode-btn.picked.blue-team {box-shadow: inset 0 0 0 3px #31499666 !important;}
+
+.mode-btn.protected {
+    box-shadow: inset 0 0 0 5px greenyellow !important;
+}
+
+.btn-id {
+    margin-left: 15px;
+    margin-top: 2px;
+    font-family: 'Eras Bold ITC';
     font-size: 30px;
-    font-weight: bold;
+}
+
+#TB .btn-id {
+    font-size: 40px;
+    margin-top: 4px;
+    margin-left: 0;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn-bp {
+    position: absolute;
+    height: fit-content;
+    width: fit-content;
+    top: 6px;
+    right: 10px;
+    padding: 0px 8px;
+    border-radius: 20px;
+    font-size: 20px;
     font-family: 'Eras Bold ITC';
     color: white;
-    margin-left: -10px;
-    transition: 1s;
-}
-
-.picks {
-    position: absolute;
-    margin-left: 5px;
-    font-size: 40px;
-    transform: translateY(110px);
-    filter: drop-shadow(2px 2px 4px #000000);
-}
-
-#blue_picks .hexagon {
-    transform: translate(41px, 7px);
-}
-
-#red_picks .hexagon {
-    transform: translate(-41px, -27px);
-}
-
-.hexagon.gray {
-    filter: grayscale(100%);
 }
 
 /* Footer */
@@ -160,70 +207,6 @@ body {
     will-change: transform;
     filter: drop-shadow(2px 2px 4px #000000);
     transition: 0.2s;
-}
-
-/* 右側按鈕區 */
-#panel {
-    position: absolute;
-    right: 110px;
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.button-row {
-    transform: translateY(-10px);
-    display: flex;
-    justify-content: left;
-    gap: 6px;
-}
-
-.mode-btn {
-    width: 70px;
-    height: 30px;
-
-    border-radius: 6px;
-    border: 2px solid white;
-    background: white;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Eras Bold ITC';
-    font-weight: bold;
-    font-size: 20px;
-    color: black;
-
-    cursor: pointer;
-    transition: 0.4s;
-
-    user-select: none;
-}
-
-#NM1 .mode-btn {
-    border: 2px solid #2c75ff;
-}
-
-#NM2 .mode-btn {
-    border: 2px solid #2c75ff;
-}
-
-#HD .mode-btn {
-    border: 2px solid #f59e0b;
-}
-
-#HR .mode-btn {
-    border: 2px solid #dc2626;
-}
-
-#DT .mode-btn {
-    border: 2px solid #7c3aed;
-}
-
-.mode-btn.picked {
-    background: gray;
-    color: #444444;
-    border: 2px solid #222222 !important;
 }
 
 
@@ -384,7 +367,7 @@ body {
     left: 40px;
     top: 33px;
     border-radius: 6px;
-    outline: 3px solid var(--red);
+    outline: 3px solid #9EB4DD;
     outline-offset: 4px;
 }
 
@@ -396,7 +379,8 @@ body {
     right: 40px;
     top: 33px;
     border-radius: 6px;
-    outline: 3px solid var(--blue);
+    outline: 3px solid #F2A1A1;
+    
     outline-offset: 4px;
 }
 

@@ -40,6 +40,26 @@ body {
     justify-content: center;
 }
 
+.info {
+    height: fit-content;
+    width: fit-content;
+    display: inline-block;
+    font-family: 'Eras Bold ITC';
+    font-size: 50px;
+    text-shadow: 2px 2px 4px #000000;
+    opacity: 0.35;
+}
+
+.info.blue {
+    transform: rotate(-90deg) translateX(-145px);
+    color: #9EB4DD;
+}
+
+.info.red {
+    transform: rotate(90deg) translateX(115px);
+    color: #F2A1A1;
+}
+
 #pick-wrapper {
     display: flex;
     flex-direction: column;
@@ -87,11 +107,11 @@ body {
 }
 
 #blue_picks .hexagon {
-    transform: translate(41px, 7px);
+    transform: translate(-81px, 7px);
 }
 
 #red_picks .hexagon {
-    transform: translate(-41px, -27px);
+    transform: translate(81px, -27px);
 }
 
 .hexagon.gray {
@@ -172,14 +192,14 @@ body {
 }
 
 .button-row {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     display: flex;
     justify-content: left;
     gap: 6px;
 }
 
 .mode-btn {
-    width: 70px;
+    width: 65px;
     height: 30px;
 
     border-radius: 6px;
@@ -200,12 +220,12 @@ body {
     user-select: none;
 }
 
-#NM1 .mode-btn {border: 2px solid #2c75ff;}
-#NM2 .mode-btn {border: 2px solid #2c75ff;}
-#HD .mode-btn {border: 2px solid #f59e0b;}
-#HR .mode-btn {border: 2px solid #dc2626;}
-#DT .mode-btn {border: 2px solid #7c3aed;}
-.mode-btn.picked { background: gray; color: #444444; border: 2px solid #222222 !important;}
+#NM1 .mode-btn {border: 2px solid #a5c6e9;}
+#NM2 .mode-btn {border: 2px solid #a5c6e9;}
+#HD .mode-btn {border: 2px solid #f1eba1;}
+#HR .mode-btn {border: 2px solid #eda3a3;}
+#DT .mode-btn {border: 2px solid #c0a2c8;}
+.mode-btn.picked { background: #999999; color: #444444; border: 2px solid #222222 !important;}
 
 
 /* 聊天室樣式 */
@@ -365,7 +385,7 @@ body {
     left: 40px;
     top: 33px;
     border-radius: 6px;
-    outline: 3px solid var(--red);
+    outline: 3px solid #9EB4DD;
     outline-offset: 4px;
 }
 
@@ -377,7 +397,7 @@ body {
     right: 40px;
     top: 33px;
     border-radius: 6px;
-    outline: 3px solid var(--blue);
+    outline: 3px solid #F2A1A1;
     outline-offset: 4px;
 }
 

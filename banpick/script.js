@@ -129,6 +129,13 @@ function generateHexPicks(containerId, prefix) {
     if (hexNum == 8) grayIndexes = [2, 5]; // BO11時規律不一樣
     else grayIndexes = [2, 5, 8];
 
+    if (prefix == 'Blue') {
+        const info = document.createElement("div");
+        info.className = "info blue";
+        info.innerText = "Blue Side";
+        container.appendChild(info);
+    }
+
     for (let i = 1; i <= hexNum; i++) {
         const hex = document.createElement("div");
         const picks = document.createElement("div");
@@ -140,6 +147,13 @@ function generateHexPicks(containerId, prefix) {
         hex.dataset.index = i;
         if (grayIndexes.includes(i)) hex.classList.add("gray");
         container.appendChild(hex);
+    }
+
+    if (prefix == 'Red') {
+        const info = document.createElement("div");
+        info.className = "info red";
+        info.innerText = "Red Side";
+        container.appendChild(info);
     }
 }
 

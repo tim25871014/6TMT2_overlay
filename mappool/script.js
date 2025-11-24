@@ -100,119 +100,10 @@ socket.onmessage = async (event) => {
     updateChat(tourneyMng);
     updateNowPlaying(beatmapMng, mappool);
 
-    // 即時根據bo數更新bp顯示區數量
-    let targetNum = 0;
-    if (tourneyMng.bestOF == 9) targetNum = 7;
-    else if (tourneyMng.bestOF == 11) targetNum = 8;
-    else targetNum = 10;
-    if (hexNum !== targetNum) {
-        hexNum = targetNum;
-        generateHexPicks("blue_picks", "Blue");
-        generateHexPicks("red_picks", "Red");
-        updateHexContent("blue_picks", "Blue");
-        updateHexContent("red_picks", "Red");
-    }
 };
 
 
-///////////////////////////
 
-// 生成bp顯示區
-let hexNum = 0;
-function generateHexPicks(containerId, prefix) {
-    const container = document.getElementById(containerId);
-
-    // 清空現有內容
-    while (container.firstChild) container.removeChild(container.firstChild);
-
-    let grayIndexes = [];
-    if (hexNum == 8) grayIndexes = [2, 5]; // BO11時規律不一樣
-    else grayIndexes = [2, 5, 8];
-
-    for (let i = 1; i <= hexNum; i++) {
-        const hex = document.createElement("div");
-        const picks = document.createElement("div");
-        picks.className = "picks";
-        picks.textContent = `${prefix} ${i}`;
-        picks.dataset.index = i;
-        hex.appendChild(picks);
-        hex.className = "hexagon";
-        hex.dataset.index = i;
-        if (grayIndexes.includes(i)) hex.classList.add("gray");
-        container.appendChild(hex);
-    }
-}
-
-// 更新bp顯示內容
-function updateHexContent(containerId, prefix) {
-    const container = document.getElementById(containerId);
-    const hexes = container.querySelectorAll(".hexagon");
-
-    const isBlue = (containerId === "blue_picks");
-    const pick_list = isBlue ? blue_pick_list : red_pick_list;
-    const ban_list = isBlue ? blue_ban_list : red_ban_list;
-    const protect_list = isBlue ? blue_protect_list : red_protect_list;
-
-    hexes.forEach((hex, i) => {
-        const picks = hex.querySelector(".picks");
-        const idx = i; // 0-based index
-
-        // 預設內容
-        let content = "";
-
-        // 預設背景
-        let bg1 = hex.classList.contains("gray") ?
-            "url(\"../_data/img/gray_hexagon.png\")" :
-            "url(\"../_data/img/black_hexagon.png\")";
-        let bg2 = "";
-        let bg3 = "";
-        let bg4 = "";
-        let bg5 = "url(\"../_data/img/transparent_hexagon.png\"),";
-
-        // bp順序: protect -> ban -> pick -> pick -> ban -> pick -> pick ...
-        if (idx === 0) { // protect
-            if (protect_list[0]) {
-                content = protect_list[0];
-                bg4 = "url(\"../_data/img/protected.png\"),"
-            }
-        } else {
-            const sequence = (idx - 1) % 3;
-            const group = Math.floor((idx - 1) / 3);
-            if (hexNum == 8 && idx == 7) { // BO11特例：最後一個是pick
-                const pickIndex = 4;
-                if (pick_list[pickIndex]) {
-                    content = pick_list[pickIndex];
-                    bg4 = "url(\"../_data/img/picked.png\"),"
-                }
-            }
-            else if (sequence === 0) { // ban
-                if (ban_list[group]) {
-                    content = ban_list[group];
-                    bg4 = "url(\"../_data/img/banned.png\"),"
-                }
-            } else {  // pick
-                const pickIndex = group * 2 + (sequence === 1 ? 0 : 1);
-                if (pick_list[pickIndex]) {
-                    content = pick_list[pickIndex];
-                    bg4 = "url(\"../_data/img/picked.png\"),"
-                }
-            }
-        }
-
-        const mapInfo = mappool.find(map => map.identifier === content);
-        const mapId = mapInfo ? mapInfo.beatmap_id : "Unknown ID";
-        const mapSetId = mapInfo ? mapInfo.beatmapset_id : "Unknown Set ID";
-
-        if (mapId !== "Unknown ID") {
-            bg2 = `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),`
-            bg3 = isBlue ? "url(\"../_data/img/blue_hexagon.png\")," :
-                "url(\"../_data/img/red_hexagon.png\"),"
-        }
-
-        picks.textContent = content;
-        hex.style.backgroundImage = bg5 + bg4 + bg3 + bg2 + bg1;
-    });
-}
 
 ///////////////////////////
 
@@ -226,11 +117,11 @@ function updateMappool(mappool) {
 
     const idSet = new Set(mappool.map(b => b.identifier));
     rows = [
-        { containerId: "NM1", names: ["NM1", "NM2", "NM3", "NM4", "NM5"] },
-        { containerId: "NM2", names: ["NM6", "NM7"] },
+        { containerId: "NM", names: ["NM1", "NM2", "NM3", "NM4", "NM5", "NM6", "NM7"] },
         { containerId: "HD", names: ["HD1", "HD2", "HD3", "HD4"] },
         { containerId: "HR", names: ["HR1", "HR2", "HR3", "HR4"] },
-        { containerId: "DT", names: ["DT1", "DT2", "DT3", "DT4", "DT5"] }
+        { containerId: "DT", names: ["DT1", "DT2", "DT3", "DT4", "DT5"] },
+        { containerId: "TB", names: ["TB"] }
     ];
 
     // 只留下存在於beatmaps的圖譜
@@ -248,15 +139,48 @@ function generateButtons() {
 
         row.names.forEach(name => {
             const btn = document.createElement("div");
+            const btnId = document.createElement("div");
+            const btnBP = document.createElement("div");
+
             btn.className = "mode-btn default";
-            btn.innerText = name;
+            btnId.className = "btn-id";
+            btnBP.className = "btn-bp";
+
+            btn.appendChild(btnId);
+            console.log("btnBP");
+            btn.appendChild(btnBP);
+
+            // 在mappool尋找identifier=name的圖譜
+            const mapInfo = mappool.find(map => map.identifier === name);
+            const setId = mapInfo ? mapInfo.beatmapset_id : null;
+            let color, color2;
+            if (name.startsWith("NM")) color = "#a5c6e9", color2 = "#20487d";
+            else if (name.startsWith("HD")) color = "#f1eba1", color2 = "#8b7f29";
+            else if (name.startsWith("HR")) color = "#eda3a3", color2 = "#942d2d";
+            else if (name.startsWith("DT")) color = "#c0a2c8", color2 = "#582b87";
+            else color = "#999999", color2 = "#252525";
+
+            if (setId) {
+                if (name.startsWith("TB")) {
+                    btn.style.backgroundImage = `
+                    linear-gradient(to bottom, ${color} 0%, ${color} 15%, transparent 15%, transparent 50%, black 100%),
+                    url("https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg")`;
+                }
+                else {
+                    btn.style.backgroundImage = `
+                    linear-gradient(to bottom, ${color} 0%, ${color} 25%, transparent 25%, transparent 50%, black 100%),
+                    url("https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg")`;
+                }
+            }
+            
+            if (name.startsWith("TB")) btnId.innerText = "Tiebreaker";
+            else btnId.innerText = name;
+            btnId.style.color = color2;
 
             // 左鍵按下或右鍵按下會執行這個
             btn.addEventListener("mousedown", (e) => {
                 handleButtonClick(e, name);
                 updatePanelPicked();
-                updateHexContent("blue_picks", "Blue");
-                updateHexContent("red_picks", "Red");
             });
 
             container.appendChild(btn);
@@ -269,14 +193,37 @@ function updatePanelPicked() {
     const panel = document.getElementById("panel");
     if (!panel) return;
 
-    const allLists = [blue_pick_list, red_pick_list, blue_ban_list, red_ban_list];
-    const items = panel.querySelectorAll("*");
+    const pickLists = [blue_pick_list, red_pick_list];
+    const banLists = [blue_ban_list, red_ban_list];
+    const protectLists = [blue_protect_list, red_protect_list];
+    const redList = [red_pick_list, red_ban_list, red_protect_list];
+    const blueList = [blue_pick_list, blue_ban_list, blue_protect_list];
+
+    const items = panel.querySelectorAll(".btn-id");
     items.forEach(item => {
+        const parent = item.parentElement;
         const text = item.innerText.trim();
-        item.classList.remove("picked");
-        if (allLists.some(list => list.includes(text))) {
-            item.classList.add("picked");
-        }
+        parent.classList.remove("picked", "banned", "protected", "red-team", "blue-team");
+        if (pickLists.some(list => list.includes(text))) parent.classList.add("picked");
+        if (banLists.some(list => list.includes(text))) parent.classList.add("banned");
+        if (protectLists.some(list => list.includes(text))) parent.classList.add("protected");
+        if (redList.some(list => list.includes(text))) parent.classList.add("red-team");
+        if (blueList.some(list => list.includes(text))) parent.classList.add("blue-team");
+    });
+
+    const bps = panel.querySelectorAll(".btn-bp");
+    bps.forEach(bp => {
+        const parent = bp.parentElement;
+        let text = "";
+
+        if (parent.classList.contains("picked")) text += "pick";
+        else if (parent.classList.contains("banned")) text += "ban";
+        else if (parent.classList.contains("protected")) text += "protect";
+
+        bp.style.backgroundColor = parent.classList.contains("red-team") ? "#9b0c13" :
+            parent.classList.contains("blue-team") ? "#314996" :
+                             "transparent";
+        bp.innerText = text;
     });
 }
 
@@ -329,8 +276,6 @@ window.addEventListener("storage", (event) => {
         red_ban_list = newState.red_ban_list;
         blue_protect_list = newState.blue_protect_list;
         red_protect_list = newState.red_protect_list;
-        updateHexContent("blue_picks", "Blue");
-        updateHexContent("red_picks", "Red");
         updatePanelPicked();
         printLists();
     }
