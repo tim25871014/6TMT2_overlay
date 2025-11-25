@@ -219,8 +219,8 @@ function updateHexContent(containerId, prefix) {
         
         if (mapId !== "Unknown ID") {
             bg2 = `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),`
-            bg3 = isBlue ? "url(\"../_data/img/blue_hexagon.png\")," :
-                           "url(\"../_data/img/red_hexagon.png\"),"
+            bg3 = isBlue ? "linear-gradient(to top, #20487dff, #20487d00)," :
+                           "linear-gradient(to top, #942d2dff, #942d2d00),"
         }
 
         picks.textContent = content;

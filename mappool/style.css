@@ -44,40 +44,25 @@ body {
 }
 
 #panel {
+    width: 1705px;
     transform: translateY(-5px);
     position: absolute;
     display: flex;
     flex-direction: column;
-    gap: 18px;
-}
-
-#MODS {
-    width: 1235px;
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-}
-
-#TB {
-    position: absolute;
-    right: 30px;
-    top: 35%;
-    display: flex;
-    justify-content: center;
-    color: white;
 }
 
 .button-row {
     display: flex;
     justify-content: center;
-    gap: 15px;
 }
 
 .mode-btn {
-    width: 235px;
-    height: 140px;
+    margin: 5px;
 
-    border-radius: 20px;
+    width: 330px;
+    height: 105px;
+
+    border-radius: 5px;
     background-position: center;
     background-size: cover;
 
@@ -88,61 +73,100 @@ body {
     transition: 0.4s;
 
     user-select: none;
+    box-shadow: inset 0 0 0 3px white;
 }
 
+#TB .mode-btn {
+    width: 670px;
+}
+
+/*
 #NM .mode-btn {box-shadow: inset 0 0 0 3px #a5c6e9;}
 #HD .mode-btn {box-shadow: inset 0 0 0 3px #f1eba1;}
 #HR .mode-btn {box-shadow: inset 0 0 0 3px #eda3a3;}
 #DT .mode-btn {box-shadow: inset 0 0 0 3px #c0a2c8;}
-#TB .mode-btn {
-    border-radius: 30px;
-    width: 430px;
-    height: 350px;
-    box-shadow: inset 0 0 0 3px #999999;
-}
-
+*/
 .mode-btn.banned {
-    filter: brightness(50%);
-    transform: scale(0.95);
+    filter: brightness(60%) !important;
     color: #444444;
     box-shadow: inset 0 0 0 3px #222222 !important;
 }
 
-.mode-btn.picked {transform: scale(0.95);}
+.mode-btn.picked {
+    animation: flash 2s ease forwards;
+    box-shadow: inset 0 0 0 3px white !important;
+}
+@keyframes flash {
+    0%   { filter: brightness(1); }
+    20%  { filter: brightness(0.8); }
+    40%  { filter: brightness(1.2); }
+    60%  { filter: brightness(0.8); }
+    80%  { filter: brightness(1.2); }
+    100%  { filter: brightness(0.8); }
+}
+/*
 .mode-btn.picked.red-team {box-shadow: inset 0 0 0 3px #9b0c1366 !important;}
 .mode-btn.picked.blue-team {box-shadow: inset 0 0 0 3px #31499666 !important;}
+*/
+.mode-btn:hover {
+    filter: brightness(1.2);
+}
 
 .mode-btn.protected {
-    box-shadow: inset 0 0 0 5px greenyellow !important;
+    box-shadow: inset 0 0 0 3px greenyellow;
 }
 
 .btn-id {
     margin-left: 15px;
     margin-top: 2px;
     font-family: 'Eras Bold ITC';
-    font-size: 30px;
-}
-
-#TB .btn-id {
-    font-size: 40px;
-    margin-top: 4px;
-    margin-left: 0;
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
+    font-size: 20px;
+    transition: 2s;
 }
 
 .btn-bp {
     position: absolute;
-    height: fit-content;
-    width: fit-content;
-    top: 6px;
-    right: 10px;
-    padding: 0px 8px;
-    border-radius: 20px;
-    font-size: 20px;
-    font-family: 'Eras Bold ITC';
+    width: 200px;
+    height: 50px;
+    font-size: 25px;
+    top: 60%;
+    right: 50%;
+    border-radius: 25px;
+    transform: translate(50%, -50%);
+    font-family: 'Eras Demi ITC';
     color: white;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.title-text {
+    position: absolute;
+    bottom: 10px;
+    left: 15px;
+    font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
+    font-size: 23px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+    width: calc(100% - 30px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.artist-text {
+    position: absolute;
+    bottom: 35px;
+    left: 15px;
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    font-size: 16px;
+    color: #dddddd;
+    text-shadow: 2px 2px 4px #000000;
+    width: calc(100% - 30px);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 /* Footer */

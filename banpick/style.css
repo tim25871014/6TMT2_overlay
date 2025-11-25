@@ -220,6 +220,10 @@ body {
     user-select: none;
 }
 
+.mode-btn:hover {
+    filter: brightness(0.8);
+}
+
 #NM1 .mode-btn {border: 2px solid #a5c6e9;}
 #NM2 .mode-btn {border: 2px solid #a5c6e9;}
 #HD .mode-btn {border: 2px solid #f1eba1;}

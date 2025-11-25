@@ -117,7 +117,8 @@ function updateMappool(mappool) {
 
     const idSet = new Set(mappool.map(b => b.identifier));
     rows = [
-        { containerId: "NM", names: ["NM1", "NM2", "NM3", "NM4", "NM5", "NM6", "NM7"] },
+        { containerId: "NM1", names: ["NM1", "NM2", "NM3", "NM4", "NM5"] },
+        { containerId: "NM2", names: ["NM6", "NM7"] },
         { containerId: "HD", names: ["HD1", "HD2", "HD3", "HD4"] },
         { containerId: "HR", names: ["HR1", "HR2", "HR3", "HR4"] },
         { containerId: "DT", names: ["DT1", "DT2", "DT3", "DT4", "DT5"] },
@@ -141,13 +142,20 @@ function generateButtons() {
             const btn = document.createElement("div");
             const btnId = document.createElement("div");
             const btnBP = document.createElement("div");
+            const titleText = document.createElement("div");
+            const artistText = document.createElement("div");
 
             btn.className = "mode-btn default";
             btnId.className = "btn-id";
             btnBP.className = "btn-bp";
+            titleText.className = "title-text";
+            artistText.className = "artist-text";
 
             btn.appendChild(btnId);
-            console.log("btnBP");
+
+            btn.appendChild(titleText);
+            btn.appendChild(artistText);
+            
             btn.appendChild(btnBP);
 
             // 在mappool尋找identifier=name的圖譜
@@ -161,20 +169,15 @@ function generateButtons() {
             else color = "#999999", color2 = "#252525";
 
             if (setId) {
-                if (name.startsWith("TB")) {
-                    btn.style.backgroundImage = `
-                    linear-gradient(to bottom, ${color} 0%, ${color} 15%, transparent 15%, transparent 50%, black 100%),
-                    url("https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg")`;
-                }
-                else {
-                    btn.style.backgroundImage = `
-                    linear-gradient(to bottom, ${color} 0%, ${color} 25%, transparent 25%, transparent 50%, black 100%),
-                    url("https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg")`;
-                }
+                btn.style.backgroundImage = `
+                linear-gradient(to bottom, ${color} 0%, ${color} 25%, #00000033 25%, #00000033 30%, black 100%),
+                url("https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg")`;
+
+                titleText.innerText = mapInfo ? `${mapInfo.title}` : "Unknown";
+                artistText.innerText = mapInfo ? `${mapInfo.artist}` : "Unknown";
             }
             
-            if (name.startsWith("TB")) btnId.innerText = "Tiebreaker";
-            else btnId.innerText = name;
+            btnId.innerText = name;
             btnId.style.color = color2;
 
             // 左鍵按下或右鍵按下會執行這個
@@ -216,13 +219,20 @@ function updatePanelPicked() {
         const parent = bp.parentElement;
         let text = "";
 
-        if (parent.classList.contains("picked")) text += "pick";
-        else if (parent.classList.contains("banned")) text += "ban";
-        else if (parent.classList.contains("protected")) text += "protect";
+        if (parent.classList.contains("picked")) text += "picked";
+        else if (parent.classList.contains("banned")) text += "banned";
 
-        bp.style.backgroundColor = parent.classList.contains("red-team") ? "#9b0c13" :
-            parent.classList.contains("blue-team") ? "#314996" :
-                             "transparent";
+        if (text == "picked" || text == "banned") {
+            bp.style.background = parent.classList.contains("red-team") ? 
+                "linear-gradient(to right, #9b0c1300 0%, #9b0c13FF 40%, #9b0c13FF 60%, #9b0c1300 100%)" :
+            parent.classList.contains("blue-team") ? 
+                "linear-gradient(to right, #31499600 0%, #314996FF 40%, #314996FF 60%, #31499600 100%)" :
+                "transparent";
+        }
+        else {
+            bp.style.background = 'unset';
+            bp.style.boxShadow = "none";
+        }
         bp.innerText = text;
     });
 }
