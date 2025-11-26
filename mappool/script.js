@@ -12,6 +12,8 @@ let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
     updateStageInfo(stageInfo);
     updateMappool(mappool);
     generateButtons();
+    generateBPzones();
+    initializeControls();
     setupScroll();
 })();
 
@@ -99,7 +101,6 @@ socket.onmessage = async (event) => {
     updateTeamInfo(tourneyMng);
     updateChat(tourneyMng);
     updateNowPlaying(beatmapMng, mappool);
-
 };
 
 
@@ -184,6 +185,7 @@ function generateButtons() {
             btn.addEventListener("mousedown", (e) => {
                 handleButtonClick(e, name);
                 updatePanelPicked();
+                updateBPdisplays();
             });
 
             container.appendChild(btn);
@@ -266,11 +268,58 @@ function handleButtonClick(e, name) {
 
 ///////////////////////////
 
+// 生成右下bp顯示器區域
+function generateBPzones() {
+    const bpBlueContainer = document.getElementById("bp-blue");
+    const bpRedContainer = document.getElementById("bp-red");
+    const zones = ["protect", "ban", "pick"];
+
+    zones.forEach(zone => {
+        const blueIcon = document.createElement("div");
+        const blueZone = document.createElement("div");
+        blueIcon.className = `${zone} icon`;
+        blueZone.className = `${zone} zone`;
+        bpBlueContainer.appendChild(blueIcon);
+        bpBlueContainer.appendChild(blueZone);
+    });
+    zones.forEach(zone => {
+        const redIcon = document.createElement("div");
+        const redZone = document.createElement("div");
+        redIcon.className = `${zone} icon`;
+        redZone.className = `${zone} zone`;
+        bpRedContainer.appendChild(redIcon);
+        bpRedContainer.appendChild(redZone);
+    });
+}
+
+// 更新右下bp顯示器
+function updateBPdisplays() {
+    const bpBlueContainer = document.getElementById("bp-blue");
+    const bpRedContainer = document.getElementById("bp-red");
+
+    const blueProtectZone = bpBlueContainer.querySelector(".protect.zone");
+    const blueBanZone = bpBlueContainer.querySelector(".ban.zone");
+    const bluePickZone = bpBlueContainer.querySelector(".pick.zone");
+    const redProtectZone = bpRedContainer.querySelector(".protect.zone");
+    const redBanZone = bpRedContainer.querySelector(".ban.zone");
+    const redPickZone = bpRedContainer.querySelector(".pick.zone");
+
+    bluePickZone.innerText = blue_pick_list.join(" > ");
+    blueBanZone.innerText = blue_ban_list.join(" > ");
+    blueProtectZone.innerText = blue_protect_list.join(" > ");
+    redPickZone.innerText = red_pick_list.join(" > ");
+    redBanZone.innerText = red_ban_list.join(" > ");
+    redProtectZone.innerText = red_protect_list.join(" > ");
+}
+
+///////////////////////////
+
 // 同步bp狀態到 localStorage (寫入)
 function syncState() {
     const state = {
         blue_pick_list, red_pick_list, blue_ban_list,
-        red_ban_list, blue_protect_list, red_protect_list
+        red_ban_list, blue_protect_list, red_protect_list,
+        autoPick, firstPick
     };
     localStorage.setItem("banpick_state", JSON.stringify(state));
     printLists();
@@ -286,8 +335,22 @@ window.addEventListener("storage", (event) => {
         red_ban_list = newState.red_ban_list;
         blue_protect_list = newState.blue_protect_list;
         red_protect_list = newState.red_protect_list;
+        autoPick = newState.autoPick;
+        firstPick = newState.firstPick;
+        initializeControls();
         updatePanelPicked();
+        updateBPdisplays();
         printLists();
+    }
+});
+
+window.addEventListener("storage", (event) => {
+    if (event.key === "banpick_controls") {
+        const newControls = JSON.parse(event.newValue);
+        const autoPick = newControls.autoPick;
+        const nowPick = newControls.nowPick;
+        document.getElementById("auto-pick").innerText = `Auto Pick: ${autoPick ? "ON" : "OFF"}`;
+        document.getElementById("next-pick").innerText = `Now Pick: ${nowPick}`;
     }
 });
 
@@ -302,4 +365,20 @@ function printLists() {
     console.log("red_protect_list:", red_protect_list);
 }
 
-
+// 控制自動選圖與當前選圖隊伍
+let autoPick = false;
+let firstPick = 'Blue';
+function initializeControls() {
+    document.getElementById("auto-pick").innerText = `Auto Pick: ${autoPick ? 'ON' : 'OFF'}`;
+    document.getElementById("first-pick").innerText = `First Pick: ${firstPick}`;
+}
+function switchAutoPick() {
+    autoPick = !autoPick;
+    document.getElementById("auto-pick").innerText = `Auto Pick: ${autoPick ? 'ON' : 'OFF'}`;
+    syncState();
+}
+function switchFirstPick() {
+    firstPick = (firstPick === 'Blue') ? 'Red' : 'Blue';
+    document.getElementById("first-pick").innerText = `First Pick: ${firstPick}`;
+    syncState();
+}

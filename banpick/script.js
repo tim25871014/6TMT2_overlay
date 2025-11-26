@@ -12,6 +12,7 @@ let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
     updateStageInfo(stageInfo);
     updateMappool(mappool);
     generateButtons();
+    initializeControls();
     setupScroll();
 })();
 
@@ -79,6 +80,27 @@ function updateNowPlaying(beatmapMng) {
         np_container.style.maskRepeat = 'no-repeat';
         np_container.style.maskPosition = 'center';
         np_container.style.maskSize = 'cover';
+
+        if (mapInfo) {
+            console.log("Auto Pick:", mapInfo.identifier);
+            if (autoPick) {
+                if (blue_pick_list.length < red_pick_list.length) {
+                    blue_pick_list.push(mapInfo.identifier);
+                }
+                else if (red_pick_list.length < blue_pick_list.length) {
+                    red_pick_list.push(mapInfo.identifier);
+                }
+                else if (firstPick === 'Blue') {
+                    blue_pick_list.push(mapInfo.identifier);
+                }
+                else {
+                    red_pick_list.push(mapInfo.identifier);
+                }
+                updateHexContent("blue_picks", "Blue");
+                updateHexContent("red_picks", "Red");
+                syncState();
+            }
+        }
     }
 
     setupScroll();
@@ -219,8 +241,7 @@ function updateHexContent(containerId, prefix) {
         
         if (mapId !== "Unknown ID") {
             bg2 = `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg'),`
-            bg3 = isBlue ? "linear-gradient(to top, #20487dff, #20487d00)," :
-                           "linear-gradient(to top, #942d2dff, #942d2d00),"
+            bg3 = isBlue ? "url(\"../_data/img/blue_hexagon.png\")," : "url(\"../_data/img/red_hexagon.png\"),";
         }
 
         picks.textContent = content;
@@ -327,7 +348,8 @@ function handleButtonClick(e, name) {
 function syncState() {
     const state = {
         blue_pick_list, red_pick_list, blue_ban_list,
-        red_ban_list, blue_protect_list, red_protect_list
+        red_ban_list, blue_protect_list, red_protect_list,
+        autoPick, firstPick
     };
     localStorage.setItem("banpick_state", JSON.stringify(state));
     printLists();
@@ -343,10 +365,23 @@ window.addEventListener("storage", (event) => {
         red_ban_list = newState.red_ban_list;
         blue_protect_list = newState.blue_protect_list;
         red_protect_list = newState.red_protect_list;
+        autoPick = newState.autoPick;
+        firstPick = newState.firstPick;
+        initializeControls();
         updateHexContent("blue_picks", "Blue");
         updateHexContent("red_picks", "Red");
         updatePanelPicked();
         printLists();
+    }
+    
+});
+
+window.addEventListener("storage", (event) => {
+    if (event.key === "banpick_switch") {
+        console.log("Received control switch event");
+        const switchData = JSON.parse(event.newValue);
+        if (switchData.switchAuto) switchAutoPick();
+        if (switchData.switchNow) switchFirstPick();
     }
 });
 
@@ -361,4 +396,20 @@ function printLists() {
     console.log("red_protect_list:", red_protect_list);
 }
 
-
+// 控制自動選圖與當前選圖隊伍
+let autoPick = false;
+let firstPick = 'Blue';
+function initializeControls() {
+    document.getElementById("auto-pick").innerText = `Auto Pick: ${autoPick ? 'ON' : 'OFF'}`;
+    document.getElementById("first-pick").innerText = `First Pick: ${firstPick}`;
+}
+function switchAutoPick() {
+    autoPick = !autoPick;
+    document.getElementById("auto-pick").innerText = `Auto Pick: ${autoPick ? 'ON' : 'OFF'}`;
+    syncState();
+}
+function switchFirstPick() {
+    firstPick = (firstPick === 'Blue') ? 'Red' : 'Blue';
+    document.getElementById("first-pick").innerText = `First Pick: ${firstPick}`;
+    syncState();
+}

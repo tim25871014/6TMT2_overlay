@@ -28,6 +28,24 @@ body {
     height: 1080px;
     position: absolute;
     background-image: url('../_data/img/background.png');
+    z-index: -3;
+}
+
+#background-video {
+    filter: brightness(2.0);
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    opacity: 0.2;
+    z-index: -2;
+}
+
+#foreground {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-image: url('../_data/img/banner.png');
     z-index: -1;
 }
 
@@ -414,4 +432,118 @@ body {
     font-family: 'Eras Bold ITC';
     font-size: 25px;
     color: white;
+}
+
+/* BP顯示區域 */
+#bp-container {
+    position: absolute;
+    width: 520px;
+    height: 250px;
+    top: -15px;
+    right: 34px;
+    display: flex;
+    flex-direction: column;
+    z-index: 2;
+}
+
+#bp-red, #bp-blue {
+    position: relative;
+    width: 520px;
+    height: 100px;
+}
+
+#bp-blue {
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom: 3px solid white;
+    background-color: #9EB4DD55;
+}
+
+#bp-red {
+    border-bottom-right-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: #F2A1A155;
+}
+
+.icon {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background-size: cover;
+    background-position: center;
+}
+
+.protect.icon {
+    left: 10px;
+    top: 13px;
+    background-image: url(../_data/img/icon_protect.png);
+}
+
+.ban.icon {
+    left: 160px;
+    top: 13px;
+    background-image: url(../_data/img/icon_ban.png);
+}
+
+.pick.icon {
+    left: 10px;
+    top: 53px;
+    background-image: url(../_data/img/icon_pick.png);
+}
+
+.zone {
+    position: absolute;
+    height: 35px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-family: 'Eras Bold ITC';
+    font-size: 23px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.pick.zone {
+    width: 430px;
+    left: 65px;
+    top: 54px;
+}
+
+.ban.zone {
+    width: 250px;
+    left: 215px;
+    top: 12px;
+}
+
+.protect.zone {
+    width: 50px;
+    left: 65px;
+    top: 12px;
+}
+
+/* 控制區域 */
+#control {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    gap: 10px;
+    font-size: 16px;
+    overflow-y: auto;
+}
+
+.ctrl-btn {
+    padding: 10px;
+    font-size: 25px;
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s;
 }

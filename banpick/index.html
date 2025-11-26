@@ -10,6 +10,10 @@
 
 <body>
     <div id="background"></div>
+    <video id="background-video" autoplay loop muted>
+        <source src="../_data/img/background.mp4" type="video/mp4">
+    </video>
+    <div id="foreground"></div>
     <div id="header">
         <div id="stage-name">STAGE</div>
         <div id="blue-points"></div>
@@ -43,9 +47,15 @@
             <div id="DT"  class="button-row"></div>
         </div>
     </div>
+    <div id="control">
+        <button class="ctrl-btn" id="auto-pick" onclick="switchAutoPick()"></button>
+        <button class="ctrl-btn" id="first-pick" onclick="switchFirstPick()"></button>
+    </div>
 
     <script src="../_data/deps/headerHandler.js"></script>
     <script src="script.js"></script>
 </body>
+
+
 
 </html>
