@@ -136,6 +136,121 @@ body {
     filter: grayscale(100%);
 }
 
+/* 決勝局樣式 */
+
+#tie-breaker {
+    position: fixed;
+    top: 530px;
+    transform: translateY(-50%);
+    width: 1920px;
+    height: 423px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: center;
+
+    font-family: 'Eras Bold ITC';
+    font-size: 40px;
+    color: white;
+    text-shadow: 2px 2px 4px #000000;
+
+    background-image:
+        url('../_data/img/tbback_hexagon.png'),
+        linear-gradient(to right, #00000000 0%, #000000FF 50%, #00000000 100%);
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+}
+#tie-breaker.show {
+    animation:
+        tb-show 3s ease-in-out 0s 1 normal forwards, 
+        tb-blink 3s ease-in-out 3s infinite;
+}
+@keyframes tb-show {
+    0% {opacity: 0; width: 0px; height: 0px;}
+    10% {height: 423px;}
+    33% {opacity: 1; width: 1920px;}
+    66% {filter: brightness(1.5);}
+    100% {opacity: 1; filter: brightness(1);}
+}
+@keyframes tb-blink {
+    0%,
+    100% {filter: brightness(1);}
+    50% {filter: brightness(0.8);}
+}
+
+#tie-breaker::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 23.5%;
+    width: 53%;
+    height: 100%;
+
+    background-image: var(--before-bg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    clip-path: polygon(
+        11.5% 3.2%,
+        88.5% 3.2%,
+        100% 50%,
+        88.5% 96.8%,
+        11.5% 96.8%,
+        0% 50%);
+    z-index: 1;
+}
+
+#tie-breaker::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url('../_data/img/tbfront_hexagon.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    z-index: 2;
+}
+
+#tie-breaker-btn {
+    position: absolute;
+    bottom: 8px;
+    right: 69px;
+    
+    width: 65px;
+    height: 65px;
+
+    font-family: 'Eras Bold ITC';
+    font-size: 20px;
+    color: white;
+    background: #444444;
+    border: 2px solid white;
+    border-radius: 8px;
+    cursor: pointer;
+    user-select: none;
+    z-index: 3;
+}
+#tie-breaker-btn:hover {
+    filter: brightness(1.3);
+}
+
+#tie-breaker p {
+    position: absolute;
+    width: 750px;
+    transition: 3s;
+    z-index: 4;
+    text-align: center;
+}
+#tie-breaker #title {
+    font-size: 30px;
+    top: 320px;
+}
+#tie-breaker #text {
+    font-size: 100px;
+    font-weight: bold;
+    top: 50px;
+}
 /* Footer */
 
 #footer {
@@ -203,7 +318,7 @@ body {
 /* 右側按鈕區 */
 #panel {
     position: absolute;
-    right: 110px;
+    right: 140px;
     display: flex;
     flex-direction: column;
     gap: 5px;

@@ -81,25 +81,27 @@ function updateNowPlaying(beatmapMng) {
         np_container.style.maskPosition = 'center';
         np_container.style.maskSize = 'cover';
 
-        if (mapInfo) {
+        if (mapInfo && autoPick) {
             console.log("Auto Pick:", mapInfo.identifier);
-            if (autoPick) {
-                if (blue_pick_list.length < red_pick_list.length) {
-                    blue_pick_list.push(mapInfo.identifier);
-                }
-                else if (red_pick_list.length < blue_pick_list.length) {
-                    red_pick_list.push(mapInfo.identifier);
-                }
-                else if (firstPick === 'Blue') {
-                    blue_pick_list.push(mapInfo.identifier);
-                }
-                else {
-                    red_pick_list.push(mapInfo.identifier);
-                }
-                updateHexContent("blue_picks", "Blue");
-                updateHexContent("red_picks", "Red");
-                syncState();
+            if (mapInfo.identifier === 'TB') {
+                tb_picked = true;
             }
+            else if (blue_pick_list.length < red_pick_list.length) {
+                blue_pick_list.push(mapInfo.identifier);
+            }
+            else if (red_pick_list.length < blue_pick_list.length) {
+                red_pick_list.push(mapInfo.identifier);
+            }
+            else if (firstPick === 'Blue') {
+                blue_pick_list.push(mapInfo.identifier);
+            }
+            else {
+                red_pick_list.push(mapInfo.identifier);
+            }
+            updateHexContent("blue_picks", "Blue");
+            updateHexContent("red_picks", "Red");
+            updateTiebreakerContent();
+            syncState();
         }
     }
 
@@ -249,8 +251,41 @@ function updateHexContent(containerId, prefix) {
     });
 }
 
+// TB選圖
+function tiebreakerPick(event) {
+    tb_picked = (event.shiftKey) ? false : true;
+    updateTiebreakerContent();
+    syncState();
+}
+
+// 更新TB顯示內容
+function updateTiebreakerContent() {
+    const tieBreaker = document.getElementById("tie-breaker");
+    const tieTitle = tieBreaker.querySelector("#title");
+
+    const mapInfo = mappool.find(map => map.identifier === 'TB');
+    const mapSetId = mapInfo ? mapInfo.beatmapset_id : "Unknown Set ID";
+    const artist = mapInfo ? mapInfo.artist : "Unknown Artist";
+    const title = mapInfo ? mapInfo.title : "Unknown Title";
+
+    tieBreaker.classList.remove("show");
+    if (!tb_picked) return;
+
+    // 替換背景
+    tieBreaker.style.setProperty(
+        "--before-bg",
+        `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg')`
+    );
+
+    tieTitle.innerText = `${artist} - ${title}`;
+
+    void tieBreaker.offsetWidth;
+    tieBreaker.classList.add("show");
+}
+
 ///////////////////////////
 
+let tb_picked = false;
 let blue_pick_list = [], red_pick_list = [];
 let blue_ban_list = [], red_ban_list = [];
 let blue_protect_list = [], red_protect_list = [];
@@ -315,7 +350,6 @@ function updatePanelPicked() {
     });
 }
 
-
 function handleButtonClick(e, name) {
     // 阻止右鍵選單彈出
     e.preventDefault();
@@ -349,7 +383,7 @@ function syncState() {
     const state = {
         blue_pick_list, red_pick_list, blue_ban_list,
         red_ban_list, blue_protect_list, red_protect_list,
-        autoPick, firstPick
+        autoPick, firstPick, tb_picked
     };
     localStorage.setItem("banpick_state", JSON.stringify(state));
     printLists();
@@ -367,10 +401,12 @@ window.addEventListener("storage", (event) => {
         red_protect_list = newState.red_protect_list;
         autoPick = newState.autoPick;
         firstPick = newState.firstPick;
+        tb_picked = newState.tb_picked;
         initializeControls();
         updateHexContent("blue_picks", "Blue");
         updateHexContent("red_picks", "Red");
         updatePanelPicked();
+        updateTiebreakerContent();
         printLists();
     }
     
@@ -387,6 +423,7 @@ window.addEventListener("storage", (event) => {
 
 // 印出目前各 list 狀態（除錯用）
 function printLists() {
+    /*
     console.log("===== 狀態更新 =====");
     console.log("blue_pick_list:", blue_pick_list);
     console.log("red_pick_list:", red_pick_list);
@@ -394,6 +431,11 @@ function printLists() {
     console.log("red_ban_list:", red_ban_list);
     console.log("blue_protect_list:", blue_protect_list);
     console.log("red_protect_list:", red_protect_list);
+    console.log("autoPick:", autoPick);
+    console.log("firstPick:", firstPick);
+    console.log("tb_picked:", tb_picked);
+    console.log("====================");
+    */
 }
 
 // 控制自動選圖與當前選圖隊伍

@@ -108,6 +108,7 @@ socket.onmessage = async (event) => {
 
 ///////////////////////////
 
+let tb_picked = false;
 let blue_pick_list = [], red_pick_list = [];
 let blue_ban_list = [], red_ban_list = [];
 let blue_protect_list = [], red_protect_list = [];
@@ -214,6 +215,7 @@ function updatePanelPicked() {
         if (protectLists.some(list => list.includes(text))) parent.classList.add("protected");
         if (redList.some(list => list.includes(text))) parent.classList.add("red-team");
         if (blueList.some(list => list.includes(text))) parent.classList.add("blue-team");
+        if (text === "TB" && tb_picked) parent.classList.add("picked"), parent.classList.add("tb-team");
     });
 
     const bps = panel.querySelectorAll(".btn-bp");
@@ -229,6 +231,8 @@ function updatePanelPicked() {
                 "linear-gradient(to right, #9b0c1300 0%, #9b0c13FF 40%, #9b0c13FF 60%, #9b0c1300 100%)" :
             parent.classList.contains("blue-team") ? 
                 "linear-gradient(to right, #31499600 0%, #314996FF 40%, #314996FF 60%, #31499600 100%)" :
+            parent.classList.contains("tb-team") ?
+                "linear-gradient(to right, #22222200 0%, #222222FF 40%, #222222FF 60%, #00000000 100%)" :
                 "transparent";
         }
         else {
@@ -257,11 +261,17 @@ function handleButtonClick(e, name) {
         });
     }
 
-    const isLeft = (e.button === 0);
-    if (e.shiftKey) removeFromAll(name); // shift：從全部 list 移除
-    else if (e.ctrlKey) addToList(isLeft ? blue_ban_list : red_ban_list, name); // ctrl：Ban
-    else if (e.altKey) addToList(isLeft ? blue_protect_list : red_protect_list, name); // alt：Protect
-    else addToList(isLeft ? blue_pick_list : red_pick_list, name); // 一般點擊：Pick
+    if (name === "TB") {
+        if (e.shiftKey) tb_picked = false;
+        else tb_picked = true;
+    }
+    else {
+        const isLeft = (e.button === 0);
+        if (e.shiftKey) removeFromAll(name); // shift：從全部 list 移除
+        else if (e.ctrlKey) addToList(isLeft ? blue_ban_list : red_ban_list, name); // ctrl：Ban
+        else if (e.altKey) addToList(isLeft ? blue_protect_list : red_protect_list, name); // alt：Protect
+        else addToList(isLeft ? blue_pick_list : red_pick_list, name); // 一般點擊：Pick
+    }
 
     syncState();
 }
@@ -319,7 +329,7 @@ function syncState() {
     const state = {
         blue_pick_list, red_pick_list, blue_ban_list,
         red_ban_list, blue_protect_list, red_protect_list,
-        autoPick, firstPick
+        autoPick, firstPick, tb_picked
     };
     localStorage.setItem("banpick_state", JSON.stringify(state));
     printLists();
@@ -337,6 +347,7 @@ window.addEventListener("storage", (event) => {
         red_protect_list = newState.red_protect_list;
         autoPick = newState.autoPick;
         firstPick = newState.firstPick;
+        tb_picked = newState.tb_picked;
         initializeControls();
         updatePanelPicked();
         updateBPdisplays();
@@ -345,17 +356,17 @@ window.addEventListener("storage", (event) => {
 });
 
 window.addEventListener("storage", (event) => {
-    if (event.key === "banpick_controls") {
-        const newControls = JSON.parse(event.newValue);
-        const autoPick = newControls.autoPick;
-        const nowPick = newControls.nowPick;
-        document.getElementById("auto-pick").innerText = `Auto Pick: ${autoPick ? "ON" : "OFF"}`;
-        document.getElementById("next-pick").innerText = `Now Pick: ${nowPick}`;
+    if (event.key === "banpick_switch") {
+        console.log("Received control switch event");
+        const switchData = JSON.parse(event.newValue);
+        if (switchData.switchAuto) switchAutoPick();
+        if (switchData.switchNow) switchFirstPick();
     }
 });
 
 // 印出目前各 list 狀態（除錯用）
 function printLists() {
+    /*
     console.log("===== 狀態更新 =====");
     console.log("blue_pick_list:", blue_pick_list);
     console.log("red_pick_list:", red_pick_list);
@@ -363,6 +374,11 @@ function printLists() {
     console.log("red_ban_list:", red_ban_list);
     console.log("blue_protect_list:", blue_protect_list);
     console.log("red_protect_list:", red_protect_list);
+    console.log("autoPick:", autoPick);
+    console.log("firstPick:", firstPick);
+    console.log("tb_picked:", tb_picked);
+    console.log("====================");
+    */
 }
 
 // 控制自動選圖與當前選圖隊伍

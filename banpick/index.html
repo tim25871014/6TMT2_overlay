@@ -28,6 +28,10 @@
         <div id="pick-wrapper">
             <div id="blue_picks" class="pick-container"></div>
             <div id="red_picks" class="pick-container"></div>
+            <div id="tie-breaker">
+                <p id="text">Tiebreaker</p>
+                <p id="title"></p>
+            </div>
         </div>
     </div>
 
@@ -46,6 +50,7 @@
             <div id="HR"  class="button-row"></div>
             <div id="DT"  class="button-row"></div>
         </div>
+        <button id="tie-breaker-btn" onclick="tiebreakerPick(event)">TB</button>
     </div>
     <div id="control">
         <button class="ctrl-btn" id="auto-pick" onclick="switchAutoPick()"></button>
