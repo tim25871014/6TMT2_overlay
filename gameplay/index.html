@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
+    <script src="../_data/deps/countUp.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../_data/deps/reconnecting-websocket.min.js"></script>
 </head>
@@ -24,16 +25,7 @@
         <img id="red-flag" src="https://assets.ppy.sh/old-flags/XX.png">
     </div>
 
-    <div id="content">
-        <div id="pick-wrapper">
-            <div id="blue_picks" class="pick-container"></div>
-            <div id="red_picks" class="pick-container"></div>
-            <div id="tie-breaker">
-                <p id="text">Tiebreaker</p>
-                <p id="title"></p>
-            </div>
-        </div>
-    </div>
+    <div id="content"></div>
 
     <div id="footer">
         <div id="now-playing"></div>
@@ -42,20 +34,15 @@
         <div class="scroll-box" id="scrollBox">
             <div class="scroll-content" id="scrollContent"></div>
         </div>
-        <div id="chat-container"><div id="chat"></div></div>
-        <div id="panel">
-            <div id="NM1" class="button-row"></div>
-            <div id="NM2" class="button-row"></div>
-            <div id="HD"  class="button-row"></div>
-            <div id="HR"  class="button-row"></div>
-            <div id="DT"  class="button-row"></div>
-            <button id="tie-breaker-btn" onclick="tiebreakerPick(event)">TB</button>
+        <div id="top-footer">
+            <div id="lead-bar"></div>
+            <div id="score-red">0</div>
+            <div id="score-blue">0</div>
         </div>
-    </div>
-    
-    <div id="control">
-        <button class="ctrl-btn" id="auto-pick" onclick="switchAutoPick()"></button>
-        <button class="ctrl-btn" id="first-pick" onclick="switchFirstPick()"></button>
+        <div id="score-diff" data-before="" data-after="">0</div>
+        <div id="chat-container">
+            <div id="chat"></div>
+        </div>
     </div>
 
     <script src="../_data/deps/headerHandler.js"></script>

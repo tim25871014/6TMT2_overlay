@@ -1,0 +1,378 @@
+@font-face {
+    font-family: 'Eras Bold ITC';
+    src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Eras Demi ITC';
+    src: url('../_data/fonts/Eras\ Demi\ ITC.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Maoken Assorted Sans';
+    src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
+    font-weight: 400;
+    unicode-range: U+4E00-9FFF;
+    /*中文*/
+}
+
+body {
+    width: 1920px;
+    height: 1080px;
+}
+
+#background {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-image: url('../_data/img/background.png');
+    z-index: -3;
+}
+
+#background-video {
+    filter: brightness(2.0);
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    opacity: 0.2;
+    z-index: -2;
+}
+
+#foreground {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-image: url('../_data/img/banner.png');
+    z-index: -1;
+}
+
+/* 主要內容區域 */
+
+#content {
+    height: 720px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: green;
+}
+
+/* 聊天室樣式 */
+
+#chat-container {
+    position: absolute;
+
+    width: 740px;
+    height: 183px;
+    background: #222;
+
+    border: 3px solid white;
+    border-radius: 7px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+
+    transition: ease-in-out 500ms;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    overflow: hidden;
+}
+
+#chat {
+    width: 97%;
+    height: 90%;
+    overflow: hidden;
+    font-family: "Maoken Assorted Sans", "Eras Demi ITC", sans-serif;
+}
+
+
+.chat {
+    display: flex;
+    text-align: left;
+    line-height: 25px;
+    font-size: 20px;
+}
+
+.chatTime {
+    width: 56px;
+    min-width: 56px;
+    color: rgb(90, 90, 90);
+    margin-right: 6px;
+    text-align: center;
+}
+
+.chatName {
+    color: rgb(255, 255, 225);
+    white-space: nowrap;
+    width: max-content;
+}
+
+.chatText {
+    color: #dddddd;
+    white-space: normal;
+    word-wrap: break-word;
+    overflow: hidden;
+}
+
+/* header */
+
+#header {
+    width: 1920px;
+    height: 172px;
+
+    transition: ease-in-out 500ms;
+    z-index: 1;
+    letter-spacing: 0px;
+    color: black;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.1));
+}
+
+#stage-name {
+    font-family: 'Eras Bold ITC';
+    position: absolute;
+    width: 100%;
+    top: 140px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 23px;
+    color: white;
+    text-transform: none;
+}
+
+#blue-name {
+    font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
+    position: absolute;
+    left: 150px;
+    top: 33px;
+    font-size: 44px;
+    transition: ease-in-out 500ms;
+    text-align: left;
+    color: #9EB4DD;
+}
+
+#red-name {
+    font-family: 'Eras Bold ITC', 'Maoken Assorted Sans';
+    position: absolute;
+    right: 150px;
+    top: 33px;
+    font-size: 44px;
+    transition: ease-in-out 500ms;
+    text-align: right;
+    color: #F2A1A1;
+}
+
+#blue-points {
+    position: absolute;
+    left: 148px;
+    top: 85px;
+    display: flex;
+    flex-direction: row;
+    width: fit-content;
+    padding: 4px;
+    gap: 3px;
+    transition: 300ms ease-out;
+}
+
+#red-points {
+    position: absolute;
+    right: 148px;
+    top: 85px;
+    display: flex;
+    flex-direction: row-reverse;
+    width: fit-content;
+    padding: 4px;
+    gap: 3px;
+    transition: 300ms ease-out;
+}
+
+.star-b {
+    z-index: 100;
+    width: 27px;
+    height: 27px;
+    transition: 200ms ease;
+    border-radius: 10px;
+}
+
+.star-r {
+    z-index: 100;
+    width: 27px;
+    height: 27px;
+    background-color: none;
+    transition: 200ms ease;
+    border-radius: 10px;
+}
+
+#blue-flag {
+    opacity: 1s;
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    left: 40px;
+    top: 33px;
+    border-radius: 6px;
+    outline: 3px solid #9EB4DD;
+    outline-offset: 4px;
+}
+
+#red-flag {
+    opacity: 1;
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    right: 40px;
+    top: 33px;
+    border-radius: 6px;
+    outline: 3px solid #F2A1A1;
+    outline-offset: 4px;
+}
+
+.seed {
+    margin-left: 10px;
+    margin-right: 10px;
+    font-family: 'Eras Bold ITC';
+    font-size: 25px;
+    color: white;
+}
+
+/* Footer */
+
+#footer {
+    height: 188px;
+    width: 1920px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* now playing */
+
+#now-playing {
+    position: absolute;
+    left: 0px;
+    height: 188px;
+    width: 480px;
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    font-size: 20px;
+    text-align: center;
+}
+
+#np-text {
+    position: absolute;
+    left: 32px;
+    top: 10px;
+    font-family: 'Eras Demi ITC';
+    font-size: 20px;
+    color: white;
+    filter: drop-shadow(2px 2px 4px #000000);
+}
+
+#np-identifier {
+    position: absolute;
+    left: 27px;
+    top: 25px;
+    font-family: 'Eras Bold ITC';
+    font-size: 80px;
+    color: #dddddd;
+    margin-top: 20px;
+    filter: drop-shadow(5px 5px 8px #000000);
+    transition: 0.2s;
+}
+
+.scroll-box {
+    position: absolute;
+    left: 30px;
+    top: 125px;
+    width: 520px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.scroll-content {
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    color: white;
+    font-size: 40px;
+    display: inline-block;
+    will-change: transform;
+    filter: drop-shadow(2px 2px 4px #000000);
+    transition: 0.2s;
+}
+
+/* Score difference */
+#top-footer {
+    opacity: 1;
+    position: relative;
+    width: 100%;
+    height: 200px;
+    display: flex;
+    justify-content: center;
+    font-size: 52px;
+    text-align: center;
+    font-family: 'Eras Bold ITC';
+    font-variant-numeric: tabular-nums;
+    font-size: 44px;
+}
+
+#lead-bar {
+    border-radius: 8px;
+    opacity: 1;
+    position: absolute;
+    top: 6px;
+    right: 960px;
+    left: unset;
+    height: 30px;
+    width: 0px;
+    background-color: #dddddd;
+    transition: ease-out 300ms;
+}
+
+#score-red {
+    width: 300px;
+    height: 100%;
+    padding-right: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: red;
+    text-align: right;
+    justify-content: flex-end;
+}
+
+#score-blue {
+    width: 300px;
+    height: 100%;
+    padding-left: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 1em;
+    color: blue;
+    text-align: left;
+    justify-content: flex-start;
+}
+
+#score-diff {
+    position: absolute;
+    height: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 2px 6px;
+    font-family: 'Eras Demi ITC';
+    font-variant-numeric: tabular-nums;
+    font-size: 1.2em;
+    font-weight: 400;
+    letter-spacing: -1px;
+    bottom: 104px;
+    color: green;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    opacity: 1;
+    transition: opacity 300ms ease;
+}

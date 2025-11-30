@@ -4,7 +4,7 @@
 
 ### 此程式正在開發中，預計2026/4前完工上線。
 
-### This program is under developing, please check this out around April 2026
+### This program is under development, please check this out around April 2026
 
 
 usage: clone this repo under tosu/static/ and run tosu

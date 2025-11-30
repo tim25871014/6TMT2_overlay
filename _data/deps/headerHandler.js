@@ -57,9 +57,22 @@ function updateScoreBars(tourneyMng) {
 }
 
 // 計算雙方分數
-let starsRed, scoreRed, flagRed;
-let starsBlue, scoreBlue, flagBlue;
+let starsRed, flagRed;
+let starsBlue, flagBlue;
+let starsVisible;
 function updateScore(tourneyMng) {
+    if (starsVisible !== tourneyMng.bools.starsVisible) {
+        starsVisible = tourneyMng.bools.starsVisible;
+        if (starsVisible) {
+            document.querySelectorAll('.star-b, .star-r').forEach(el => el.style.display = 'block');
+            document.querySelectorAll('.seed').forEach(el => el.style.marginLeft = '10px');
+            document.querySelectorAll('.seed').forEach(el => el.style.marginRight = '10px');
+        } else {
+            document.querySelectorAll('.star-b, .star-r').forEach(el => el.style.display = 'none');
+            document.querySelectorAll('.seed').forEach(el => el.style.marginLeft = '0px'); 
+            document.querySelectorAll('.seed').forEach(el => el.style.marginRight = '0px');
+        }
+    }
     if (starsBlue !== tourneyMng.stars.left) {
         starsBlue = tourneyMng.stars.left;
         for (let i = 1; i <= starsBlue; i++) {
