@@ -381,11 +381,16 @@ body {
 /* Strain chart */
 #progress-container {
     position: absolute;
+    width: 740px;
+    height: 50px;
     bottom: 0px;
     display: flex;
     justify-content: center;
     align-items: center;
     opacity: 0;
+    border-left: 4px solid gray;
+    border-right: 4px solid gray;
+    border-radius: 5px;
 }
 
 #colorDiv {
@@ -394,6 +399,26 @@ body {
     height: 40px;
     bottom: 0px;
     border-radius: 5px;
-    border-left: 3px solid white;
-    border-right: 3px solid white;
+}
+
+#progress-bar {
+    position: absolute;
+    height: 10px;
+    bottom: 35px;
+    left: 0px;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: width 50ms linear;
+    z-index: 2;
+}
+
+#ball {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translate(50%, -50%);
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 50%;
 }

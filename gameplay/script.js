@@ -39,6 +39,7 @@ socket.onmessage = async (event) => {
     updateGameplayScore(tourneyMng);
     updateNowPlaying(beatmapMng, strainMng);
     setupStrainChart(strainMng);
+    updateProgressBar(beatmapMng);
 };
 
 // 切換分數顯示與聊天視窗
@@ -200,6 +201,18 @@ function setupStrainChart(strainMng) {
     queryUpdateChart = false;
     updateStrainChart(strainMng);
 }
+
+let lastUpdateProgress = 0;
+function updateProgressBar(beatmapMng) {
+    if (!beatmapMng || !beatmapMng.time) return;
+    const now = Date.now();
+    if (now - lastUpdateProgress < 50) return;
+    lastUpdateProgress = now;
+    const progressBar = document.getElementById("progress-bar");
+    const progress = beatmapMng.time.current / beatmapMng.time.mp3;
+    progressBar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
+}
+
 
 const div = document.getElementById("colorDiv");
 function updateStrainChart(strainMng) {
