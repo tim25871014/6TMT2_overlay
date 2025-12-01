@@ -25,6 +25,7 @@ socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
     let tourneyMng = data.tourney.manager;
     let beatmapMng = data.menu.bm;
+    let strainMng = data.menu.pp;
     if (!tourneyMng) return;
 
     // 這些函數都寫在 _data/deps/headerHandler.js 裡
@@ -36,13 +37,14 @@ socket.onmessage = async (event) => {
     updateChat(tourneyMng);
     updateChatVisibility(tourneyMng);
     updateGameplayScore(tourneyMng);
-    updateNowPlaying(beatmapMng, mappool);
-
+    updateNowPlaying(beatmapMng, strainMng);
+    setupStrainChart(strainMng);
 };
 
 // 切換分數顯示與聊天視窗
 let scoreVisible;
 let top_footer = document.getElementById("top-footer");
+let progress_container = document.getElementById("progress-container");
 function updateChatVisibility(tourneyMng) {
     if (scoreVisible === tourneyMng.bools.scoreVisible) return;
     const chatContainer = document.getElementById("chat-container");
@@ -53,11 +55,13 @@ function updateChatVisibility(tourneyMng) {
         chatContainer.style.opacity = 0;
         top_footer.style.opacity = 1;
         score_diff.style.opacity = 1;
+        progress_container.style.opacity = 1;
     } else {
         chatContainer.style.display = "block";
         chatContainer.style.opacity = 1;
         top_footer.style.opacity = 0;
         score_diff.style.opacity = 0;
+        progress_container.style.opacity = 0;
     }
 }
 
@@ -159,11 +163,12 @@ const np_text = document.getElementById("np-text");
 const np_scroll = document.getElementById("scrollContent");
 const np_identifier = document.getElementById("np-identifier");
 const np_container = document.getElementById("now-playing");
-function updateNowPlaying(beatmapMng) {
+function updateNowPlaying(beatmapMng, strainMng) {
     if (!beatmapMng) return;
     if (np_id === beatmapMng.id) return;
     np_id = beatmapMng.id;
     const title = beatmapMng.metadata.artist + " - " + beatmapMng.metadata.title;
+
     np_scroll.innerText = title;
     np_text.innerText = "♪ Now Playing";
 
@@ -185,5 +190,50 @@ function updateNowPlaying(beatmapMng) {
         np_container.style.maskSize = 'cover';
     }
 
+    setTimeout(() => {queryUpdateChart = true;}, 200);
     setupScroll();
+}
+
+queryUpdateChart = false;
+function setupStrainChart(strainMng) {
+    if (!strainMng || !queryUpdateChart) return;
+    queryUpdateChart = false;
+    updateStrainChart(strainMng);
+}
+
+const div = document.getElementById("colorDiv");
+function updateStrainChart(strainMng) {
+
+    let data = strainMng.strains;
+    // normalize data to 0~1
+    const maxVal = Math.max(...data);
+    for (let i = 0; i < data.length; i++) {
+        data[i] = data[i] / maxVal;
+    }
+    data = groupAndAverage(data, data.length / 100);
+
+
+    // 生成 linear-gradient
+    const stops = data.map((v, i) => {
+        const color = valueToColor(v);
+        const percent = (i / (data.length - 1)) * 100;
+        return `${color} ${percent}%`;
+    }).join(", ");
+
+    div.style.background = `linear-gradient(to right, ${stops})`;
+
+    function valueToColor(v) {
+        return `rgba(255,255,255,${v})`;
+    }
+
+    function groupAndAverage(arr, size = 10) {
+        const result = [];
+        for (let i = 0; i < arr.length; i += size) {
+            const group = arr.slice(i, i + size);
+            const avg = group.reduce((sum, num) => sum + num, 0) / group.length;
+            const newGroup = Array(group.length).fill(avg);
+            result.push(...newGroup);
+        }
+        return result;
+    }
 }

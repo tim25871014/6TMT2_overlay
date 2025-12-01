@@ -377,3 +377,23 @@ body {
     content: attr(data-before);
     display: inline-block;
 }
+
+/* Strain chart */
+#progress-container {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+}
+
+#colorDiv {
+    position: absolute;
+    width: 740px;
+    height: 40px;
+    bottom: 0px;
+    border-radius: 5px;
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+}
