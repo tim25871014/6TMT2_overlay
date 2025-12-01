@@ -56,7 +56,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    background-color: green;
+    background-color: #75bd53;
 }
 
 /* 聊天室樣式 */
@@ -320,54 +320,50 @@ body {
 }
 
 #lead-bar {
-    border-radius: 8px;
+    border-radius: 3px;
     opacity: 1;
     position: absolute;
     top: 6px;
     right: 960px;
     left: unset;
-    height: 30px;
+    height: 21px;
     width: 0px;
     background-color: #dddddd;
     transition: ease-out 300ms;
 }
 
-#score-red {
-    width: 300px;
-    height: 100%;
-    padding-right: 12px;
-    display: flex;
-    align-items: center;
-    font-size: 1em;
-    color: red;
-    text-align: right;
-    justify-content: flex-end;
-}
-
 #score-blue {
     width: 300px;
-    height: 100%;
-    padding-left: 12px;
+    padding-top: 30px;
+    padding-right: 5px;
     display: flex;
-    align-items: center;
-    font-size: 1em;
-    color: blue;
+    color: #9eb4dd;
+    text-align: right;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+#score-red {
+    width: 300px;
+    padding-top: 30px;
+    padding-left: 5px;
+    display: flex;
+    color: #f2a1a1;
     text-align: left;
     justify-content: flex-start;
+    align-items: flex-start;
 }
 
 #score-diff {
     position: absolute;
-    height: 24px;
     left: 50%;
     transform: translateX(-50%);
     padding: 2px 6px;
     font-family: 'Eras Demi ITC';
-    font-variant-numeric: tabular-nums;
     font-size: 1.2em;
     font-weight: 400;
     letter-spacing: -1px;
-    bottom: 104px;
+    bottom: 90px;
     color: green;
     display: flex;
     text-align: center;
@@ -375,4 +371,9 @@ body {
     justify-content: center;
     opacity: 1;
     transition: opacity 300ms ease;
+}
+
+#score-diff::before {
+    content: attr(data-before);
+    display: inline-block;
 }

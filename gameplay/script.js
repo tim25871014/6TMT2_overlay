@@ -13,9 +13,10 @@ let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
     setupScroll();
 })();
 
+// 分數動畫物件 (參照 https://inorganik.github.io/countUp.js/)
 let scoreAnimation = {
-    red_score: new CountUp('score-red', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
     blue_score: new CountUp('score-blue', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
+    red_score: new CountUp('score-red', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
     score_diff: new CountUp('score-diff', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
 }
 
@@ -41,18 +42,19 @@ socket.onmessage = async (event) => {
 
 // 切換分數顯示與聊天視窗
 let scoreVisible;
+let top_footer = document.getElementById("top-footer");
 function updateChatVisibility(tourneyMng) {
     if (scoreVisible === tourneyMng.bools.scoreVisible) return;
     const chatContainer = document.getElementById("chat-container");
     scoreVisible = tourneyMng.bools.scoreVisible;
 
     if (scoreVisible) {
-        //chatContainer.style.display = "none";
+        chatContainer.style.display = "none";
         chatContainer.style.opacity = 0;
         top_footer.style.opacity = 1;
         score_diff.style.opacity = 1;
     } else {
-        //chatContainer.style.display = "block";
+        chatContainer.style.display = "block";
         chatContainer.style.opacity = 1;
         top_footer.style.opacity = 0;
         score_diff.style.opacity = 0;
@@ -60,8 +62,8 @@ function updateChatVisibility(tourneyMng) {
 }
 
 // 更新雙方及時分數
-let red_score = document.getElementById('score-red');
 let blue_score = document.getElementById('score-blue');
+let red_score = document.getElementById('score-red');
 let score_diff = document.getElementById('score-diff');
 let lead_bar = document.getElementById('lead-bar');
 let last_score_update = 0;
@@ -69,59 +71,52 @@ function updateGameplayScore(tourneyMng) {
     if (!tourneyMng || !scoreVisible) return;
     let now = Date.now();
 
-    scoreBlue = tourneyMng.gameplay.score.left;
     scoreRed = tourneyMng.gameplay.score.right;
-    let scorediff = Math.abs(scoreRed - scoreBlue);
+    scoreBlue = tourneyMng.gameplay.score.left;
+    let scorediff = Math.abs(scoreBlue - scoreRed);
 
-    scoreAnimation.red_score.update(scoreRed);
     scoreAnimation.blue_score.update(scoreBlue);
+    scoreAnimation.red_score.update(scoreRed);
     scoreAnimation.score_diff.update(scorediff);
 
-    if (scoreRed > scoreBlue) {
-        red_score.style.fontWeight = '700';
-        red_score.style.fontSize = '1em';
-        blue_score.style.fontWeight = '500';
-        blue_score.style.fontSize = '0.85em';
+    if (scoreBlue > scoreRed) {
+        blue_score.style.fontSize = '1.1em';
+        red_score.style.fontSize = '0.8em';
 
         if (now - last_score_update > 300) {
             last_score_update = now;
-            score_diff.setAttribute('data-before', '◀');
-            score_diff.setAttribute('data-after', '');
             score_diff.style.opacity = 1;
-            lead_bar.style.width = 360 * (Math.min(0.5, Math.pow((scoreRed - scoreBlue) / 1000000, 0.7)) * 2) + 'px';
+            lead_bar.style.width = 400 * (Math.min(0.5, Math.pow(scorediff / 1000000, 0.7)) * 2) + 'px';
             lead_bar.style.right = '960px';
             lead_bar.style.left = 'unset';
+            score_diff.setAttribute('data-before', '+');
+            score_diff.style.left = '47.6%';
+            score_diff.style.color = '#9eb4dd';
             lead_bar.style.borderRight = 'unset';
-            lead_bar.style.borderLeft = '10px solid red';
+            lead_bar.style.borderLeft = '5px solid #9eb4dd';
         }
     }
-    else if (scoreBlue > scoreRed) {
-        blue_score.style.fontWeight = '700';
-        blue_score.style.fontSize = '1em';
-        red_score.style.fontWeight = '500';
-        red_score.style.fontSize = '0.85em';
+    else if (scoreRed > scoreBlue) {
+        red_score.style.fontSize = '1.1em';
+        blue_score.style.fontSize = '0.8em';
 
         if (now - last_score_update > 300) {
             last_score_update = now;
-            score_diff.setAttribute('data-before', '');
-            score_diff.setAttribute('data-after', '▶');
             score_diff.style.opacity = 1;
-            lead_bar.style.width = 360 * (Math.min(0.5, Math.pow((scoreBlue - scoreRed) / 1000000, 0.7)) * 2) + 'px';
+            lead_bar.style.width = 400 * (Math.min(0.5, Math.pow(scorediff / 1000000, 0.7)) * 2) + 'px';
             lead_bar.style.right = 'unset';
             lead_bar.style.left = '960px';
-            lead_bar.style.borderRight = '10px solid blue';
+            score_diff.setAttribute('data-before', '+');
+            score_diff.style.left = '52.4%';
+            score_diff.style.color = '#f2a1a1';
+            lead_bar.style.borderRight = '5px solid #f2a1a1';
             lead_bar.style.borderLeft = 'unset';
         }
     }
     else {
-        score_diff.setAttribute('data-before', '');
-        score_diff.setAttribute('data-after', '');
         score_diff.style.opacity = 0;
-        red_score.style.fontWeight = '500';
-        red_score.style.fontSize = '0.85em';
-        blue_score.style.fontWeight = '700';
         blue_score.style.fontSize = '1em';
-
+        red_score.style.fontSize = '1em';
         lead_bar.style.width = '0px';
     }
 
