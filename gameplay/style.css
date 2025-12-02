@@ -18,6 +18,13 @@
     /*中文*/
 }
 
+@font-face {
+    font-family: 'DigitFont';
+    src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
+    unicode-range: U+30-39;
+    /* 只包含 0-9 */
+}
+
 body {
     width: 1920px;
     height: 1080px;
@@ -382,7 +389,7 @@ body {
 #progress-container {
     position: absolute;
     width: 740px;
-    height: 50px;
+    height: 70px;
     bottom: 0px;
     display: flex;
     justify-content: center;
@@ -393,32 +400,106 @@ body {
     border-radius: 5px;
 }
 
-#colorDiv {
+#myChart {
     position: absolute;
-    width: 740px;
-    height: 40px;
     bottom: 0px;
     border-radius: 5px;
 }
 
 #progress-bar {
     position: absolute;
-    height: 10px;
-    bottom: 35px;
+    height: 55px;
+    bottom: 0px;
     left: 0px;
-    border-radius: 5px;
-    background-color: #ffffff;
+    border-right: 7px solid white;
+    background: linear-gradient(to bottom, #00000000 0%, #000000AA 100%);
     transition: width 200ms ease;
-    z-index: 2;
 }
 
 #ball {
     position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translate(50%, -50%);
+    top: 0px;
+    right: 0px;
+    transform: translate(13.5px, -50%);
     width: 20px;
     height: 20px;
     background: #ffffff;
     border-radius: 50%;
+}
+
+#time-ellapse {
+    position: absolute;
+    left: 10px;
+    top: 7px;
+    font-family: 'Eras Demi ITC';
+    font-size: 16px;
+    color: white;
+}
+
+#time-percentage {
+    position: absolute;
+    right: 10px;
+    top: 7px;
+    font-family: 'Eras Demi ITC';
+    font-size: 16px;
+    color: white;
+}
+
+/* Map info */
+#map-info {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    position: absolute;
+    width: 430px;
+    height: 100px;
+    right: 30px;
+    bottom: 20px;
+    border-radius: 10px;
+    border: 2px solid #ffffffAA;
+    background: linear-gradient(to right, #000000AA, #00000033);
+    font-family: 'digitFont', 'Eras Demi ITC';
+    color: white;
+    text-align: right;
+}
+
+#map-left {
+    height: auto;
+    padding-left: 5px;
+    width: 135px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 2px;
+}
+
+#map-drain, #map-bpm, #map-sr, #map-cs, #map-ar, #map-od {
+    font-size: 20px;
+    color: white;
+    transform: translateY(1px);
+}
+
+#map-cs, #map-ar, #map-od {
+    height: 75px;
+    width: 65px;
+    background-color: #F2A1A1;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    color: black;
+}
+
+#map-mod {
+    position: absolute;
+    right: 20px;
+    top: -28px;
+    font-size: 24px;
+    color: white;
 }

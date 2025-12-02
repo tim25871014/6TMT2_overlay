@@ -26,6 +26,8 @@ socket.onmessage = async (event) => {
     let tourneyMng = data.tourney.manager;
     let beatmapMng = data.menu.bm;
     let strainMng = data.menu.pp;
+    let modMng = data.menu.mods;
+    let ipcMng = data.tourney.ipcClients;
     if (!tourneyMng) return;
 
     // 這些函數都寫在 _data/deps/headerHandler.js 裡
@@ -40,6 +42,7 @@ socket.onmessage = async (event) => {
     updateNowPlaying(beatmapMng, strainMng);
     setupStrainChart(strainMng);
     updateProgressBar(beatmapMng);
+    updateMapInfo(beatmapMng, modMng, ipcMng);
 };
 
 // 切換分數顯示與聊天視窗
@@ -91,7 +94,7 @@ function updateGameplayScore(tourneyMng) {
         if (now - last_score_update > 300) {
             last_score_update = now;
             score_diff.style.opacity = 1;
-            lead_bar.style.width = 400 * (Math.min(0.5, Math.pow(scorediff / 1000000, 0.7)) * 2) + 'px';
+            lead_bar.style.width = 400 * (Math.min(0.5, Math.pow(scorediff / 1000000, 0.65)) * 2) + 'px';
             lead_bar.style.right = '960px';
             lead_bar.style.left = 'unset';
             score_diff.setAttribute('data-before', '+');
@@ -108,7 +111,7 @@ function updateGameplayScore(tourneyMng) {
         if (now - last_score_update > 300) {
             last_score_update = now;
             score_diff.style.opacity = 1;
-            lead_bar.style.width = 400 * (Math.min(0.5, Math.pow(scorediff / 1000000, 0.7)) * 2) + 'px';
+            lead_bar.style.width = 400 * (Math.min(0.5, Math.pow(scorediff / 1000000, 0.65)) * 2) + 'px';
             lead_bar.style.right = 'unset';
             lead_bar.style.left = '960px';
             score_diff.setAttribute('data-before', '+');
@@ -203,41 +206,34 @@ function setupStrainChart(strainMng) {
 }
 
 let lastUpdateProgress = 0;
+const progressBar = document.getElementById("progress-bar");
+const timeEllapse = document.getElementById("time-ellapse");
+const timePercentage = document.getElementById("time-percentage");
 function updateProgressBar(beatmapMng) {
     if (!beatmapMng || !beatmapMng.time) return;
     const now = Date.now();
     if (now - lastUpdateProgress < 50) return;
     lastUpdateProgress = now;
-    const progressBar = document.getElementById("progress-bar");
+
     const progress = beatmapMng.time.current / beatmapMng.time.mp3;
     progressBar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
+
+    // 時間顯示
+    const elapsedSeconds = Math.floor(beatmapMng.time.current / 1000);
+    const totalSeconds = Math.floor(beatmapMng.time.mp3 / 1000);
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
+    timeEllapse.innerText = `${formatTime(elapsedSeconds)} / ${formatTime(totalSeconds)}`;
+    timePercentage.innerText = `${Math.min(100, Math.max(0, progress * 100)).toFixed(0)}%`;
 }
 
 
-const div = document.getElementById("colorDiv");
+const div = document.getElementById("myChart");
 function updateStrainChart(strainMng) {
-
-    let data = strainMng.strains;
-    // normalize data to 0~1
-    const maxVal = Math.max(...data);
-    for (let i = 0; i < data.length; i++) {
-        data[i] = data[i] / maxVal;
-    }
-    data = groupAndAverage(data, data.length / 100);
-
-
-    // 生成 linear-gradient
-    const stops = data.map((v, i) => {
-        const color = valueToColor(v);
-        const percent = (i / (data.length - 1)) * 100;
-        return `${color} ${percent}%`;
-    }).join(", ");
-
-    div.style.background = `linear-gradient(to right, ${stops})`;
-
-    function valueToColor(v) {
-        return `rgba(255,255,255,${v})`;
-    }
 
     function groupAndAverage(arr, size = 10) {
         const result = [];
@@ -249,4 +245,159 @@ function updateStrainChart(strainMng) {
         }
         return result;
     }
+
+    const dataArray = strainMng.strains;
+    const K = Math.ceil(dataArray.length / 100);
+    const averages = groupAndAverage(dataArray, K);
+    const maxValue = Math.max(...averages);
+
+    // 不透明度依數值調整
+    const bgColors = averages.map(v => `rgba(255,255,255,${v / maxValue})`);
+
+    new Chart(document.getElementById("myChart"), {
+        type: "bar",
+        data: {
+            labels: averages.map((_, i) => "Group " + (i + 1)),
+            datasets: [{
+                data: averages,
+                backgroundColor: bgColors,
+                borderColor: "white"
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            plugins: {
+                legend: { display: false },
+                tooltip: { enabled: false },
+            },
+            scales: {
+                x: { display: false },
+                y: { display: false }
+            }
+        }
+    });
+}
+
+
+// 更新譜面資訊區域
+const mapDrain = document.getElementById('map-drain');
+const mapBPM = document.getElementById('map-bpm');
+const mapSR = document.getElementById('map-sr');
+const mapCS = document.getElementById('map-cs');
+const mapAR = document.getElementById('map-ar');
+const mapOD = document.getElementById('map-od');
+const mapMod = document.getElementById('map-mod');
+let mapAndMods;
+function updateMapInfo(beatmapMng, modMng, ipcMng) {
+
+    const currentMapAndMods = beatmapMng ? `${beatmapMng.id}-${modMng.num}` : null;
+    if (mapAndMods === currentMapAndMods) return;
+    mapAndMods = currentMapAndMods;
+
+    if (ipcMng.length == 0) { // 本機端
+        
+        mapMod.innerText = modMng.str == "" ? "NM stats" : `${modMng.str} stats`;
+
+        if (!beatmapMng || !beatmapMng.stats) return;
+
+        const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds) % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        };
+
+        mapDrain.innerText = `Drain ${formatTime(beatmapMng.time.full / 1000)}`;
+        mapBPM.innerText = `BPM ${beatmapMng.stats.BPM.common}`;
+        mapSR.innerText = `SR ${beatmapMng.stats.fullSR.toFixed(2)}`;
+        mapCS.innerText = `CS ${beatmapMng.stats.CS.toFixed(1)}`;
+        mapAR.innerText = `AR ${beatmapMng.stats.AR.toFixed(1)}`;
+        mapOD.innerText = `OD ${beatmapMng.stats.OD.toFixed(1)}`;
+    }
+    else { // tourney client 端
+
+        // 從mappool裡找map.beatmap_id = beatmapMng.id的元素
+        const mapInfo = mappool.find(map => map.beatmap_id === beatmapMng.id);
+        const applyMod = mapInfo ? mapInfo.mods : null;
+        
+        let sr_after = mapInfo ? mapInfo.sr : beatmapMng.stats.fullSR;
+        let cs_after = beatmapMng.stats.CS;
+        let ar_after = beatmapMng.stats.AR;
+        let od_after = beatmapMng.stats.OD;
+        let bpm_after = beatmapMng.stats.BPM.common;
+        let drain_after = beatmapMng.time.full;
+
+        if (applyMod) {
+            if (applyMod.includes('HR')) {
+                cs_after = Math.min(10, cs_after * 1.3);
+                ar_after = Math.min(10, ar_after * 1.4);
+                od_after = Math.min(10, od_after * 1.4);
+            }
+            if (applyMod.includes('DT')) {
+                ar_after = (2 * ar_after + 13) / 3;
+                od_after = (2 * od_after + 13) / 3 + 1 / 9;
+                bpm_after = Math.round(bpm_after * 1.5);
+                drain_after = Math.round(drain_after / 1.5);
+            }
+        }
+
+        mapMod.innerText = applyMod == "" ? "NM stats" : `${applyMod} stats`;
+
+        const formatTime = (seconds) => {
+            const mins = Math.floor(seconds / 60);
+            const secs = Math.floor(seconds) % 60;
+            return `${mins}:${secs.toString().padStart(2, '0')}`;
+        };
+
+        mapDrain.innerText = `Drain ${formatTime(drain_after / 1000)}`;
+        mapBPM.innerText = `BPM ${bpm_after}`;
+        mapSR.innerText = `SR ${sr_after.toFixed(2)}`;
+        mapCS.innerText = `CS ${cs_after.toFixed(1)}`;
+        mapAR.innerText = `AR ${ar_after.toFixed(1)}`;
+        mapOD.innerText = `OD ${od_after.toFixed(1)}`;
+    }
+
+    enlargeNumbersInMapInfo();
+}
+
+// 放大 #map-info 裡的數字
+function enlargeNumbersInMapInfo() {
+    const container = document.querySelector('#map-info');
+    if (!container) return;
+
+    function processNode(node) {
+        // 只處理文字節點
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent;
+            const regex = /\d+(\.\d+)?/g;  // 數字與小數
+            if (!regex.test(text)) return; // 沒數字就略過
+
+            const frag = document.createDocumentFragment();
+            let lastIndex = 0;
+
+            text.replace(regex, (match, _, index) => {
+                // 加入前面不是數字的部分
+                if (index > lastIndex) {
+                    frag.appendChild(document.createTextNode(text.slice(lastIndex, index)));
+                }
+
+                // 包數字
+                const span = document.createElement('span');
+                span.textContent = match;
+                span.style.fontSize = '24px';
+                frag.appendChild(span);
+
+                lastIndex = index + match.length;
+            });
+            // 加入最後面不是數字的部分
+            if (lastIndex < text.length) frag.appendChild(document.createTextNode(text.slice(lastIndex)));
+            node.replaceWith(frag);
+        }
+
+        // 如果是元素節點，繼續往下處理子節點
+        else if (node.nodeType === Node.ELEMENT_NODE) {
+            [...node.childNodes].forEach(processNode);
+        }
+    }
+
+    processNode(container);
 }

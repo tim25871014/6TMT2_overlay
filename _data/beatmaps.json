@@ -199,7 +199,7 @@
         {
             "beatmap_id": 3757767,
             "identifier": "NM6",
-            "mods": "FM",
+            "mods": "NM",
             "sr": 6.16,
             "bpm": 217,
             "title": "Lawn Wake IV (Black)",
@@ -212,7 +212,7 @@
         {
             "beatmap_id": 4502850,
             "identifier": "NM7",
-            "mods": "FM",
+            "mods": "NM",
             "sr": 5.51,
             "bpm": 202,
             "title": "Prismatic Lollipops",
@@ -225,7 +225,7 @@
         {
             "beatmap_id": 3757767,
             "identifier": "HD4",
-            "mods": "FM",
+            "mods": "HD",
             "sr": 6.16,
             "bpm": 217,
             "title": "Lawn Wake IV (Black)",
@@ -236,15 +236,15 @@
             "version": "Expert"
         },
         {
-            "beatmap_id": 4502850,
+            "beatmap_id": 2162072,
             "identifier": "DT5",
-            "mods": "FM",
-            "sr": 5.51,
+            "mods": "DT",
+            "sr": 6.73,
             "bpm": 202,
             "title": "Prismatic Lollipops",
             "artist": "DJ Mashiro",
             "difficulty": "pop",
-            "beatmapset_id": 2139490,
+            "beatmapset_id": 1034063,
             "creator": "yaspo",
             "version": "pop"
         },

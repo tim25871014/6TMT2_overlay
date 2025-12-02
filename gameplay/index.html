@@ -7,6 +7,7 @@
     <script src="../_data/deps/countUp.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="../_data/deps/reconnecting-websocket.min.js"></script>
+    <script src="../_data/deps/Chart.min.js"></script>
 </head>
 
 <body>
@@ -44,8 +45,21 @@
             <div id="chat"></div>
         </div>
         <div id="progress-container">
+            <canvas id="myChart"></canvas>
             <div id="progress-bar"><div id="ball"></div></div>
-            <div id="colorDiv"></div>
+            <div id="time-ellapse">3:20</div>
+            <div id="time-percentage">60%</div>
+        </div>
+        <div id="map-info">
+            <div id="map-left">
+                <div id="map-drain"></div>
+                <div id="map-bpm"></div>
+                <div id="map-sr"></div>
+            </div> 
+            <div id="map-cs"></div>
+            <div id="map-ar"></div>
+            <div id="map-od"></div>
+            <div id="map-mod"></div>
         </div>
     </div>
 
