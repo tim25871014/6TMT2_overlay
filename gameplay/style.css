@@ -480,13 +480,11 @@ body {
 #map-drain, #map-bpm, #map-sr, #map-cs, #map-ar, #map-od {
     font-size: 20px;
     color: white;
-    transform: translateY(1px);
 }
 
 #map-cs, #map-ar, #map-od {
     height: 75px;
     width: 65px;
-    background-color: #F2A1A1;
     display: flex;
     flex-direction: column;
     text-align: center;
@@ -494,6 +492,18 @@ body {
     justify-content: center;
     border-radius: 8px;
     color: black;
+}
+
+#map-ar {
+    background-color: #CFF7CF;
+}
+
+#map-od {
+    background-color: #CFCFF7;
+}
+
+#map-cs {
+    background-color: #F7CFCF;
 }
 
 #map-mod {

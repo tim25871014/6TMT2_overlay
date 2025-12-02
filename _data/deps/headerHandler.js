@@ -116,6 +116,14 @@ function updateTeamInfo(tourneyMng) {
         flagBlue = player?.id || null;
         if (flagBlue) blue_flag.src = `https://a.ppy.sh/${player.id}`;
         else blue_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
+
+        // 更新seeding
+        let seedBlue = players.find(p => p.username === tourneyMng.teamName.left)?.seed || 'N/A';
+        let seedRed = players.find(p => p.username === tourneyMng.teamName.right)?.seed || 'N/A';
+        const blue_seed = document.querySelector('#blue-points .seed');
+        const red_seed = document.querySelector('#red-points .seed');
+        blue_seed.innerText = seedBlue;
+        red_seed.innerText = seedRed;
     }
 }
 
