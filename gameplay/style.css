@@ -408,7 +408,7 @@ body {
     left: 0px;
     border-radius: 5px;
     background-color: #ffffff;
-    transition: width 50ms linear;
+    transition: width 200ms ease;
     z-index: 2;
 }
 
