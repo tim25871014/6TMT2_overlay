@@ -101,29 +101,28 @@ let red_flag = document.getElementById('red-flag');
 let blue_flag = document.getElementById('blue-flag');
 function updateTeamInfo(tourneyMng) {
     if (!red_flag || !blue_flag) return;
-    if (players && nameRed !== tourneyMng.teamName.left && tourneyMng.teamName.left) {
-        nameRed = tourneyMng.teamName.left || 'Red Team';
+    if (players && nameRed !== tourneyMng.teamName.right && tourneyMng.teamName.right) {
+        nameRed = tourneyMng.teamName.right || 'Red Team';
         red_name.innerHTML = nameRed;
         let player = players.find(t => t.username == nameRed);
         flagRed = player?.id || null;
         if (flagRed) red_flag.src = `https://a.ppy.sh/${player.id}`;
         else red_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
+        let seedRed = players.find(p => p.username === tourneyMng.teamName.right)?.seed || 'N/A';
+        const red_seed = document.querySelector('#red-points .seed');
+        red_seed.innerText = seedRed;
     }
-    if (players && nameBlue !== tourneyMng.teamName.right && tourneyMng.teamName.right) {
-        nameBlue = tourneyMng.teamName.right || 'Blue Team';
+    if (players && nameBlue !== tourneyMng.teamName.left && tourneyMng.teamName.left) {
+        nameBlue = tourneyMng.teamName.left || 'Blue Team';
         blue_name.innerHTML = nameBlue;
         let player = players.find(t => t.username == nameBlue);
         flagBlue = player?.id || null;
         if (flagBlue) blue_flag.src = `https://a.ppy.sh/${player.id}`;
         else blue_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
-
         // 更新seeding
         let seedBlue = players.find(p => p.username === tourneyMng.teamName.left)?.seed || 'N/A';
-        let seedRed = players.find(p => p.username === tourneyMng.teamName.right)?.seed || 'N/A';
         const blue_seed = document.querySelector('#blue-points .seed');
-        const red_seed = document.querySelector('#red-points .seed');
         blue_seed.innerText = seedBlue;
-        red_seed.innerText = seedRed;
     }
 }
 
