@@ -1,0 +1,6 @@
+
+注意事項：
+1. 比賽房間與coming_up.json裡的玩家名稱都必須與players.json裡記錄的username一致，否則會導致直播介面找不到玩家id。
+2. 本次使用的unix時間戳記是10位數，基本上可以把 https://www.unixtimestamp.com/ 查到的時間直接複製貼上。
+3. 主畫面的兩隊隊名與隊旗必須要在tourney client抓到房間名稱才能正確顯示，分數從tourney client那邊操控，或是讓他自動
+4. 雖然圖池有auto pick的功能，但偶爾會出現一次連選兩張圖的bug(我不知道怎麼修QQ)，請謹慎使用。
