@@ -38,9 +38,6 @@ usage: clone this repo under tosu/static/ and run tosu
 | winner   | 顯示勝利玩家與雙方比數 |
 | showcase | 圖池展示用畫面 |
 
-
-
-
 所有畫面的解析度皆為1920×1080px，且雙方玩家的遊戲畫面需設定為960×720px。
 
 ### bp畫面/圖池畫面使用方法
