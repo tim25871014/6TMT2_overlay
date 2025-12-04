@@ -1,0 +1,206 @@
+@font-face {
+    font-family: 'Eras Bold ITC';
+    src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Eras Demi ITC';
+    src: url('../_data/fonts/Eras\ Demi\ ITC.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Maoken Assorted Sans';
+    src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
+    font-weight: 400;
+    unicode-range: U+4E00-9FFF;
+    /*中文*/
+}
+
+body {
+    width: 1920px;
+    height: 1080px;
+}
+
+#background {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-image: url('../_data/img/background.png');
+    z-index: -3;
+}
+
+#background-video {
+    filter: brightness(2.0);
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    opacity: 0.2;
+    z-index: -2;
+}
+
+#foreground {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-image: url('../_data/img/banner_large.png');
+    z-index: -1;
+}
+
+#header {
+    width: 1920px;
+    height: 510px;
+}
+
+
+/* 主要內容區域 */
+
+#content {
+    height: 460px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    position: relative;
+    font-family: 'Eras Bold ITC';
+    color: white;
+}
+
+.player {
+    width: 520px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+#countdown {
+    width: 600px;
+    height: 100%;
+}
+
+/* 中間區域 */
+#stage {
+    text-align: center;
+    font-size: 50px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+#timer {
+    text-align: center;
+    font-size: 200px;
+}
+
+#vs {
+    margin-top: 5px;
+    text-align: center;
+    font-size: 80px;
+}
+
+/* 玩家區域 */
+.avatar {
+    width: 310px;
+    height: 310px;
+}
+
+.name {
+    margin-top: 15px;
+    font-size: 55px;
+}
+
+.name.red {
+    color: #f2a1a1;
+}
+
+.name.blue {
+    color: #a1c4f2;
+}
+
+.seed {
+    margin-top: 3px;
+    font-size: 35px;
+}
+
+/* 動畫效果 */
+
+.hex-svg {
+    width: 310px;
+    height: 310px;
+    filter: drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.3));
+}
+
+.content-group {
+    transform: scale(0.92);
+    transform-origin: 155px 155px;
+}
+
+.hex-image {
+    width: 100%;
+    height: 100%;
+    clip-path: url(#hex-clip);
+}
+
+.hex-border {
+    fill: none;
+    stroke: white;
+    stroke-width: 5px;
+}
+.hex-border.red {
+    stroke: #f2a1a1;
+}
+.hex-border.blue {
+    stroke: #a1c4f2;
+}
+
+@keyframes spin-inner {
+    from {transform: rotate(0deg);}
+    to {transform: rotate(360deg);}
+}
+@keyframes spin-outer {
+    from {transform: rotate(0deg) scale(1.07);}
+    to {transform: rotate(360deg) scale(1.07);}
+}
+
+.anim-spin {
+    transform-origin: 155px 155px;
+    animation: spin-inner 20s linear infinite;
+}
+.anim-spin-outer {
+    transform-origin: 155px 155px;
+    animation: spin-outer 20s linear infinite;
+}
+
+/* 計時器動畫 */
+.timer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.digit {
+    position: relative;
+    width: 125px;
+    height: 150px;
+    overflow: hidden;
+}
+
+.digit-inner {
+    transition: transform 0.25s ease-out;
+}
+
+.digit-inner span {
+    display: block;
+    width: 100%;
+    height: 150px;
+    line-height: 150px;
+    text-align: center;
+}
+
+.small-unit {
+    align-self: bottom;
+    font-size: 80px;
+    transform: translateY(40px) translateX(20px);
+}

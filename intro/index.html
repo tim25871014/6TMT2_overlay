@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../_data/deps/reconnecting-websocket.min.js"></script>
+</head>
+
+<body>
+    <div id="background"></div>
+    <video id="background-video" autoplay loop muted>
+        <source src="../_data/img/background.mp4" type="video/mp4">
+    </video>
+    <div id="foreground"></div>
+    <div id="header"></div>
+
+    <div id="content">
+        <div class="player blue">
+            <svg class="hex-svg avatar blue" viewBox="0 0 310 310" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <path id="hex-shape" d="M 165 11 L 275 74 A 20 20 0 0 1 285 92 L 285 218 A 20 20 0 0 1 275 236 L 165 299 A 20 20 0 0 1 145 299 L 35 236 A 20 20 0 0 1 25 218 L 25 92 A 20 20 0 0 1 35 74 L 145 11 A 20 20 0 0 1 165 11 Z" />
+                    <clipPath id="hex-clip">
+                        <use href="#hex-shape" class="anim-spin" />
+                    </clipPath>
+                </defs>
+                <g class="content-group">
+                    <image class="hex-image" preserveAspectRatio="xMidYMid slice" />
+                    <use href="#hex-shape" class="hex-border anim-spin" />
+                    <use href="#hex-shape" class="hex-border blue anim-spin-outer" />
+                </g>
+            </svg>
+            <div class="name blue"></div>
+            <div class="seed blue"></div>
+        </div>
+        <div id="countdown">
+            <div id="stage"></div>
+            <div id="timer" class="timer"></div>
+            <div id="vs">vs</div>
+        </div>
+        <div class="player red">
+            <svg class="hex-svg avatar red" viewBox="0 0 310 310" xmlns="http://www.w3.org/2000/svg">
+                <g class="content-group">
+                    <image class="hex-image" preserveAspectRatio="xMidYMid slice" />
+                    <use href="#hex-shape" class="hex-border anim-spin" />
+                    <use href="#hex-shape" class="hex-border red anim-spin-outer" />
+                </g>
+            </svg>
+            <div class="name red"></div>
+            <div class="seed red"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
