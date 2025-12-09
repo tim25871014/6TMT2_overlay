@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Seed Reveal</title>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div id="background"></div>
+    <video id="background-video" autoplay loop muted>
+        <source src="../_data/img/background.mp4" type="video/mp4">
+    </video>
+    <div id="banner-layer"></div>
+    <div id="stage-name">Seed Reveal</div>
+
+    <div id="nav-layer">
+        <div class="nav-btn" id="btn-prev" onclick="changeSeed(-1)">&lt;</div>
+        <div class="nav-btn" id="btn-next" onclick="changeSeed(1)">&gt;</div>
+    </div>
+
+    <div class="container">
+        <div class="panel-profile">
+            <div class="player-info" id="leftInfoPanel">
+                <div class="seed-label" id="playerSeed">Seed #--</div>
+                <div class="player-name" id="playerName">Loading...</div>
+
+                <div class="hex-wrapper">
+                    <svg class="hex-svg" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <path id="hex-shape"
+                                d="M 160 6 L 270 69 A 20 20 0 0 1 280 87 L 280 213 A 20 20 0 0 1 270 231 L 160 294 A 20 20 0 0 1 140 294 L 30 231 A 20 20 0 0 1 20 213 L 20 87 A 20 20 0 0 1 30 69 L 140 6 A 20 20 0 0 1 160 6 Z" />
+                            <clipPath id="hex-clip">
+                                <use href="#hex-shape" class="anim-spin" />
+                            </clipPath>
+                        </defs>
+                        <g class="content-group">
+                            <image id="playerAvatar" href="" class="hex-image" x="0" y="0" width="300" height="300"
+                                clip-path="url(#hex-clip)" preserveAspectRatio="xMidYMid slice" />
+                            <use href="#hex-shape" class="hex-border anim-spin" />
+                            <use href="#hex-shape" class="hex-border anim-spin-outer" />
+                        </g>
+                    </svg>
+                </div>
+
+                <div class="stats-box">
+                    <div class="stats-row"><span class="stats-label">Z-Sum</span><span class="stats-value"
+                            id="zSumVal">0.00</span></div>
+                    <div class="stats-row"><span class="stats-label">Avg.</span><span class="stats-value"
+                            id="avgScoreVal">0</span></div>
+                    <div class="mod-stats-container" id="leftStats"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="panel-center">
+            <div class="score-list" id="listCenter"></div>
+        </div>
+        <div class="panel-right">
+            <div class="score-list" id="listRight"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

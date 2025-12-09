@@ -1,0 +1,56 @@
+[
+  {
+    "seed": 1,
+    "username": "pdpd123",
+    "osu_id": 13519117,
+    "maps": [
+      { "label": "NM1", "score": 992458, "acc": "97.25%" },
+      { "label": "NM2", "score": 985120, "acc": "96.80%" },
+      { "label": "NM3", "score": 103822, "acc": "10.25%" },
+      { "label": "NM4", "score": 990000, "acc": "98.10%" },
+      { "label": "HD1", "score": 1002500, "acc": "99.05%" },
+      { "label": "HD2", "score": 970230, "acc": "95.50%" },
+      { "label": "HR1", "score": 998400, "acc": "98.90%" },
+      { "label": "HR2", "score": 950100, "acc": "94.20%" },
+      { "label": "DT1", "score": 1150300, "acc": "97.25%" },
+      { "label": "DT2", "score": 1202367, "acc": "85.25%" },
+      { "label": "DT3", "score": 1089200, "acc": "97.80%" }
+    ]
+  },
+  {
+    "seed": 2,
+    "username": "Cookiezi",
+    "osu_id": 124493,
+    "maps": [
+      { "label": "NM1", "score": 1000000, "acc": "100.00%" },
+      { "label": "NM2", "score": 999500, "acc": "99.95%" },
+      { "label": "NM3", "score": 998200, "acc": "99.80%" },
+      { "label": "NM4", "score": 995000, "acc": "99.50%" },
+      { "label": "HD1", "score": 1050200, "acc": "99.85%" },
+      { "label": "HD2", "score": 1045000, "acc": "99.20%" },
+      { "label": "HR1", "score": 1020300, "acc": "98.50%" },
+      { "label": "HR2", "score": 980000, "acc": "97.00%" },
+      { "label": "DT1", "score": 950000, "acc": "94.50%" },
+      { "label": "DT2", "score": 1200000, "acc": "98.80%" },
+      { "label": "DT3", "score": 1150000, "acc": "96.50%" }
+    ]
+  },
+  {
+    "seed": 3,
+    "username": "mrekk",
+    "osu_id": 7562902,
+    "maps": [
+      { "label": "NM1", "score": 980500, "acc": "96.50%" },
+      { "label": "NM2", "score": 975000, "acc": "95.80%" },
+      { "label": "NM3", "score": 990100, "acc": "98.20%" },
+      { "label": "NM4", "score": 988000, "acc": "97.90%" },
+      { "label": "HD1", "score": 995000, "acc": "98.50%" },
+      { "label": "HD2", "score": 960000, "acc": "94.80%" },
+      { "label": "HR1", "score": 970500, "acc": "96.20%" },
+      { "label": "HR2", "score": 940000, "acc": "93.50%" },
+      { "label": "DT1", "score": 1250000, "acc": "99.10%" },
+      { "label": "DT2", "score": 1240000, "acc": "98.50%" },
+      { "label": "DT3", "score": 1280000, "acc": "99.50%" }
+    ]
+  }
+]
