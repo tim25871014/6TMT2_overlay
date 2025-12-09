@@ -32,8 +32,8 @@ function changeSeed(offset) {
 
     let newSeed = currentSeed + offset;
     const maxSeed = allPlayersData.length;
-    if (newSeed < 1) newSeed = 1;
-    if (newSeed > maxSeed) newSeed = maxSeed;
+    if (newSeed < 1) newSeed = maxSeed;
+    if (newSeed > maxSeed) newSeed = 1;
 
     if (newSeed !== currentSeed) {
         isAnimating = true;
