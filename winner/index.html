@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../_data/deps/reconnecting-websocket.min.js"></script>
+</head>
+
+<body>
+    <div id="background"></div>
+    <video id="background-video" autoplay loop muted>
+        <source src="../_data/img/background.mp4" type="video/mp4">
+    </video>
+    <div id="foreground"></div>
+    <div id="header">
+        <div id="stage">STAGE</div>
+    </div>
+    <div id="content">
+        <div id="left" class="row">
+            <div id="winner">Winner</div>
+            <div id="score">-</div>
+        </div>
+        <div id="right" class="row">
+            <div class="player winner">
+            <svg class="hex-svg avatar winner" viewBox="0 0 450 450" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <path id="hex-shape" d="M 240 16 L 400 108 A 29 29 0 0 1 414 133 L 414 317 A 29 29 0 0 1 400 342 L 240 434 A 29 29 0 0 1 210 434 L 50 342 A 29 29 0 0 1 36 317 L 36 133 A 29 29 0 0 1 50 108 L 210 16 A 29 29 0 0 1 240 16 Z" />
+                    <clipPath id="hex-clip">
+                        <use href="#hex-shape" class="anim-spin" />
+                    </clipPath>
+                </defs>
+                <g class="content-group">
+                    <image class="hex-image" preserveAspectRatio="xMidYMid slice" />
+                    <use href="#hex-shape" class="hex-border anim-spin" />
+                    <use href="#hex-shape" class="hex-border winner anim-spin-outer" />
+                </g>
+            </svg>
+            <div class="name winner">N/A</div>
+            <div class="seed winner">-</div>
+        </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+    
+</html>

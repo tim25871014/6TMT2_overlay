@@ -1,7 +1,5 @@
 
 let stageInfo, mappool, players, upcoming;
-//let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
-let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
 (async () => {
     $.ajaxSetup({ cache: false });
@@ -15,11 +13,7 @@ let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
 // 監聽分頁可見性改變事件
 document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) {
-        // 使用者切回前景
-        prevDigits = "";    // 清空舊數字，保證完整重渲染
-        updateTimer();      // 立即刷新一次倒數計時器
-    }
+    if (!document.hidden) prevDigits = "";    // 使用者切回前景，清空舊數字，保證完整重渲染
 });
 
 
