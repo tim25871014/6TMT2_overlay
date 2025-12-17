@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="../_data/deps/countUp.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../_data/deps/reconnecting-websocket.min.js"></script>
+    <script src="../_data/deps/Chart.min.js"></script>
+</head>
+
+<body>
+    <div id="background"></div>
+    <video id="background-video" autoplay loop muted>
+        <source src="../_data/img/background.mp4" type="video/mp4">
+    </video>
+    <div id="foreground"></div>
+    <div id="header">
+        <div id="stage-name">STAGE</div>
+        <div id="showcase-text">- Mappool Showcase -</div>
+    </div>
+
+    <div id="content">
+        <div id="green-screen"></div>
+        <div id="information-box">
+            <div id="now-playing"></div>
+            <div id="np-identifier"></div>
+            <div id="np-artist" class="map-title"></div>
+            <div id="np-title" class="map-title"></div>
+            <div id="np-difficulty" class="map-title"></div>
+            <div id="map-info">
+                <div class="map-info-container top">
+                    <div class="info-title">Map ID</div>
+                    <div class="info-value" id="map-id"></div>
+                </div>
+                <div class="map-info-container">
+                    <div class="info-title">Replay by</div>
+                    <div class="info-value" id="replay-by"></div>
+                </div>
+                <div class="map-info-container">
+                    <div class="info-title">Drain</div>
+                    <div class="info-value" id="map-drain"></div>
+                </div>
+                <div class="map-info-container">
+                    <div class="info-title">Max Combo</div>
+                    <div class="info-value" id="map-combo"></div>
+                </div>
+                <div class="map-info-container">
+                    <div class="info-title">BPM</div>
+                    <div class="info-value" id="map-bpm"></div>
+                </div>
+                <div class="map-info-container bottom">
+                    <div class="info-title">Star Rating</div>
+                    <div class="info-value" id="map-sr"></div>
+                </div>
+                <div id="map-stats">
+                    <div class="map-stats-container cs">
+                        <div class="map-stats-title">CS</div>
+                        <div class="map-stats-value" id="map-cs"></div>
+                    </div>
+                    <div class="map-stats-container ar">
+                        <div class="map-stats-title">AR</div>
+                        <div class="map-stats-value" id="map-ar"></div>
+                    </div>
+                    <div class="map-stats-container od">
+                        <div class="map-stats-title">OD</div>
+                        <div class="map-stats-value" id="map-od"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="footer">
+        <div id="progress-container">
+            <canvas id="myChart"></canvas>
+            <div id="progress-bar">
+                <div id="ball"></div>
+            </div>
+            <div id="time-ellapse">3:20</div>
+            <div id="time-percentage">60%</div>
+        </div>
+        <div id="panel">
+            <div id="NM1" class="button-row"></div>
+            <div id="NM2" class="button-row"></div>
+            <div id="HD" class="button-row"></div>
+            <div id="HR" class="button-row"></div>
+            <div id="DT" class="button-row"></div>
+            <button id="tie-breaker-btn">TB</button>
+        </div>
+    </div>
+
+    <script src="../_data/deps/headerHandler.js"></script>
+    <script src="script.js"></script>
+</body>
+
+
+
+</html>

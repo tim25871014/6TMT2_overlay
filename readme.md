@@ -38,7 +38,10 @@ usage: clone this repo under tosu/static/ and run tosu
 | winner   | 顯示勝利玩家與雙方比數 |
 | showcase | 圖池展示用畫面 |
 
-所有畫面的解析度皆為1920×1080px，且雙方玩家的遊戲畫面需設定為960×720px。
+### 解析度設定
+1. 所有畫面的解析度皆為1920×1080px (16:9)。
+2. gameplay畫面中，雙方玩家的遊戲畫面(tourney client)需設定為960×720px (4:3)。
+3. showcase畫面中，遊戲畫面的解析度為1440×810px (16:9)，可以用obs縮放畫面。
 
 ### bp畫面/圖池畫面使用方法
 ctrl+左/右鍵：藍/紅方ban圖
@@ -57,3 +60,12 @@ shift+滑鼠點擊：取消該圖譜所有狀態
 
 TBD
 
+## Acknowledgements
+
+- 特別感謝 [shdewz](https://github.com/shdewz) 開放提供 [6wc-stream-overlay](https://github.com/shdewz/6wc-stream-overlay) 的原始碼，基本上此專案的架構與部分程式碼都是參考自該專案進行開發。
+
+- 感謝 [eric44168](https://osu.ppy.sh/users/4489605) 提供部分畫面的排版設計與技術支援。
+
+- 感謝6TMT主辦 [NickTerty](https://osu.ppy.sh/users/17847990) 提供我機會製作這個直播畫面。
+
+- 感謝 [luke920118](https://osu.ppy.sh/users/33689349)，雖然他啥事都沒做，但沒有他這個專案就永遠無法完成。

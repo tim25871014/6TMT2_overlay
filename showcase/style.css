@@ -1,0 +1,400 @@
+@font-face {
+    font-family: 'Eras Bold ITC';
+    src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
+    font-weight: 700;
+}
+
+@font-face {
+    font-family: 'Eras Demi ITC';
+    src: url('../_data/fonts/Eras\ Demi\ ITC.ttf');
+    font-weight: 400;
+}
+
+@font-face {
+    font-family: 'Maoken Assorted Sans';
+    src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
+    font-weight: 400;
+    unicode-range: U+4E00-9FFF;
+    /*中文*/
+}
+
+@font-face {
+    font-family: 'DigitFont';
+    src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
+    unicode-range: U+30-39;
+    /* 只包含 0-9 */
+}
+
+body {
+    width: 1920px;
+    height: 1080px;
+    margin: 0;
+}
+
+#background {
+    width: 1920px;
+    height: 1080px;
+    position: absolute;
+    background-image: url('../_data/img/background.png');
+    z-index: -3;
+}
+
+#background-video {
+    filter: brightness(2.0);
+    position: absolute;
+    width: 1920px;
+    height: 1080px;
+    object-fit: cover;
+    opacity: 0.2;
+    z-index: -2;
+}
+
+#foreground {
+    width: 1920px;
+    height: 1080px;
+    transform: translate(-700px, 3px);
+    position: absolute;
+    background-image: url('../_data/img/banner.png');
+    z-index: -1;
+}
+
+/* 主要內容區域 */
+
+#content {
+    height: 810px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#green-screen {
+    height: 100%;
+    width: 1440px;
+    background-color: #75bd53;
+}
+
+#information-box {
+    height: 100%;
+    width: 480px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+/* header */
+
+#header {
+    width: 1920px;
+    height: 160px;
+
+    transition: ease-in-out 500ms;
+    z-index: 1;
+    letter-spacing: 0px;
+    color: black;
+    filter: drop-shadow(0 0 12px rgba(0, 0, 0, 0.1));
+}
+
+#stage-name {
+    font-family: 'Eras Bold ITC';
+    position: absolute;
+    width: 1440px;
+    top: 38px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: white;
+    text-transform: none;
+}
+
+#showcase-text {
+    font-family: 'Eras Demi ITC';
+    position: absolute;
+    width: 1440px;
+    top: 82px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 35px;
+    color: white;
+    text-transform: none;
+}
+
+/* Footer */
+
+#footer {
+    height: 110px;
+    width: 1920px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* now playing */
+
+#now-playing {
+    position: absolute;
+    left: 0px;
+    height: 250px;
+    width: 480px;
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    font-size: 20px;
+    text-align: center;
+}
+
+#np-identifier {
+    margin-top: 15px;
+    font-family: 'Eras Bold ITC';
+    font-size: 100px;
+    color: white;
+    filter: drop-shadow(5px 5px 8px #000000);
+    transition: 0.2s;
+}
+
+.map-title {
+    width: 90%;
+    text-align: center;
+    font-family: 'Eras Demi ITC';
+}
+
+#np-artist {
+    left: 30px;
+    top: 100px;
+    font-size: 24px;
+    color: #cccccc;
+    filter: drop-shadow(2px 2px 4px #000000);
+}
+
+#np-title {
+    font-family: 'Eras Bold ITC';
+    left: 30px;
+    top: 100px;
+    font-size: 35px;
+    margin-top: 10px;
+    color: white;
+    filter: drop-shadow(2px 2px 4px #000000);
+}
+
+#np-difficulty {
+    left: 30px;
+    top: 140px;
+    margin-top: 10px;
+    font-size: 20px;
+    color: #cccccc;
+    filter: drop-shadow(2px 2px 4px #000000);
+}
+
+
+/* Strain chart */
+#progress-container {
+    position: absolute;
+    transform: translateX(-240px);
+    width: 1000px;
+    height: 85px;
+    bottom: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 1;
+    border-left: 4px solid gray;
+    border-right: 4px solid gray;
+    border-radius: 5px;
+}
+
+#myChart {
+    position: absolute;
+    bottom: 0px;
+    border-radius: 5px;
+}
+
+#progress-bar {
+    position: absolute;
+    height: 70px;
+    bottom: 0px;
+    left: 0px;
+    border-right: 7px solid white;
+    background: linear-gradient(to bottom, #00000000 0%, #000000AA 100%);
+    transition: width 200ms ease;
+}
+
+#ball {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    transform: translate(13.5px, -50%);
+    width: 20px;
+    height: 20px;
+    background: #ffffff;
+    border-radius: 50%;
+}
+
+#time-ellapse {
+    position: absolute;
+    left: 10px;
+    top: 3px;
+    font-family: 'Eras Demi ITC';
+    font-size: 20px;
+    color: white;
+}
+
+#time-percentage {
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    font-family: 'Eras Demi ITC';
+    font-size: 20px;
+    color: white;
+}
+
+/* Map info */
+#map-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0px;
+    margin-top: 30px;
+
+    width: 405px;
+    height: auto;
+    right: 35px;
+    bottom: 100px;
+    border-radius: 10px;
+    border: 2px solid #ffffffAA;
+    font-family: 'Eras Demi ITC';
+    color: white;
+    background-color: #00000088;
+    text-align: right;
+}
+
+.map-info-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 90%;
+    margin: 10px 0px 0px 0px;
+}
+.map-info-container.top {
+    margin-top: 25px;
+}
+.map-info-container.bottom {
+    margin-bottom: 20px;
+}
+
+
+.info-value {
+    margin-left: 20px;
+    font-family: 'Eras Bold ITC';
+    font-size: 24px;
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.info-title {
+    font-family: 'Eras Demi ITC';
+    font-size: 22px;
+    white-space: nowrap;
+    color: #CCCCCC;
+}
+
+#map-stats {
+    width: 95%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.map-stats-container {
+    width: 110px;
+    height: 50px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    margin-bottom: 30px;
+    color: black;
+}
+.map-stats-container.cs {
+    background-color: #F7CFCF
+}
+.map-stats-container.ar {
+    background-color: #CFF7CF;
+}
+.map-stats-container.od {
+    background-color: #CFCFF7;
+}
+
+.map-stats-title {
+    font-family: 'Eras Demi ITC';
+    font-size: 20px;
+    transform: translateY(2px);
+}
+
+.map-stats-value {
+    font-family: 'Eras Bold ITC';
+    font-size: 24px;
+}
+
+
+/* 右側按鈕區 */
+#panel {
+    position: absolute;
+    right: 105px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    transform: translateY(-30px);
+}
+
+.button-row {
+    transform: translateY(-5px);
+    display: flex;
+    justify-content: left;
+    gap: 6px;
+}
+
+.mode-btn {
+    width: 60px;
+    height: 25px;
+
+    border-radius: 6px;
+    background: white;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Eras Bold ITC';
+    font-size: 18px;
+    color: black;
+}
+
+#NM1 .mode-btn {border: 2px solid #a5c6e9;}
+#NM2 .mode-btn {border: 2px solid #a5c6e9;}
+#HD .mode-btn {border: 2px solid #f1eba1;}
+#HR .mode-btn {border: 2px solid #eda3a3;}
+#DT .mode-btn {border: 2px solid #c0a2c8;}
+.mode-btn.picked { background: #AAAAAA; color: #444444; border: 2px solid #222222 !important;}
+
+#tie-breaker-btn {
+    position: absolute;
+    bottom: 5px;
+    right: -71px;
+
+    width: 65px;
+    height: 55px;
+
+    font-family: 'Eras Bold ITC';
+    font-size: 20px;
+    color: white;
+    background: #444444;
+    border: 2px solid white;
+    border-radius: 8px;
+    z-index: 3;
+}

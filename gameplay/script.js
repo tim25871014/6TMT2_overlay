@@ -177,8 +177,10 @@ function updateNowPlaying(beatmapMng, strainMng) {
     np_text.innerText = "♪ Now Playing";
 
     // find identifier from mappool
-    const mapInfo = mappool.find(map => map.beatmap_id === np_id);
-    np_identifier.innerText = mapInfo ? mapInfo.identifier : "";
+    if (mappool) {
+        const mapInfo = mappool.find(map => map.beatmap_id === np_id);
+        np_identifier.innerText = mapInfo ? mapInfo.identifier : "";
+    }
 
     // 
     if (beatmapMng && beatmapMng.set) {
@@ -233,15 +235,21 @@ function updateProgressBar(beatmapMng) {
 
 
 const div = document.getElementById("myChart");
+let strainChart = null;
 function updateStrainChart(strainMng) {
+    const canvas = document.getElementById("myChart");
+
+    const existingChart = Chart.getChart(canvas);
+    if (existingChart) {
+        existingChart.destroy();
+    }
 
     function groupAndAverage(arr, size = 10) {
         const result = [];
         for (let i = 0; i < arr.length; i += size) {
             const group = arr.slice(i, i + size);
             const avg = group.reduce((sum, num) => sum + num, 0) / group.length;
-            const newGroup = Array(group.length).fill(avg);
-            result.push(...newGroup);
+            result.push(...Array(group.length).fill(avg));
         }
         return result;
     }
@@ -250,25 +258,22 @@ function updateStrainChart(strainMng) {
     const K = Math.ceil(dataArray.length / 100);
     const averages = groupAndAverage(dataArray, K);
     const maxValue = Math.max(...averages);
-
-    // 不透明度依數值調整
     const bgColors = averages.map(v => `rgba(255,255,255,${v / maxValue})`);
 
-    new Chart(document.getElementById("myChart"), {
+    strainChart = new Chart(canvas, {
         type: "bar",
         data: {
-            labels: averages.map((_, i) => "Group " + (i + 1)),
+            labels: averages.map((_, i) => i),
             datasets: [{
                 data: averages,
-                backgroundColor: bgColors,
-                borderColor: "white"
+                backgroundColor: bgColors
             }]
         },
         options: {
             maintainAspectRatio: false,
             plugins: {
                 legend: { display: false },
-                tooltip: { enabled: false },
+                tooltip: { enabled: false }
             },
             scales: {
                 x: { display: false },
@@ -350,7 +355,7 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
 
         mapDrain.innerText = `Drain ${formatTime(drain_after / 1000)}`;
         mapBPM.innerText = `BPM ${bpm_after}`;
-        mapSR.innerText = `SR ${sr_after.toFixed(2)}`;
+        mapSR.innerText = `SR ★${sr_after.toFixed(2)}`;
         mapCS.innerText = `CS ${cs_after.toFixed(1)}`;
         mapAR.innerText = `AR ${ar_after.toFixed(1)}`;
         mapOD.innerText = `OD ${od_after.toFixed(1)}`;

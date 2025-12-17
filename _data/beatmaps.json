@@ -1,5 +1,5 @@
 {
-    "stage": "Play-In Round 1",
+    "stage": "Play-In Round 2",
     "beatmaps": [
         {
             "beatmap_id": 3620057,
@@ -67,6 +67,32 @@
             "version": "ar8"
         },
         {
+            "beatmap_id": 3757767,
+            "identifier": "NM6",
+            "mods": "NM",
+            "sr": 6.16,
+            "bpm": 217,
+            "title": "Lawn Wake IV (Black)",
+            "artist": "The Flashbulb",
+            "difficulty": "Expert",
+            "beatmapset_id": 1830754,
+            "creator": "BR41N",
+            "version": "Expert"
+        },
+        {
+            "beatmap_id": 4502850,
+            "identifier": "NM7",
+            "mods": "NM",
+            "sr": 5.51,
+            "bpm": 202,
+            "title": "Prismatic Lollipops",
+            "artist": "DJ Mashiro",
+            "difficulty": "pop",
+            "beatmapset_id": 2139490,
+            "creator": "yaspo",
+            "version": "pop"
+        },
+        {
             "beatmap_id": 2139172,
             "identifier": "HD1",
             "mods": "HD",
@@ -103,6 +129,19 @@
             "difficulty": "Expert",
             "beatmapset_id": 1566547,
             "creator": "Kyuuchie",
+            "version": "Expert"
+        },
+        {
+            "beatmap_id": 3757767,
+            "identifier": "HD4",
+            "mods": "HD",
+            "sr": 6.16,
+            "bpm": 217,
+            "title": "Lawn Wake IV (Black)",
+            "artist": "The Flashbulb",
+            "difficulty": "Expert",
+            "beatmapset_id": 1830754,
+            "creator": "BR41N",
             "version": "Expert"
         },
         {
@@ -195,45 +234,6 @@
             "beatmapset_id": 2036233,
             "creator": "quantumvortex",
             "version": "Insane"
-        },
-        {
-            "beatmap_id": 3757767,
-            "identifier": "NM6",
-            "mods": "NM",
-            "sr": 6.16,
-            "bpm": 217,
-            "title": "Lawn Wake IV (Black)",
-            "artist": "The Flashbulb",
-            "difficulty": "Expert",
-            "beatmapset_id": 1830754,
-            "creator": "BR41N",
-            "version": "Expert"
-        },
-        {
-            "beatmap_id": 4502850,
-            "identifier": "NM7",
-            "mods": "NM",
-            "sr": 5.51,
-            "bpm": 202,
-            "title": "Prismatic Lollipops",
-            "artist": "DJ Mashiro",
-            "difficulty": "pop",
-            "beatmapset_id": 2139490,
-            "creator": "yaspo",
-            "version": "pop"
-        },
-        {
-            "beatmap_id": 3757767,
-            "identifier": "HD4",
-            "mods": "HD",
-            "sr": 6.16,
-            "bpm": 217,
-            "title": "Lawn Wake IV (Black)",
-            "artist": "The Flashbulb",
-            "difficulty": "Expert",
-            "beatmapset_id": 1830754,
-            "creator": "BR41N",
-            "version": "Expert"
         },
         {
             "beatmap_id": 2162072,
