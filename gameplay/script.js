@@ -162,7 +162,7 @@ function setupScroll() {
 }
 
 // 更新正在進行的譜面資訊
-let np_id = 0;
+let np_id = null;
 const np_text = document.getElementById("np-text");
 const np_scroll = document.getElementById("scrollContent");
 const np_identifier = document.getElementById("np-identifier");

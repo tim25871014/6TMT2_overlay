@@ -35,7 +35,7 @@ socket.onmessage = async (event) => {
 
 
 // 更新正在進行的譜面資訊
-let np_id = 0;
+let np_id = null;
 const np_identifier = document.getElementById("np-identifier");
 const np_artist = document.getElementById("np-artist");
 const np_title = document.getElementById("np-title");
@@ -56,8 +56,15 @@ function updateMapInfo(beatmapMng, gameplayMng) {
     const now = Date.now();
     if (now - coolDownTimer < 1000) return;
     coolDownTimer = now;
+
+    const formatTime = (seconds) => {
+        const mins = Math.floor(seconds / 60);
+        const secs = Math.floor(seconds) % 60;
+        return `${mins}:${secs.toString().padStart(2, '0')}`;
+    };
+
     map_replay.innerText = `${gameplayMng.name || "Unknown"}`;
-    map_drain.innerText = `${beatmapMng.time.full}`;
+    map_drain.innerText = `${formatTime(beatmapMng.time.full / 1000)}`;
     map_combo.innerText = `${beatmapMng.stats.maxCombo}x`;
     map_bpm.innerText = `${beatmapMng.stats.BPM.common}`;
     map_sr.innerText = `★${beatmapMng.stats.fullSR.toFixed(2)}`;
@@ -75,12 +82,19 @@ function updateNowPlaying(beatmapMng, strainMng) {
     np_artist.innerText = beatmapMng.metadata.artist;
     np_difficulty.innerText = "[" + beatmapMng.metadata.difficulty + "] by " + beatmapMng.metadata.mapper;
 
-    map_id.innerText = `${beatmapMng.id}`;
+    if (beatmapMng.id === 0) map_id.innerText = `Custom`; 
+    else map_id.innerText = `${beatmapMng.id}`;
 
     // find identifier from mappool
     if(mappool) {
         const mapInfo = mappool.find(map => map.beatmap_id === np_id);
-        np_identifier.innerText = mapInfo ? mapInfo.identifier : "";
+        if(!mapInfo) {
+            // find by song name if not found by id
+            const mapInfoByName = mappool.find(map => map.title === beatmapMng.metadata.title);
+            np_identifier.innerText = mapInfoByName ? mapInfoByName.identifier : "";
+        } else {
+            np_identifier.innerText = mapInfo.identifier;
+        }
     }
 
     // 
