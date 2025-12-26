@@ -1,14 +1,16 @@
 
-let stageInfo, mappool, players, upcoming;
+let stageInfo, mappool, players, schedule, upcoming;
 
 (async () => {
     $.ajaxSetup({ cache: false });
     stageInfo = await $.getJSON('../_data/beatmaps.json');
     players = await $.getJSON('../_data/players.json');
-    upcoming = await $.getJSON('../_data/coming_up.json');
+    schedule = await $.getJSON('../_data/schedule.json');
 
+    getUpcoming();
     getPlayerInfo();
     getStageInfo();
+    getTimeInfo();
 })();
 
 // 監聽分頁可見性改變事件
@@ -16,6 +18,40 @@ document.addEventListener("visibilitychange", () => {
     if (!document.hidden) prevDigits = "";    // 使用者切回前景，清空舊數字，保證完整重渲染
 });
 
+function getUpcoming() {
+    const now = Math.floor(Date.now() / 1000);
+    // 找出下一場賽事
+    upcoming = schedule.games.find(event => event.time > now);
+    // 若未來無即將賽事，則取最後一場
+    if (!upcoming) {
+        upcoming = schedule.games[schedule.games.length - 1];
+    }
+}
+
+function nextMatch(offset) {
+    const currentIndex = schedule.games.indexOf(upcoming);
+    if (currentIndex < schedule.games.length - offset && currentIndex + offset >= 0) {
+        upcoming = schedule.games[currentIndex + offset];
+        prevDigits = "";
+        getPlayerInfo();
+        getStageInfo();
+        getTimeInfo();
+    }
+}
+
+function getTimeInfo() {
+    // update match time display
+    const matchTime = document.querySelector('#match-time');
+    const matchDate = new Date(upcoming.time * 1000);
+    const options = {
+        hour: '2-digit',
+        minute: '2-digit',
+        timeZone: 'Asia/Taipei',
+        hour12: false,
+    };
+    const timeString = matchDate.toLocaleTimeString('en-US', options);
+    matchTime.innerHTML = `${timeString} (UTC+8)`;
+}
 
 function getPlayerInfo() {
     const bluePlayer = players.find(p => p.username === upcoming.player_blue);

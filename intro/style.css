@@ -88,6 +88,7 @@ body {
     font-size: 50px;
     margin-top: 20px;
     margin-bottom: 10px;
+    color: #dddddd;
 }
 
 #timer {
@@ -95,8 +96,16 @@ body {
     font-size: 200px;
 }
 
+#match-time {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 30px;
+    font-family: 'Eras Demi ITC';
+    color: #cccccc;
+}
+
 #vs {
-    margin-top: 5px;
+    margin-top: -15px;
     text-align: center;
     font-size: 80px;
 }
@@ -204,4 +213,41 @@ body {
     align-self: bottom;
     font-size: 80px;
     transform: translateY(40px) translateX(20px);
+}
+
+/* Footer */
+
+#footer {
+    height: 110px;
+    width: 1920px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 控制區域 */
+#control {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    padding: 10px;
+    color: white;
+    gap: 10px;
+    font-size: 16px;
+    overflow-y: auto;
+}
+
+.ctrl-btn {
+    padding: 10px;
+    font-size: 25px;
+    font-family: 'Eras Demi ITC', 'Maoken Assorted Sans';
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid white;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+    transition: background 0.3s;
 }

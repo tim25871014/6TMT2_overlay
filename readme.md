@@ -20,9 +20,9 @@ usage: clone this repo under tosu/static/ and run tosu
 
 | 檔案名稱 | 說明 | 替換時機 |
 | -------- | -------- | -------- |
-| players.json   | 記錄所有玩家的資訊 | 不需替換 |
-| beatmaps.json  | 記錄圖池資訊 | 更換圖池時替換 |
-| coming_up.json | 記錄單場比賽的資訊(intro用) | 逐場替換 |
+| players.json   | 記錄所有玩家的資訊 | 通常不須替換，除非玩家要求更改顯示名稱 |
+| beatmaps.json  | 記錄圖池資訊 | 更換輪次時 |
+| schedule.json | 比賽的時程與對戰組合(intro用) | 更換輪次時 |
 
 上述檔案必須放在 _data/ 底下，且在該資料夾內可以找到這些檔案的範例。
 
@@ -57,6 +57,9 @@ shift+滑鼠點擊：取消該圖譜所有狀態
 使用此畫面前，請先準備好 quals.json 檔案，並放置於 _data/ 底下。格式請參考該資料夾內的範例檔案。
 
 ## For Developers 
+
+./debug 目錄底下有提供測試用的 websocket。
+使用 `node ./debug/server.js` 啟動server後連線至 `ws://127.0.0.1:3000/ws`，可以在不開啟 osu! 本體或 tourney client 的情況下進行測試與除錯。
 
 TBD
 
