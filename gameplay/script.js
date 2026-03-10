@@ -38,7 +38,7 @@ socket.onmessage = async (event) => {
     updateTeamInfo(tourneyMng);
     updateChat(tourneyMng);
     updateChatVisibility(tourneyMng);
-    updateGameplayScore(tourneyMng);
+    updateGameplayScore(tourneyMng, ipcMng);
     updateNowPlaying(beatmapMng, strainMng);
     setupStrainChart(strainMng);
     updateProgressBar(beatmapMng);
@@ -75,12 +75,16 @@ let red_score = document.getElementById('score-red');
 let score_diff = document.getElementById('score-diff');
 let lead_bar = document.getElementById('lead-bar');
 let last_score_update = 0;
-function updateGameplayScore(tourneyMng) {
+function updateGameplayScore(tourneyMng, ipcMng) {
     if (!tourneyMng || !scoreVisible) return;
     let now = Date.now();
 
     scoreRed = tourneyMng.gameplay.score.right;
     scoreBlue = tourneyMng.gameplay.score.left;
+
+    if (ipcMng[0] && ipcMng[0].gameplay.mods.str.includes('EZ')) scoreBlue *= 1.8;
+    if (ipcMng[1] && ipcMng[1].gameplay.mods.str.includes('EZ')) scoreRed *= 1.8;
+
     let scorediff = Math.abs(scoreBlue - scoreRed);
 
     scoreAnimation.blue_score.update(scoreBlue);
