@@ -1,6 +1,6 @@
 let stageInfo, mappool, players;
-//let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
-let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
+let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
+//let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
 (async () => {
     $.ajaxSetup({ cache: false });
@@ -316,7 +316,7 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
         };
 
         mapDrain.innerText = `Drain ${formatTime(beatmapMng.time.full / 1000)}`;
-        mapBPM.innerText = `BPM ${beatmapMng.stats.BPM.common}`;
+        mapBPM.innerText = `BPM ${Math.round(beatmapMng.stats.BPM.common)}`;
         mapSR.innerText = `SR ${beatmapMng.stats.fullSR.toFixed(2)}`;
         mapCS.innerText = `CS ${beatmapMng.stats.CS.toFixed(1)}`;
         mapAR.innerText = `AR ${beatmapMng.stats.AR.toFixed(1)}`;

@@ -1,6 +1,6 @@
 let stageInfo, mappool, players;
-//let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
-let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
+let socket = new ReconnectingWebSocket('ws://127.0.0.1:24050/ws');
+//let socket = new ReconnectingWebSocket('ws://127.0.0.1:3000/ws');
 
 (async () => {
     $.ajaxSetup({ cache: false });
@@ -66,7 +66,7 @@ function updateMapInfo(beatmapMng, gameplayMng) {
     map_replay.innerText = `${gameplayMng.name || "Unknown"}`;
     map_drain.innerText = `${formatTime(beatmapMng.time.full / 1000)}`;
     map_combo.innerText = `${beatmapMng.stats.maxCombo}x`;
-    map_bpm.innerText = `${beatmapMng.stats.BPM.common}`;
+    map_bpm.innerText = `${Math.round(beatmapMng.stats.BPM.common)}`;
     map_sr.innerText = `★${beatmapMng.stats.fullSR.toFixed(2)}`;
     map_cs.innerText = `${beatmapMng.stats.CS.toFixed(1)}`;
     map_ar.innerText = `${beatmapMng.stats.AR.toFixed(1)}`;
