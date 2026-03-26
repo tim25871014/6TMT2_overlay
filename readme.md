@@ -58,8 +58,9 @@ shift+滑鼠點擊：取消該圖譜所有狀態
 
 ## For Developers 
 
-./debug 目錄底下有提供測試用的 websocket。
-使用 `node ./debug/server.js` 啟動server後連線至 `ws://127.0.0.1:3000/ws`，可以在不開啟 osu! 本體或 tourney client 的情況下進行測試與除錯。
+./debug 目錄底下有提供測試用的 websocket server。
+這個 server 是用 node.js 寫的，執行之前要先安裝 node.js，並且用 `npm install` 安裝 `node_modules`。
+使用 `node ./debug/server.js` 啟動 server 後，到 `./_data/deps/connection.js` 將連線改成 `ws://127.0.0.1:3000/ws`，即可在不開啟 osu! 本體或 tourney client 的情況下進行測試與除錯。
 
 TBD
 

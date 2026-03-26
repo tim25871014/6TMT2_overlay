@@ -1,5 +1,5 @@
 let stageInfo, mappool, players;
-let socket = new Connection();
+let socket = ConnectSocket();
 
 (async () => {
     $.ajaxSetup({ cache: false });
