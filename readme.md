@@ -1,12 +1,8 @@
 # 6TMT2 Streaming Overlay
 
+[English version](./readne_en.md)
+
 這裡是6TMT2的直播畫面，目標是完全免費開源給所有熱愛osu!這款遊戲的玩家使用。
-
-### 此程式正在開發中，預計2026/4前完工上線。
-
-### This program is under development, please check this out around April 2026
-
-usage: clone this repo under tosu/static/ and run tosu
 
 ## For Streamers
 
