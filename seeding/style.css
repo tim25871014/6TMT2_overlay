@@ -1,4 +1,4 @@
-/* --- 字體設定 --- */
+/* --- Font settings --- */
 @font-face {
     font-family: 'Eras Bold ITC';
     src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
@@ -299,10 +299,10 @@ body {
     transition: width 1s ease-out;
 }
 
-/* 新增：排名樣式 */
+/* Added: rank styles */
 .mod-rank {
     width: 45px;
-    /* 固定寬度確保對齊 */
+    /* Fixed width to ensure alignment */
     text-align: right;
     font-size: 1.3rem;
     font-family: var(--font-bold);
@@ -513,3 +513,4 @@ body {
         transform: translateY(0);
     }
 }
+

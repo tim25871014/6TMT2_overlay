@@ -3,7 +3,7 @@ let beatmapLookup = {};
 let currentSeed = 1;
 let isAnimating = false;
 
-// --- 數學計算函數 ---
+// --- Math utility functions ---
 function calculateMean(numbers) {
     if (numbers.length === 0) return 0;
     return numbers.reduce((a, b) => a + b, 0) / numbers.length;
@@ -28,7 +28,7 @@ function getZPercent(z) {
     return Math.max(0.05, Math.min(1.0, normalized)) * 100;
 }
 
-// --- 導航切換 ---
+// --- Navigation ---
 function changeSeed(offset) {
     if (allPlayersData.length === 0 || isAnimating) return;
 
@@ -53,7 +53,7 @@ function changeSeed(offset) {
     }
 }
 
-// --- 初始化 ---
+// --- Initialization ---
 async function initDashboard() {
     try {
         const [qualsRes, beatmapsRes] = await Promise.all([
@@ -66,13 +66,13 @@ async function initDashboard() {
         const rawPlayers = await qualsRes.json();
         const beatmapsData = await beatmapsRes.json();
 
-        // 建立 Beatmap ID 對照表
+        // Build beatmap ID lookup table
         beatmapsData.beatmaps.forEach(bm => {
             beatmapLookup[bm.identifier] = bm.beatmapset_id;
         });
 
-        // --- 1. 計算真實玩家的數據 ---
-        // 假設所有玩家打的圖都一樣，取第一位玩家的 map labels 作為基準
+        // --- 1. Compute data for real players ---
+        // Assume all players played the same maps; use first player map labels as baseline
         const allLabels = rawPlayers[0].maps.map(m => m.label);
 
         allLabels.forEach(label => {
@@ -82,13 +82,13 @@ async function initDashboard() {
                 if (map) mapEntries.push(map);
             });
 
-            // 排序並給予排名
+            // Sort and assign ranks
             mapEntries.sort((a, b) => b.score - a.score);
             mapEntries.forEach((map, index) => {
                 map.calculatedRank = `#${index + 1}`;
             });
 
-            // 計算 Z-score
+            // Calculate Z-score
             const scores = mapEntries.map(m => m.score);
             const mean = calculateMean(scores);
             const stdDev = calculateStdDev(scores);
@@ -104,7 +104,7 @@ async function initDashboard() {
             });
         });
 
-        // 計算 Mod 平均與排名
+        // Calculate mod averages and ranks
         const categories = ['ALL', 'NM', 'HD', 'HR', 'DT'];
         rawPlayers.forEach(p => {
             p.modAverages = {};
@@ -132,10 +132,10 @@ async function initDashboard() {
             });
         });
 
-        // --- 2. 建立 Placeholder (封面) 物件 ---
-        // 我們需要根據 allLabels 建立一組 "空殼" Maps，這樣 renderMapList 才能畫出列表結構
+        // --- 2. Create placeholder object (cover screen) ---
+        // Build a set of placeholder maps from allLabels so renderMapList can render the layout
         const placeholderMaps = allLabels.map(label => {
-            // 解析 Type 和 ID 供 CSS 使用 (顏色)
+            // Parse type and ID for CSS usage (colors)
             const match = label.match(/([A-Z]+)(\d+)/);
             const type = match ? match[1].toLowerCase() : 'nm';
             const id = match ? parseInt(match[2]) : 1;
@@ -144,7 +144,7 @@ async function initDashboard() {
                 label: label,
                 type: type,
                 id: id,
-                score: null, // 標記為 null，表示這是 Placeholder 數據
+                score: null, // Mark as null to indicate placeholder data
                 rank: '-',
                 acc: '-',
                 percent: '-',
@@ -158,16 +158,16 @@ async function initDashboard() {
             seed: 0,
             username: "Ready?",
             osu_id: null,
-            maps: placeholderMaps, // 放入假地圖數據
+            maps: placeholderMaps, // Insert placeholder map data
             modAverages: { ALL: -999, NM: -999, HD: -999, HR: -999, DT: -999 },
             modRanks: { ALL: '-', NM: '-', HD: '-', HR: '-', DT: '-' }
         };
 
-        // --- 3. 合併資料 ---
+        // --- 3. Merge data ---
         rawPlayers.sort((a, b) => a.seed - b.seed);
         allPlayersData = [placeholderObj, ...rawPlayers];
 
-        // --- 4. 初始顯示 (Index 0 = Placeholder) ---
+        // --- 4. Initial display (Index 0 = Placeholder) ---
         currentIndex = 0;
         updateUI(allPlayersData[currentIndex]);
 
@@ -177,7 +177,7 @@ async function initDashboard() {
     }
 }
 
-// --- UI 更新邏輯 ---
+// --- UI update logic ---
 function updateUI(player) {
     const seedLabel = document.getElementById('playerSeed');
     const nameLabel = document.getElementById('playerName');
@@ -186,17 +186,17 @@ function updateUI(player) {
     const avgLabel = document.getElementById('avgScoreVal');
 
     if (player.isPlaceholder) {
-        // --- 封面狀態 ---
+        // --- Cover/placeholder state ---
         seedLabel.innerText = "6TMT 2026";
         nameLabel.innerText = "Seed Reveal";
 
-        // 修改點 1: 使用透明像素作為圖片，讓六邊形中間留白
+        // Change 1: use transparent pixel image so the hexagon center is blank
         avatarImg.setAttribute('href', 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7');
 
         zSumLabel.innerText = "---";
         avgLabel.innerText = "---";
     } else {
-        // --- 真實玩家狀態 ---
+        // --- Real player state ---
         seedLabel.innerText = `Seed #${player.seed}`;
         nameLabel.innerText = player.username;
         avatarImg.setAttribute('href', `http://s.ppy.sh/a/${player.osu_id}`);
@@ -209,11 +209,11 @@ function updateUI(player) {
         avgLabel.innerText = formatScore(avgScore);
     }
 
-    // 渲染左側 Mod 統計
+    // Render left-side mod stats
     renderModStats(player, 'leftStats');
 
-    // 渲染中間與右側列表 (即使是 Placeholder 也要渲染，只是內容變為 "-")
-    // 假設前6張是中，後5張是右
+    // Render center and right lists (still render for placeholders, but content becomes "-")
+    // Assume first 6 maps are center, last 5 are right
     const centerMaps = player.maps.slice(0, 6);
     const rightMaps = player.maps.slice(6);
 
@@ -235,7 +235,7 @@ function renderModStats(player, elementId) {
         const widthPercent = isHidden ? 0 : getZPercent(avgZ);
         const fillClass = `fill-${cat.toLowerCase()}`;
 
-        // 如果是 Placeholder，排名也顯示 "-"
+        // If placeholder, rank should also display "-"
         let rank = player.modRanks[cat];
         if (player.isPlaceholder) rank = '-';
 
@@ -258,17 +258,17 @@ function renderMapList(maps, elementId) {
 
     maps.forEach((map, index) => {
         const label = map.label;
-        // 取得封面圖 (即使是 Placeholder 也要顯示正確的圖)
+        // Get cover image (show correct image even for placeholders)
         const setId = beatmapLookup[label];
         const imgUrl = setId
             ? `https://assets.ppy.sh/beatmaps/${setId}/covers/cover.jpg`
             : `https://picsum.photos/110/72?random=${index}`;
 
-        // 修改點 2: 判斷是否為 Placeholder 數據 (score 為 null)
+        // Change 2: detect placeholder data when score is null
         const isPlaceholder = (map.score === null);
 
         const scoreText = isPlaceholder ? '-' : formatScore(map.score);
-        const barWidth = isPlaceholder ? 0 : getZPercent(map.zScore); // 0寬度
+        const barWidth = isPlaceholder ? 0 : getZPercent(map.zScore); // zero width
         const rankText = isPlaceholder ? '-' : (map.calculatedRank || "-");
         const percentText = isPlaceholder ? '-' : map.percent;
 
@@ -296,5 +296,6 @@ function renderMapList(maps, elementId) {
     container.innerHTML = html;
 }
 
-// 啟動
+// Start
 initDashboard();
+

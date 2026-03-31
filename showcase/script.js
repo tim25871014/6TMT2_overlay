@@ -7,13 +7,13 @@ let socket = ConnectSocket();
     players = await $.getJSON('../_data/players.json');
     mappool = stageInfo.beatmaps;
 
-    // 初始化比賽資訊
+    // Initialize match information
     updateStageInfo(stageInfo);
     updateMappool(mappool);
     generateButtons();
 })();
 
-// 處理來自tosu的訊息
+// Handle messages from tosu
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
     let tourneyMng = data.tourney.manager;
@@ -24,8 +24,8 @@ socket.onmessage = async (event) => {
     let ipcMng = data.tourney.ipcClients;
     if (!tourneyMng) return;
 
-    // 這些函數都寫在 _data/deps/headerHandler.js 裡
-    // 必須先載入那個檔案才能用
+    // These functions are defined in _data/deps/headerHandler.js
+    // This file must be loaded before calling them
     updateNowPlaying(beatmapMng, strainMng, gameplayMng);
     setupStrainChart(strainMng);
     updateProgressBar(beatmapMng);
@@ -33,7 +33,7 @@ socket.onmessage = async (event) => {
 };
 
 
-// 更新正在進行的譜面資訊
+// Update currently playing beatmap info
 let np_id = null;
 const np_identifier = document.getElementById("np-identifier");
 const np_artist = document.getElementById("np-artist");
@@ -114,7 +114,7 @@ function updateNowPlaying(beatmapMng, strainMng) {
     setTimeout(() => { queryUpdateChart = true; }, 200);
 }
 
-// 更新難度圖表
+// Update strain chart
 queryUpdateChart = false;
 function setupStrainChart(strainMng) {
     if (!strainMng || !queryUpdateChart) return;
@@ -135,7 +135,7 @@ function updateProgressBar(beatmapMng) {
     const progress = beatmapMng.time.current / beatmapMng.time.mp3;
     progressBar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
 
-    // 時間顯示
+    // Time display
     const elapsedSeconds = Math.floor(beatmapMng.time.current / 1000);
     const totalSeconds = Math.floor(beatmapMng.time.mp3 / 1000);
     const formatTime = (seconds) => {
@@ -200,7 +200,7 @@ function updateStrainChart(strainMng) {
 
 
 
-// 偵測圖譜數量
+// Detect map count
 let rows = [];
 function updateMappool(mappool) {
 
@@ -213,14 +213,14 @@ function updateMappool(mappool) {
         { containerId: "DT", names: ["DT1", "DT2", "DT3", "DT4", "DT5"] }
     ];
 
-    // 只留下存在於beatmaps的圖譜
+    // Keep only maps that exist in beatmaps
     rows = rows.map(row => ({
         containerId: row.containerId,
         names: row.names.filter(name => idSet.has(name))
     }));
 }
 
-// 生成bp按鈕並加入事件監聽
+// Generate BP buttons and attach event listeners
 function generateButtons() {
     rows.forEach(row => {
         const container = document.getElementById(row.containerId);
@@ -234,20 +234,20 @@ function generateButtons() {
     });
 }
 
-// 更新mappool已選取的圖譜
+// Update selected map in mappool
 function updatePanelPicked() {
 
-    // 取得np_identifier內的文字
+    // Get text from np_identifier
     const identifier = np_identifier.innerText.trim();
     if (!identifier) return;
 
     const panel = document.getElementById("panel");
     if (!panel) return;
 
-    // allList 取得 mappool中所有元素的identifier
+    // allList: get identifiers of all mappool entries
     const allLists = mappool.map(map => map.identifier);
 
-    // prevlist 取得 allList 中所有在 identifier 之前的元素
+    // prevlist: collect all identifiers before the current identifier
     const prevlist = [];
     for (const id of allLists) {
         if (id === identifier) break;
@@ -261,4 +261,3 @@ function updatePanelPicked() {
         if (prevlist.includes(text)) item.classList.add("picked");
     });
 }
-

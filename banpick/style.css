@@ -15,7 +15,7 @@
     src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
     font-weight: 400;
     unicode-range: U+4E00-9FFF;
-    /*中文*/
+    /* Chinese characters */
 }
 
 body {
@@ -50,7 +50,7 @@ body {
     z-index: -1;
 }
 
-/* 主要內容區域 */
+/* Main content area */
 
 #content {
     height: 720px;
@@ -137,7 +137,7 @@ body {
     filter: grayscale(100%);
 }
 
-/* 決勝局樣式 */
+/* Tiebreaker styles */
 
 #tie-breaker {
     position: fixed;
@@ -316,7 +316,7 @@ body {
     transition: 0.2s;
 }
 
-/* 右側按鈕區 */
+/* Right-side button panel */
 #panel {
     position: absolute;
     right: 140px;
@@ -366,7 +366,7 @@ body {
 .mode-btn.picked { background: #999999; color: #444444; border: 2px solid #222222 !important;}
 
 
-/* 聊天室樣式 */
+/* Chat panel styles */
 
 #chat-container {
     position: absolute;
@@ -547,7 +547,7 @@ body {
     color: white;
 }
 
-/* 控制區域 */
+/* Control area */
 #control {
     position: absolute;
     display: flex;
@@ -572,3 +572,4 @@ body {
     user-select: none;
     transition: background 0.3s;
 }
+

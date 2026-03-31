@@ -1,11 +1,11 @@
-// 更新比賽輪次
+// Update stage name
 const stage_name = document.getElementById('stage-name');
 function updateStageInfo(stageInfo) {
     if (!stage_name) return;
     stage_name.innerHTML = stageInfo.stage || "Stage";
 }
 
-// 更新種子序
+// Update seed display
 let seedAdded = false;
 let red_points = document.getElementById('red-points');
 let blue_points = document.getElementById('blue-points');
@@ -26,7 +26,7 @@ function updateSeeding(tourneyMng, players) {
     document.getElementById('red-points').appendChild(red_seed);
 }
 
-// 更新分數條顯示
+// Update score bar display
 let bestOf, firstTo;
 function updateScoreBars(tourneyMng) {
     if (bestOf === tourneyMng.bestOF) return;
@@ -56,7 +56,7 @@ function updateScoreBars(tourneyMng) {
     firstTo = newmax;
 }
 
-// 計算雙方分數
+// Calculate both team scores
 let starsRed, flagRed;
 let starsBlue, flagBlue;
 let starsVisible;
@@ -93,7 +93,7 @@ function updateScore(tourneyMng) {
     }
 }
 
-// 更新隊名與隊旗資訊
+// Update team names and flags
 let red_name = document.getElementById('red-name');
 let blue_name = document.getElementById('blue-name');
 let nameRed = 'Red Team', nameBlue = '藍隊';
@@ -119,14 +119,14 @@ function updateTeamInfo(tourneyMng) {
         flagBlue = player?.id || null;
         if (flagBlue) blue_flag.src = `https://a.ppy.sh/${player.id}`;
         else blue_flag.src = `https://assets.ppy.sh/old-flags/XX.png`;
-        // 更新seeding
+        // Update seeding info
         let seedBlue = players.find(p => p.username === tourneyMng.teamName.left)?.seed || 'N/A';
         const blue_seed = document.querySelector('#blue-points .seed');
         blue_seed.innerText = seedBlue;
     }
 }
 
-// 更新及生成聊天室內容
+// Update and render chat content
 let chat_container = document.getElementById('chat-container');
 let chat = document.getElementById('chat');
 let chatLen = 0;
@@ -166,3 +166,4 @@ function updateChat(tourneyMng) {
     chatLen = tourneyMng.chat.length;
     chat.scrollTop = chat.scrollHeight;
 }
+

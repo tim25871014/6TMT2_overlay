@@ -15,7 +15,7 @@
     src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
     font-weight: 400;
     unicode-range: U+4E00-9FFF;
-    /*中文*/
+    /* Chinese characters */
 }
 
 body {
@@ -57,7 +57,7 @@ body {
     height: 510px;
 }
 
-/* 主要內容區域 */
+/* Main content area */
 #content {
     height: 460px;
     display: flex;
@@ -96,7 +96,7 @@ body {
     text-align: center;
 }
 
-/* 左側區域 */
+/* Left-side section */
 #winner {
     font-size: 200px;
     background: linear-gradient(90deg, 
@@ -123,7 +123,7 @@ body {
     font-size: 70px;
 }
 
-/* 玩家區域 */
+/* Player section */
 .avatar {
     width: 450px;
     height: 450px;
@@ -147,7 +147,7 @@ body {
     font-size: 45px;
 }
 
-/* 動畫效果 */
+/* Animation effects */
 
 .hex-svg {
     width: 450px;
@@ -201,3 +201,4 @@ body {
     transform-origin: 225px 225px;
     animation: spin-outer 20s linear infinite;
 }
+

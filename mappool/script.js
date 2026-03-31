@@ -7,7 +7,7 @@ let socket = ConnectSocket();
     players = await $.getJSON('../_data/players.json');
     mappool = stageInfo.beatmaps;
 
-    // 初始化比賽資訊
+    // Initialize match information
     updateStageInfo(stageInfo);
     updateMappool(mappool);
     generateButtons();
@@ -16,17 +16,17 @@ let socket = ConnectSocket();
     setupScroll();
 })();
 
-// 禁用右鍵選單
+// Disable right-click context menu
 window.addEventListener('contextmenu', (e) => e.preventDefault());
 
-// 建立跑馬燈效果
+// Create marquee scrolling effect
 const box = document.getElementById("scrollBox");
 const content = document.getElementById("scrollContent");
 function setupScroll() {
     const boxWidth = box.clientWidth;
     const contentWidth = content.scrollWidth;
 
-    if (contentWidth <= boxWidth) { // 停止動畫
+    if (contentWidth <= boxWidth) { // Stop animation
         content.style.animation = '';
         content.style.transform = 'translateX(0)';
         return;
@@ -50,7 +50,7 @@ function setupScroll() {
     content.style.animation = `jumpScroll ${totalTime}s linear infinite`;
 }
 
-// 更新正在進行的譜面資訊
+// Update currently playing beatmap info
 let np_id = null;
 const np_text = document.getElementById("np-text");
 const np_scroll = document.getElementById("scrollContent");
@@ -85,15 +85,15 @@ function updateNowPlaying(beatmapMng) {
     setupScroll();
 }
 
-// 處理來自tosu的訊息
+// Handle messages from tosu
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
     let tourneyMng = data.tourney.manager;
     let beatmapMng = data.menu.bm;
     if (!tourneyMng) return;
 
-    // 這些函數都寫在 _data/deps/headerHandler.js 裡
-    // 必須先載入那個檔案才能用
+    // These functions are defined in _data/deps/headerHandler.js
+    // This file must be loaded before calling them
     updateScoreBars(tourneyMng);
     updateSeeding(tourneyMng, players);
     updateScore(tourneyMng);
@@ -113,7 +113,7 @@ let blue_ban_list = [], red_ban_list = [];
 let blue_protect_list = [], red_protect_list = [];
 let rows = [];
 
-// 偵測圖譜數量
+// Detect map count
 function updateMappool(mappool) {
 
     const idSet = new Set(mappool.map(b => b.identifier));
@@ -126,7 +126,7 @@ function updateMappool(mappool) {
         { containerId: "TB", names: ["TB"] }
     ];
 
-    // 只留下存在於beatmaps的圖譜
+    // Keep only maps that exist in beatmaps
     rows = rows.map(row => ({
         containerId: row.containerId,
         names: row.names.filter(name => idSet.has(name))
@@ -134,7 +134,7 @@ function updateMappool(mappool) {
 }
 
 
-// 生成bp按鈕並加入事件監聽
+// Generate BP buttons and attach event listeners
 function generateButtons() {
     rows.forEach(row => {
         const container = document.getElementById(row.containerId);
@@ -159,7 +159,7 @@ function generateButtons() {
             
             btn.appendChild(btnBP);
 
-            // 在mappool尋找identifier=name的圖譜
+            // Find the map in mappool where identifier equals name
             const mapInfo = mappool.find(map => map.identifier === name);
             const setId = mapInfo ? mapInfo.beatmapset_id : null;
             let color, color2;
@@ -181,7 +181,7 @@ function generateButtons() {
             btnId.innerText = name;
             btnId.style.color = color2;
 
-            // 左鍵按下或右鍵按下會執行這個
+            // Trigger this on left or right mouse button
             btn.addEventListener("mousedown", (e) => {
                 handleButtonClick(e, name);
                 updatePanelPicked();
@@ -193,7 +193,7 @@ function generateButtons() {
     });
 }
 
-// 更新按鈕被選取狀態
+// Update selected state for buttons
 function updatePanelPicked() {
     const panel = document.getElementById("panel");
     if (!panel) return;
@@ -244,7 +244,7 @@ function updatePanelPicked() {
 
 
 function handleButtonClick(e, name) {
-    // 阻止右鍵選單彈出
+    // Prevent browser context menu popup
     e.preventDefault();
     e.stopPropagation();
 
@@ -266,10 +266,10 @@ function handleButtonClick(e, name) {
     }
     else {
         const isLeft = (e.button === 0);
-        if (e.shiftKey) removeFromAll(name); // shift：從全部 list 移除
+        if (e.shiftKey) removeFromAll(name); // Shift: remove from all lists
         else if (e.ctrlKey) addToList(isLeft ? blue_ban_list : red_ban_list, name); // ctrl：Ban
         else if (e.altKey) addToList(isLeft ? blue_protect_list : red_protect_list, name); // alt：Protect
-        else addToList(isLeft ? blue_pick_list : red_pick_list, name); // 一般點擊：Pick
+        else addToList(isLeft ? blue_pick_list : red_pick_list, name); // Normal click: Pick
     }
 
     syncState();
@@ -277,7 +277,7 @@ function handleButtonClick(e, name) {
 
 ///////////////////////////
 
-// 生成右下bp顯示器區域
+// Generate bottom-right BP display area
 function generateBPzones() {
     const bpBlueContainer = document.getElementById("bp-blue");
     const bpRedContainer = document.getElementById("bp-red");
@@ -301,7 +301,7 @@ function generateBPzones() {
     });
 }
 
-// 更新右下bp顯示器
+// Update bottom-right BP display
 function updateBPdisplays() {
     const bpBlueContainer = document.getElementById("bp-blue");
     const bpRedContainer = document.getElementById("bp-red");
@@ -323,7 +323,7 @@ function updateBPdisplays() {
 
 ///////////////////////////
 
-// 同步bp狀態到 localStorage (寫入)
+// Sync BP state to localStorage (write)
 function syncState() {
     const state = {
         blue_pick_list, red_pick_list, blue_ban_list,
@@ -334,7 +334,7 @@ function syncState() {
     printLists();
 }
 
-// 監聽 localStorage 變更以更新狀態 (讀取)
+// Listen for localStorage changes to refresh state (read)
 window.addEventListener("storage", (event) => {
     if (event.key === "banpick_state") {
         const newState = JSON.parse(event.newValue);
@@ -363,7 +363,7 @@ window.addEventListener("storage", (event) => {
     }
 });
 
-// 印出目前各 list 狀態（除錯用）
+// Print current list states (debug)
 function printLists() {
     /*
     console.log("===== 狀態更新 =====");
@@ -380,7 +380,7 @@ function printLists() {
     */
 }
 
-// 控制自動選圖與當前選圖隊伍
+// Control auto-pick and current first-pick side
 let autoPick = false;
 let firstPick = 'Blue';
 function initializeControls() {
@@ -397,3 +397,4 @@ function switchFirstPick() {
     document.getElementById("first-pick").innerText = `First Pick: ${firstPick}`;
     syncState();
 }
+

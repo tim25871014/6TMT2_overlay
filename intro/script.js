@@ -13,16 +13,16 @@ let stageInfo, mappool, players, schedule, upcoming;
     getTimeInfo();
 })();
 
-// 監聽分頁可見性改變事件
+// Listen for page visibility changes
 document.addEventListener("visibilitychange", () => {
-    if (!document.hidden) prevDigits = "";    // 使用者切回前景，清空舊數字，保證完整重渲染
+    if (!document.hidden) prevDigits = "";    // When tab becomes visible, reset old digits to force full re-render
 });
 
 function getUpcoming() {
     const now = Math.floor(Date.now() / 1000);
-    // 找出下一場賽事
+    // Find the next upcoming match
     upcoming = schedule.games.find(event => event.time > now);
-    // 若未來無即將賽事，則取最後一場
+    // If no future match exists, use the last scheduled match
     if (!upcoming) {
         upcoming = schedule.games[schedule.games.length - 1];
     }
@@ -74,7 +74,7 @@ function getPlayerInfo() {
 
 let prevDigits = "";
 function getStageInfo() {
-    // 更新stage
+    // Update stage
     const stageText = document.querySelector('#stage');
     stageText.innerHTML = stageInfo.stage;
 
@@ -82,11 +82,11 @@ function getStageInfo() {
     
 
     function renderDigits(str) {
-        // 位數變化 → 重建 DOM
+        // Digit length changed -> rebuild DOM
         if (prevDigits.length !== str.length) {
             timer.innerHTML = "";
             [...str].forEach(char => {
-                if (/\d/.test(char)) { // 數字
+                if (/\d/.test(char)) { // Digit
                     const box = document.createElement("div");
                     const inner = document.createElement("div");
                     const span = document.createElement("span");
@@ -99,7 +99,7 @@ function getStageInfo() {
                     box.appendChild(inner);
                     timer.appendChild(box);
 
-                } else { // 非數字(冒號)
+                } else { // Non-digit (colon)
                     const span = document.createElement("span");
                     span.textContent = char;
                     span.style.width = "80px";
@@ -110,7 +110,7 @@ function getStageInfo() {
             return;
         }
 
-        // 位數相同 → 更新
+        // Same digit length -> update in place
         [...str].forEach((char, i) => {
             if (!/\d/.test(char)) return;
 
@@ -125,7 +125,7 @@ function getStageInfo() {
             newSpan.textContent = char;
             inner.appendChild(newSpan);
 
-            // 強制只動畫最新數字
+            // Force animation on latest digit only
             requestAnimationFrame(() => {
                 inner.style.transform = "translateY(-150px)";
             });
@@ -171,3 +171,4 @@ function getStageInfo() {
     }
     setInterval(updateTimer, 1000);
 }
+

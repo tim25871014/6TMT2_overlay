@@ -15,14 +15,14 @@
     src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
     font-weight: 400;
     unicode-range: U+4E00-9FFF;
-    /*中文*/
+    /* Chinese characters */
 }
 
 @font-face {
     font-family: 'DigitFont';
     src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
     unicode-range: U+30-39;
-    /* 只包含 0-9 */
+    /* Includes only 0-9 */
 }
 
 body {
@@ -57,7 +57,7 @@ body {
     z-index: -1;
 }
 
-/* 主要內容區域 */
+/* Main content area */
 
 #content {
     height: 720px;
@@ -67,7 +67,7 @@ body {
     background-color: #75bd53;
 }
 
-/* 聊天室樣式 */
+/* Chat panel styles */
 
 #chat-container {
     position: absolute;
@@ -514,3 +514,4 @@ body {
     font-size: 24px;
     color: white;
 }
+

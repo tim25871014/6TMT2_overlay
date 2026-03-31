@@ -15,14 +15,14 @@
     src: url('../_data/fonts/MaokenAssortedSans-TC.ttf');
     font-weight: 400;
     unicode-range: U+4E00-9FFF;
-    /*中文*/
+    /* Chinese characters */
 }
 
 @font-face {
     font-family: 'DigitFont';
     src: url('../_data/fonts/Eras\ Bold\ ITC.ttf');
     unicode-range: U+30-39;
-    /* 只包含 0-9 */
+    /* Includes only 0-9 */
 }
 
 body {
@@ -58,7 +58,7 @@ body {
     z-index: -1;
 }
 
-/* 主要內容區域 */
+/* Main content area */
 
 #content {
     height: 810px;
@@ -343,7 +343,7 @@ body {
 }
 
 
-/* 右側按鈕區 */
+/* Right-side button panel */
 #panel {
     position: absolute;
     right: 105px;

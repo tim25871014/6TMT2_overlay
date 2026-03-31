@@ -7,7 +7,7 @@ let socket = ConnectSocket();
     players = await $.getJSON('../_data/players.json');
     mappool = stageInfo.beatmaps;
 
-    // 初始化比賽資訊
+    // Initialize match information
     updateStageInfo(stageInfo);
     updateMappool(mappool);
     generateButtons();
@@ -15,17 +15,17 @@ let socket = ConnectSocket();
     setupScroll();
 })();
 
-// 禁用右鍵選單
+// Disable the right-click context menu
 window.addEventListener('contextmenu', (e) => e.preventDefault());
 
-// 建立跑馬燈效果
+// Create the marquee scrolling effect
 const box = document.getElementById("scrollBox");
 const content = document.getElementById("scrollContent");
 function setupScroll() {
     const boxWidth = box.clientWidth;
     const contentWidth = content.scrollWidth;
 
-    if (contentWidth <= boxWidth) { // 停止動畫
+    if (contentWidth <= boxWidth) { // Stop animation
         content.style.animation = '';
         content.style.transform = 'translateX(0)';
         return;
@@ -49,7 +49,7 @@ function setupScroll() {
     content.style.animation = `jumpScroll ${totalTime}s linear infinite`;
 }
 
-// 更新正在進行的譜面資訊
+// Update currently playing beatmap information
 let np_id = null;
 const np_text = document.getElementById("np-text");
 const np_scroll = document.getElementById("scrollContent");
@@ -107,15 +107,15 @@ function updateNowPlaying(beatmapMng) {
     setupScroll();
 }
 
-// 處理來自tosu的訊息
+// Handle messages from tosu
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
     let tourneyMng = data.tourney.manager;
     let beatmapMng = data.menu.bm;
     if (!tourneyMng) return;
     
-    // 這些函數都寫在 _data/deps/headerHandler.js 裡
-    // 必須先載入那個檔案才能用
+    // These helper functions are defined in _data/deps/headerHandler.js
+    // The file must be loaded before using them
     updateScoreBars(tourneyMng);
     updateSeeding(tourneyMng, players);
     updateScore(tourneyMng);
@@ -123,7 +123,7 @@ socket.onmessage = async (event) => {
     updateChat(tourneyMng);
     updateNowPlaying(beatmapMng, mappool);
 
-    // 即時根據bo數更新bp顯示區數量
+    // Update BP display slot count in real time based on BO
     let targetNum = 0;
     if (tourneyMng.bestOF == 9) targetNum = 7;
     else if (tourneyMng.bestOF == 11) targetNum = 8;
@@ -140,16 +140,16 @@ socket.onmessage = async (event) => {
 
 ///////////////////////////
 
-// 生成bp顯示區
+// Generate BP display area
 let hexNum = 0;
 function generateHexPicks(containerId, prefix) {
     const container = document.getElementById(containerId);
     
-    // 清空現有內容
+    // Clear existing content
     while(container.firstChild) container.removeChild(container.firstChild);
 
     let grayIndexes = [];
-    if (hexNum == 8) grayIndexes = [2, 5]; // BO11時規律不一樣
+    if (hexNum == 8) grayIndexes = [2, 5]; // BO11 uses a different pattern
     else grayIndexes = [2, 5, 8];
 
     if (prefix == 'Blue') {
@@ -180,7 +180,7 @@ function generateHexPicks(containerId, prefix) {
     }
 }
 
-// 更新bp顯示內容
+// Update BP display content
 function updateHexContent(containerId, prefix) {
     const container = document.getElementById(containerId);
     const hexes = container.querySelectorAll(".hexagon");
@@ -194,10 +194,10 @@ function updateHexContent(containerId, prefix) {
         const picks = hex.querySelector(".picks");
         const idx = i; // 0-based index
 
-        // 預設內容
+        // Default text content
         let content = "";
         
-        // 預設背景
+        // Default background layers
         let bg1 = hex.classList.contains("gray") ?
             "url(\"../_data/img/gray_hexagon.png\")" :
             "url(\"../_data/img/black_hexagon.png\")";
@@ -206,7 +206,7 @@ function updateHexContent(containerId, prefix) {
         let bg4 = "";
         let bg5 = "url(\"../_data/img/transparent_hexagon.png\"),";
         
-        // bp順序: protect -> ban -> pick -> pick -> ban -> pick -> pick ...
+        // BP order: protect -> ban -> pick -> pick -> ban -> pick -> pick ...
         if (idx === 0) { // protect
             if (protect_list[0]) {
                 content = protect_list[0];
@@ -215,7 +215,7 @@ function updateHexContent(containerId, prefix) {
         } else {
             const sequence = (idx - 1) % 3;
             const group = Math.floor((idx - 1) / 3);
-            if (hexNum == 8 && idx == 7) { // BO11特例：最後一個是pick
+            if (hexNum == 8 && idx == 7) { // BO11 special case: the last slot is a pick
                 const pickIndex = 4;
                 if (pick_list[pickIndex]) {
                     content = pick_list[pickIndex];
@@ -250,14 +250,14 @@ function updateHexContent(containerId, prefix) {
     });
 }
 
-// TB選圖
+// Handle TB selection
 function tiebreakerPick(event) {
     tb_picked = (event.shiftKey) ? false : true;
     updateTiebreakerContent();
     syncState();
 }
 
-// 更新TB顯示內容
+// Update TB display content
 function updateTiebreakerContent() {
     const tieBreaker = document.getElementById("tie-breaker");
     const tieTitle = tieBreaker.querySelector("#title");
@@ -270,7 +270,7 @@ function updateTiebreakerContent() {
     tieBreaker.classList.remove("show");
     if (!tb_picked) return;
 
-    // 替換背景
+    // Replace background image
     tieBreaker.style.setProperty(
         "--before-bg",
         `url('https://assets.ppy.sh/beatmaps/${mapSetId}/covers/cover.jpg')`
@@ -290,7 +290,7 @@ let blue_ban_list = [], red_ban_list = [];
 let blue_protect_list = [], red_protect_list = [];
 let rows = [];
 
-// 偵測圖譜數量
+// Detect available map count
 function updateMappool(mappool) {
 
     const idSet = new Set(mappool.map(b => b.identifier));
@@ -302,7 +302,7 @@ function updateMappool(mappool) {
         { containerId: "DT", names: ["DT1", "DT2", "DT3", "DT4", "DT5"] }
     ];
 
-    // 只留下存在於beatmaps的圖譜
+    // Keep only maps that exist in beatmaps
     rows = rows.map(row => ({
         containerId: row.containerId,
         names: row.names.filter(name => idSet.has(name))
@@ -310,7 +310,7 @@ function updateMappool(mappool) {
 }
 
 
-// 生成bp按鈕並加入事件監聽
+// Generate BP buttons and attach event listeners
 function generateButtons() {
     rows.forEach(row => {
         const container = document.getElementById(row.containerId);
@@ -320,7 +320,7 @@ function generateButtons() {
             btn.className = "mode-btn default";
             btn.innerText = name;
 
-            // 左鍵按下或右鍵按下會執行這個
+            // Run this for both left-click and right-click
             btn.addEventListener("mousedown", (e) => {
                 handleButtonClick(e, name);
                 updatePanelPicked();
@@ -333,7 +333,7 @@ function generateButtons() {
     });
 }
 
-// 更新按鈕被選取狀態
+// Update selected state of buttons
 function updatePanelPicked() {
     const panel = document.getElementById("panel");
     if (!panel) return;
@@ -350,7 +350,7 @@ function updatePanelPicked() {
 }
 
 function handleButtonClick(e, name) {
-    // 阻止右鍵選單彈出
+    // Prevent the browser context menu from opening
     e.preventDefault();
     e.stopPropagation();
 
@@ -367,17 +367,17 @@ function handleButtonClick(e, name) {
     }
    
     const isLeft = (e.button === 0);
-    if (e.shiftKey) removeFromAll(name); // shift：從全部 list 移除
+    if (e.shiftKey) removeFromAll(name); // Shift: remove from all lists
     else if (e.ctrlKey) addToList(isLeft ? blue_ban_list : red_ban_list, name); // ctrl：Ban
     else if (e.altKey) addToList(isLeft ? blue_protect_list : red_protect_list, name); // alt：Protect
-    else addToList(isLeft ? blue_pick_list : red_pick_list, name); // 一般點擊：Pick
+    else addToList(isLeft ? blue_pick_list : red_pick_list, name); // Normal click: Pick
 
     syncState();
 }
 
 ///////////////////////////
 
-// 同步bp狀態到 localStorage (寫入)
+// Sync BP state to localStorage (write)
 function syncState() {
     const state = {
         blue_pick_list, red_pick_list, blue_ban_list,
@@ -388,7 +388,7 @@ function syncState() {
     printLists();
 }
 
-// 監聽 localStorage 變更以更新狀態 (讀取)
+// Listen for localStorage changes and refresh state (read)
 window.addEventListener("storage", (event) => {
     if (event.key === "banpick_state") {
         const newState = JSON.parse(event.newValue);
@@ -420,7 +420,7 @@ window.addEventListener("storage", (event) => {
     }
 });
 
-// 印出目前各 list 狀態（除錯用）
+// Print current list states (for debugging)
 function printLists() {
     /*
     console.log("===== 狀態更新 =====");
@@ -437,7 +437,7 @@ function printLists() {
     */
 }
 
-// 控制自動選圖與當前選圖隊伍
+// Control auto-pick and current first-pick side
 let autoPick = false;
 let firstPick = 'Blue';
 function initializeControls() {
@@ -454,3 +454,4 @@ function switchFirstPick() {
     document.getElementById("first-pick").innerText = `First Pick: ${firstPick}`;
     syncState();
 }
+

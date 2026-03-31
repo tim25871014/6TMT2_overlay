@@ -7,19 +7,19 @@ let socket = ConnectSocket();
     players = await $.getJSON('../_data/players.json');
     mappool = stageInfo.beatmaps;
 
-    // 初始化比賽資訊
+    // Initialize match information
     updateStageInfo(stageInfo);
     setupScroll();
 })();
 
-// 分數動畫物件 (參照 https://inorganik.github.io/countUp.js/)
+// Score animation objects (ref: https://inorganik.github.io/countUp.js/)
 let scoreAnimation = {
     blue_score: new CountUp('score-blue', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
     red_score: new CountUp('score-red', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
     score_diff: new CountUp('score-diff', 0, 0, 0, .3, { useEasing: true, useGrouping: true, separator: ',', decimal: '.', suffix: '' }),
 }
 
-// 處理來自tosu的訊息
+// Handle messages from tosu
 socket.onmessage = async (event) => {
     let data = JSON.parse(event.data);
     let tourneyMng = data.tourney.manager;
@@ -29,8 +29,8 @@ socket.onmessage = async (event) => {
     let ipcMng = data.tourney.ipcClients;
     if (!tourneyMng) return;
 
-    // 這些函數都寫在 _data/deps/headerHandler.js 裡
-    // 必須先載入那個檔案才能用
+    // These functions are defined in _data/deps/headerHandler.js
+    // This file must be loaded before calling them
     updateScoreBars(tourneyMng);
     updateSeeding(tourneyMng, players);
     updateScore(tourneyMng);
@@ -44,7 +44,7 @@ socket.onmessage = async (event) => {
     updateMapInfo(beatmapMng, modMng, ipcMng);
 };
 
-// 切換分數顯示與聊天視窗
+// Toggle score panel and chat window
 let scoreVisible;
 let top_footer = document.getElementById("top-footer");
 let progress_container = document.getElementById("progress-container");
@@ -68,7 +68,7 @@ function updateChatVisibility(tourneyMng) {
     }
 }
 
-// 更新雙方及時分數
+// Update real-time score for both sides
 let blue_score = document.getElementById('score-blue');
 let red_score = document.getElementById('score-red');
 let score_diff = document.getElementById('score-diff');
@@ -133,14 +133,14 @@ function updateGameplayScore(tourneyMng, ipcMng) {
 
 }
 
-// 建立跑馬燈效果
+// Create marquee scrolling effect
 const box = document.getElementById("scrollBox");
 const content = document.getElementById("scrollContent");
 function setupScroll() {
     const boxWidth = box.clientWidth;
     const contentWidth = content.scrollWidth;
 
-    if (contentWidth <= boxWidth) { // 停止動畫
+    if (contentWidth <= boxWidth) { // Stop animation
         content.style.animation = '';
         content.style.transform = 'translateX(0)';
         return;
@@ -164,7 +164,7 @@ function setupScroll() {
     content.style.animation = `jumpScroll ${totalTime}s linear infinite`;
 }
 
-// 更新正在進行的譜面資訊
+// Update currently playing beatmap info
 let np_id = null;
 const np_text = document.getElementById("np-text");
 const np_scroll = document.getElementById("scrollContent");
@@ -223,7 +223,7 @@ function updateProgressBar(beatmapMng) {
     const progress = beatmapMng.time.current / beatmapMng.time.mp3;
     progressBar.style.width = `${Math.min(100, Math.max(0, progress * 100))}%`;
 
-    // 時間顯示
+    // Time display
     const elapsedSeconds = Math.floor(beatmapMng.time.current / 1000);
     const totalSeconds = Math.floor(beatmapMng.time.mp3 / 1000);
     const formatTime = (seconds) => {
@@ -287,7 +287,7 @@ function updateStrainChart(strainMng) {
 }
 
 
-// 更新譜面資訊區域
+// Update beatmap info panel
 const mapDrain = document.getElementById('map-drain');
 const mapBPM = document.getElementById('map-bpm');
 const mapSR = document.getElementById('map-sr');
@@ -302,7 +302,7 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
     if (mapAndMods === currentMapAndMods) return;
     mapAndMods = currentMapAndMods;
 
-    if (ipcMng.length == 0) { // 本機端
+    if (ipcMng.length == 0) { // Local client
         
         mapMod.innerText = modMng.str == "" ? "NM stats" : `${modMng.str} stats`;
 
@@ -321,9 +321,9 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
         mapAR.innerText = `AR ${beatmapMng.stats.AR.toFixed(1)}`;
         mapOD.innerText = `OD ${beatmapMng.stats.OD.toFixed(1)}`;
     }
-    else { // tourney client 端
+    else { // Tourney client side
 
-        // 從mappool裡找map.beatmap_id = beatmapMng.id的元素
+        // Find the entry in mappool where map.beatmap_id equals beatmapMng.id
         const mapInfo = mappool.find(map => map.beatmap_id === beatmapMng.id);
         const applyMod = mapInfo ? mapInfo.mods : null;
         
@@ -367,28 +367,28 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
     enlargeNumbersInMapInfo();
 }
 
-// 放大 #map-info 裡的數字
+// Enlarge numbers inside #map-info
 function enlargeNumbersInMapInfo() {
     const container = document.querySelector('#map-info');
     if (!container) return;
 
     function processNode(node) {
-        // 只處理文字節點
+        // Process text nodes only
         if (node.nodeType === Node.TEXT_NODE) {
             const text = node.textContent;
-            const regex = /\d+(\.\d+)?/g;  // 數字與小數
-            if (!regex.test(text)) return; // 沒數字就略過
+            const regex = /\d+(\.\d+)?/g;  // Numbers and decimals
+            if (!regex.test(text)) return; // Skip when no numbers are found
 
             const frag = document.createDocumentFragment();
             let lastIndex = 0;
 
             text.replace(regex, (match, _, index) => {
-                // 加入前面不是數字的部分
+                // Append non-numeric text before the number
                 if (index > lastIndex) {
                     frag.appendChild(document.createTextNode(text.slice(lastIndex, index)));
                 }
 
-                // 包數字
+                // Wrap the number
                 const span = document.createElement('span');
                 span.textContent = match;
                 span.style.fontSize = '24px';
@@ -396,12 +396,12 @@ function enlargeNumbersInMapInfo() {
 
                 lastIndex = index + match.length;
             });
-            // 加入最後面不是數字的部分
+            // Append trailing non-numeric text
             if (lastIndex < text.length) frag.appendChild(document.createTextNode(text.slice(lastIndex)));
             node.replaceWith(frag);
         }
 
-        // 如果是元素節點，繼續往下處理子節點
+        // If this is an element node, continue processing child nodes
         else if (node.nodeType === Node.ELEMENT_NODE) {
             [...node.childNodes].forEach(processNode);
         }
@@ -409,3 +409,4 @@ function enlargeNumbersInMapInfo() {
 
     processNode(container);
 }
+
