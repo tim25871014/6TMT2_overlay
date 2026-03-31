@@ -1,6 +1,6 @@
 # 6TMT2 Streaming Overlay
 
-[English version](./readne_en.md)
+[English version](./readme_en.md)
 
 這裡是6TMT2的直播畫面，目標是完全免費開源給所有熱愛osu!這款遊戲的玩家使用。
 
