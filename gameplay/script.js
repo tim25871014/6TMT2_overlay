@@ -357,7 +357,7 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
         };
 
         mapDrain.innerText = `Drain ${formatTime(drain_after / 1000)}`;
-        mapBPM.innerText = `BPM ${bpm_after}`;
+        mapBPM.innerText = `BPM ${Math.round(bpm_after)}`;
         mapSR.innerText = `SR ★${sr_after.toFixed(2)}`;
         mapCS.innerText = `CS ${cs_after.toFixed(1)}`;
         mapAR.innerText = `AR ${ar_after.toFixed(1)}`;
