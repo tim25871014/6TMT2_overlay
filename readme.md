@@ -8,7 +8,7 @@
 
 ### 使用方法：
 1. 下載 [tosu](https://github.com/tosuapp/tosu)
-2. 把這個repo下載到tosu/static底下，並且開啟tosu
+2. 把這個repo下載到tosu/static底下 (下載的方法是按下右上綠色 `Code` 按鈕，`Download ZIP` 並且解壓縮)，並且開啟tosu.exe
 3. 開啟瀏覽器 http://127.0.0.1:24050/6TMT2/{page}/ 即可看到直播畫面 ({page}的部分可替換成你想要看的頁面)，確認畫面正常後可以關閉瀏覽器
 4. 使用OBS等軟體擷取網頁，並且設定好資料來源
 
