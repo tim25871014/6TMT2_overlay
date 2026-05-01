@@ -2,6 +2,19 @@
     "stage": "Play-In Round 2",
     "beatmaps": [
         {
+            "beatmap_id": 3625243,
+            "identifier": "OP1",
+            "mods": "NM",
+            "sr": 1.25,
+            "bpm": 200,
+            "title": "Test Title",
+            "artist": "Test Artist",
+            "difficulty": "Test Difficulty",
+            "beatmapset_id": 1770934,
+            "creator": "Test Mapper",
+            "version": "Test Version"
+        },
+        {
             "beatmap_id": 3620057,
             "identifier": "NM1",
             "mods": "NM",

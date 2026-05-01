@@ -49,6 +49,7 @@ const map_sr = document.getElementById("map-sr");
 const map_cs = document.getElementById("map-cs");
 const map_ar = document.getElementById("map-ar");
 const map_od = document.getElementById("map-od");
+const tie_breaker_btn = document.getElementById("tie-breaker-btn");
 let coolDownTimer = 0;
 
 function updateMapInfo(beatmapMng, gameplayMng) {
@@ -205,6 +206,9 @@ let rows = [];
 function updateMappool(mappool) {
 
     const idSet = new Set(mappool.map(b => b.identifier));
+    if (tie_breaker_btn) {
+        tie_breaker_btn.style.display = idSet.has("TB") ? "" : "none";
+    }
     rows = [
         { containerId: "NM1", names: ["NM1", "NM2", "NM3", "NM4", "NM5"] },
         { containerId: "NM2", names: ["NM6", "NM7"] },
