@@ -77,6 +77,10 @@ body {
     align-items: center;
 }
 
+.player.hidden {
+    visibility: hidden;
+}
+
 #countdown {
     width: 600px;
     height: 100%;

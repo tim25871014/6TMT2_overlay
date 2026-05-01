@@ -39,6 +39,34 @@ function nextMatch(offset) {
     }
 }
 
+let showcaseMode = false;
+function toggleShowcase() {
+
+    showcaseMode = !showcaseMode;
+
+    // 隱藏/顯示
+    const playerElements = document.querySelectorAll('.player');
+    playerElements.forEach(el => el.classList.toggle('hidden'));
+
+    // 隱藏/顯示 vs
+    const vsElement = document.querySelector('#vs');
+    vsElement.style.visibility = showcaseMode ? 'hidden' : 'visible';
+
+    // stage 資訊改為 Showcase
+    const stageText = document.querySelector('#stage');
+    stageText.innerHTML = showcaseMode ? stageInfo.stage + "\nShowcase" : stageInfo.stage;
+
+    // 需要在切換到 showcase 時更新一次時間資訊，以顯示距離 showcase 的倒數
+    if (showcaseMode) {
+        const showcaseTime = schedule.showcase.time;
+        upcoming = { time: showcaseTime, player_blue: "Showcase", player_red: "Showcase" };
+        getTimeInfo();
+    } else {
+        getUpcoming();
+        nextMatch(0); // 切回正常模式，顯示當前或下一場比賽資訊
+    }
+}
+
 function getTimeInfo() {
     // update match time display
     const matchTime = document.querySelector('#match-time');
