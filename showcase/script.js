@@ -29,7 +29,7 @@ socket.onmessage = async (event) => {
     updateNowPlaying(beatmapMng, strainMng, gameplayMng);
     setupStrainChart(strainMng);
     updateProgressBar(beatmapMng);
-    updateMapInfo(beatmapMng, gameplayMng);
+    updateMapInfo(beatmapMng, gameplayMng, modMng);
 };
 
 
@@ -52,7 +52,7 @@ const map_od = document.getElementById("map-od");
 const tie_breaker_btn = document.getElementById("tie-breaker-btn");
 let coolDownTimer = 0;
 
-function updateMapInfo(beatmapMng, gameplayMng) {
+function updateMapInfo(beatmapMng, gameplayMng, modMng) {
     const now = Date.now();
     if (now - coolDownTimer < 1000) return;
     coolDownTimer = now;
@@ -64,7 +64,11 @@ function updateMapInfo(beatmapMng, gameplayMng) {
     };
 
     map_replay.innerText = `${gameplayMng.name || "Unknown"}`;
-    map_drain.innerText = `${formatTime(beatmapMng.time.full / 1000)}`;
+    if (modMng.str.includes("DT")) {
+        map_drain.innerText = `${formatTime(beatmapMng.time.full / 1500)}`;
+    } else {
+        map_drain.innerText = `${formatTime(beatmapMng.time.full / 1000)}`;
+    }
     map_combo.innerText = `${beatmapMng.stats.maxCombo}x`;
     map_bpm.innerText = `${Math.round(beatmapMng.stats.BPM.common)}`;
     map_sr.innerText = `★${beatmapMng.stats.fullSR.toFixed(2)}`;

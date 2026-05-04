@@ -304,7 +304,8 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
 
     if (ipcMng.length == 0) { // Local client
         
-        mapMod.innerText = modMng.str == "" ? "NM stats" : `${modMng.str} stats`;
+        let cleanModStr = modMng.str.replace(/(NF|v2)/g, '');
+        mapMod.innerText = cleanModStr == "" ? "NM stats" : `${cleanModStr} stats`;
 
         if (!beatmapMng || !beatmapMng.stats) return;
 
@@ -314,7 +315,11 @@ function updateMapInfo(beatmapMng, modMng, ipcMng) {
             return `${mins}:${secs.toString().padStart(2, '0')}`;
         };
 
-        mapDrain.innerText = `Drain ${formatTime(beatmapMng.time.full / 1000)}`;
+        if (modMng.str.includes("DT")) {
+            mapDrain.innerText = `Drain ${formatTime(beatmapMng.time.full / 1500)}`;
+        } else {
+            mapDrain.innerText = `Drain ${formatTime(beatmapMng.time.full / 1000)}`;
+        }
         mapBPM.innerText = `BPM ${Math.round(beatmapMng.stats.BPM.common)}`;
         mapSR.innerText = `SR ${beatmapMng.stats.fullSR.toFixed(2)}`;
         mapCS.innerText = `CS ${beatmapMng.stats.CS.toFixed(1)}`;
