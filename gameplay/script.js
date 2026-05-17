@@ -60,7 +60,7 @@ function updateChatVisibility(tourneyMng) {
         score_diff.style.opacity = 1;
         progress_container.style.opacity = 1;
     } else {
-        chatContainer.style.display = "block";
+        chatContainer.style.display = "flex";
         chatContainer.style.opacity = 1;
         top_footer.style.opacity = 0;
         score_diff.style.opacity = 0;

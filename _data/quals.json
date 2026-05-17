@@ -1,56 +1,1242 @@
 [
   {
     "seed": 1,
-    "username": "pdpd123",
-    "osu_id": 13519117,
+    "username": "UU12321",
+    "osu_id": 29439737,
     "maps": [
-      { "label": "NM1", "score": 992458, "acc": "97.25%" },
-      { "label": "NM2", "score": 985120, "acc": "96.80%" },
-      { "label": "NM3", "score": 103822, "acc": "10.25%" },
-      { "label": "NM4", "score": 990000, "acc": "98.10%" },
-      { "label": "HD1", "score": 1002500, "acc": "99.05%" },
-      { "label": "HD2", "score": 970230, "acc": "95.50%" },
-      { "label": "HR1", "score": 998400, "acc": "98.90%" },
-      { "label": "HR2", "score": 950100, "acc": "94.20%" },
-      { "label": "DT1", "score": 1150300, "acc": "97.25%" },
-      { "label": "DT2", "score": 1202367, "acc": "85.25%" },
-      { "label": "DT3", "score": 1089200, "acc": "97.80%" }
+      {
+        "label": "NM1",
+        "score": 961409,
+        "acc": "98.96%"
+      },
+      {
+        "label": "NM2",
+        "score": 707146,
+        "acc": "95.23%"
+      },
+      {
+        "label": "NM3",
+        "score": 918557,
+        "acc": "97.47%"
+      },
+      {
+        "label": "NM4",
+        "score": 613754,
+        "acc": "97.11%"
+      },
+      {
+        "label": "HD1",
+        "score": 1011878,
+        "acc": "98.79%"
+      },
+      {
+        "label": "HD2",
+        "score": 577450,
+        "acc": "96.65%"
+      },
+      {
+        "label": "HR1",
+        "score": 953603,
+        "acc": "96.01%"
+      },
+      {
+        "label": "HR2",
+        "score": 341026,
+        "acc": "92.23%"
+      },
+      {
+        "label": "DT1",
+        "score": 1091136,
+        "acc": "97.04%"
+      },
+      {
+        "label": "DT2",
+        "score": 1087029,
+        "acc": "96.85%"
+      },
+      {
+        "label": "DT3",
+        "score": 1098374,
+        "acc": "97.46%"
+      }
     ]
   },
   {
     "seed": 2,
-    "username": "Cookiezi",
-    "osu_id": 124493,
+    "username": "Magician8910",
+    "osu_id": 14224193,
     "maps": [
-      { "label": "NM1", "score": 1000000, "acc": "100.00%" },
-      { "label": "NM2", "score": 999500, "acc": "99.95%" },
-      { "label": "NM3", "score": 998200, "acc": "99.80%" },
-      { "label": "NM4", "score": 995000, "acc": "99.50%" },
-      { "label": "HD1", "score": 1050200, "acc": "99.85%" },
-      { "label": "HD2", "score": 1045000, "acc": "99.20%" },
-      { "label": "HR1", "score": 1020300, "acc": "98.50%" },
-      { "label": "HR2", "score": 980000, "acc": "97.00%" },
-      { "label": "DT1", "score": 950000, "acc": "94.50%" },
-      { "label": "DT2", "score": 1200000, "acc": "98.80%" },
-      { "label": "DT3", "score": 1150000, "acc": "96.50%" }
+      {
+        "label": "NM1",
+        "score": 823689,
+        "acc": "99.00%"
+      },
+      {
+        "label": "NM2",
+        "score": 381172,
+        "acc": "93.94%"
+      },
+      {
+        "label": "NM3",
+        "score": 543770,
+        "acc": "96.43%"
+      },
+      {
+        "label": "NM4",
+        "score": 322062,
+        "acc": "94.30%"
+      },
+      {
+        "label": "HD1",
+        "score": 563658,
+        "acc": "97.59%"
+      },
+      {
+        "label": "HD2",
+        "score": 187638,
+        "acc": "90.54%"
+      },
+      {
+        "label": "HR1",
+        "score": 519402,
+        "acc": "94.68%"
+      },
+      {
+        "label": "HR2",
+        "score": 342222,
+        "acc": "93.87%"
+      },
+      {
+        "label": "DT1",
+        "score": 701269,
+        "acc": "97.47%"
+      },
+      {
+        "label": "DT2",
+        "score": 975822,
+        "acc": "95.82%"
+      },
+      {
+        "label": "DT3",
+        "score": 1033001,
+        "acc": "97.14%"
+      }
     ]
   },
   {
     "seed": 3,
-    "username": "mrekk",
-    "osu_id": 7562902,
+    "username": "gugugagaaaaaaaa",
+    "osu_id": 3128781,
     "maps": [
-      { "label": "NM1", "score": 980500, "acc": "96.50%" },
-      { "label": "NM2", "score": 975000, "acc": "95.80%" },
-      { "label": "NM3", "score": 990100, "acc": "98.20%" },
-      { "label": "NM4", "score": 988000, "acc": "97.90%" },
-      { "label": "HD1", "score": 995000, "acc": "98.50%" },
-      { "label": "HD2", "score": 960000, "acc": "94.80%" },
-      { "label": "HR1", "score": 970500, "acc": "96.20%" },
-      { "label": "HR2", "score": 940000, "acc": "93.50%" },
-      { "label": "DT1", "score": 1250000, "acc": "99.10%" },
-      { "label": "DT2", "score": 1240000, "acc": "98.50%" },
-      { "label": "DT3", "score": 1280000, "acc": "99.50%" }
+      {
+        "label": "NM1",
+        "score": 459800,
+        "acc": "95.91%"
+      },
+      {
+        "label": "NM2",
+        "score": 375735,
+        "acc": "86.45%"
+      },
+      {
+        "label": "NM3",
+        "score": 627832,
+        "acc": "89.27%"
+      },
+      {
+        "label": "NM4",
+        "score": 393466,
+        "acc": "93.16%"
+      },
+      {
+        "label": "HD1",
+        "score": 749694,
+        "acc": "96.57%"
+      },
+      {
+        "label": "HD2",
+        "score": 204615,
+        "acc": "87.43%"
+      },
+      {
+        "label": "HR1",
+        "score": 397596,
+        "acc": "93.44%"
+      },
+      {
+        "label": "HR2",
+        "score": 452451,
+        "acc": "93.77%"
+      },
+      {
+        "label": "DT1",
+        "score": 784832,
+        "acc": "94.85%"
+      },
+      {
+        "label": "DT2",
+        "score": 338620,
+        "acc": "91.64%"
+      },
+      {
+        "label": "DT3",
+        "score": 1013595,
+        "acc": "94.99%"
+      }
+    ]
+  },
+  {
+    "seed": 4,
+    "username": "wifedog",
+    "osu_id": 37545021,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 823995,
+        "acc": "94.22%"
+      },
+      {
+        "label": "NM2",
+        "score": 189198,
+        "acc": "78.80%"
+      },
+      {
+        "label": "NM3",
+        "score": 325960,
+        "acc": "92.91%"
+      },
+      {
+        "label": "NM4",
+        "score": 383974,
+        "acc": "92.89%"
+      },
+      {
+        "label": "HD1",
+        "score": 313345,
+        "acc": "94.41%"
+      },
+      {
+        "label": "HD2",
+        "score": 95723,
+        "acc": "78.04%"
+      },
+      {
+        "label": "HR1",
+        "score": 869295,
+        "acc": "92.77%"
+      },
+      {
+        "label": "HR2",
+        "score": 429696,
+        "acc": "88.01%"
+      },
+      {
+        "label": "DT1",
+        "score": 993368,
+        "acc": "97.23%"
+      },
+      {
+        "label": "DT2",
+        "score": 588126,
+        "acc": "91.18%"
+      },
+      {
+        "label": "DT3",
+        "score": 1099029,
+        "acc": "97.48%"
+      }
+    ]
+  },
+  {
+    "seed": 5,
+    "username": "tsumuoshi",
+    "osu_id": 32231622,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 353397,
+        "acc": "95.29%"
+      },
+      {
+        "label": "NM2",
+        "score": 413840,
+        "acc": "79.11%"
+      },
+      {
+        "label": "NM3",
+        "score": 198397,
+        "acc": "89.52%"
+      },
+      {
+        "label": "NM4",
+        "score": 391490,
+        "acc": "94.96%"
+      },
+      {
+        "label": "HD1",
+        "score": 459169,
+        "acc": "94.30%"
+      },
+      {
+        "label": "HD2",
+        "score": 215025,
+        "acc": "89.24%"
+      },
+      {
+        "label": "HR1",
+        "score": 360479,
+        "acc": "88.60%"
+      },
+      {
+        "label": "HR2",
+        "score": 499568,
+        "acc": "96.01%"
+      },
+      {
+        "label": "DT1",
+        "score": 636639,
+        "acc": "89.92%"
+      },
+      {
+        "label": "DT2",
+        "score": 682576,
+        "acc": "95.75%"
+      },
+      {
+        "label": "DT3",
+        "score": 1049331,
+        "acc": "96.07%"
+      }
+    ]
+  },
+  {
+    "seed": 6,
+    "username": "SeiRyu_SZtar",
+    "osu_id": 12776443,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 553656,
+        "acc": "97.81%"
+      },
+      {
+        "label": "NM2",
+        "score": 426228,
+        "acc": "89.84%"
+      },
+      {
+        "label": "NM3",
+        "score": 567701,
+        "acc": "97.94%"
+      },
+      {
+        "label": "NM4",
+        "score": 259889,
+        "acc": "91.36%"
+      },
+      {
+        "label": "HD1",
+        "score": 328335,
+        "acc": "95.10%"
+      },
+      {
+        "label": "HD2",
+        "score": 323311,
+        "acc": "95.56%"
+      },
+      {
+        "label": "HR1",
+        "score": 151103,
+        "acc": "88.04%"
+      },
+      {
+        "label": "HR2",
+        "score": 174328,
+        "acc": "86.53%"
+      },
+      {
+        "label": "DT1",
+        "score": 358453,
+        "acc": "92.94%"
+      },
+      {
+        "label": "DT2",
+        "score": 627236,
+        "acc": "89.33%"
+      },
+      {
+        "label": "DT3",
+        "score": 896325,
+        "acc": "90.72%"
+      }
+    ]
+  },
+  {
+    "seed": 7,
+    "username": "Eggurooru",
+    "osu_id": 9136159,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 211301,
+        "acc": "89.95%"
+      },
+      {
+        "label": "NM2",
+        "score": 393004,
+        "acc": "83.98%"
+      },
+      {
+        "label": "NM3",
+        "score": 215296,
+        "acc": "90.57%"
+      },
+      {
+        "label": "NM4",
+        "score": 296998,
+        "acc": "92.15%"
+      },
+      {
+        "label": "HD1",
+        "score": 371470,
+        "acc": "95.65%"
+      },
+      {
+        "label": "HD2",
+        "score": 528562,
+        "acc": "93.72%"
+      },
+      {
+        "label": "HR1",
+        "score": 308148,
+        "acc": "94.15%"
+      },
+      {
+        "label": "HR2",
+        "score": 428848,
+        "acc": "93.41%"
+      },
+      {
+        "label": "DT1",
+        "score": 352969,
+        "acc": "92.62%"
+      },
+      {
+        "label": "DT2",
+        "score": 495807,
+        "acc": "89.45%"
+      },
+      {
+        "label": "DT3",
+        "score": 619180,
+        "acc": "93.61%"
+      }
+    ]
+  },
+  {
+    "seed": 8,
+    "username": "TheStepAside",
+    "osu_id": 14884864,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 380596,
+        "acc": "94.85%"
+      },
+      {
+        "label": "NM2",
+        "score": 207551,
+        "acc": "75.60%"
+      },
+      {
+        "label": "NM3",
+        "score": 368353,
+        "acc": "91.97%"
+      },
+      {
+        "label": "NM4",
+        "score": 300794,
+        "acc": "91.36%"
+      },
+      {
+        "label": "HD1",
+        "score": 295618,
+        "acc": "92.96%"
+      },
+      {
+        "label": "HD2",
+        "score": 120774,
+        "acc": "81.35%"
+      },
+      {
+        "label": "HR1",
+        "score": 291694,
+        "acc": "89.94%"
+      },
+      {
+        "label": "HR2",
+        "score": 329763,
+        "acc": "93.12%"
+      },
+      {
+        "label": "DT1",
+        "score": 560745,
+        "acc": "94.83%"
+      },
+      {
+        "label": "DT2",
+        "score": 862201,
+        "acc": "97.79%"
+      },
+      {
+        "label": "DT3",
+        "score": 792075,
+        "acc": "96.96%"
+      }
+    ]
+  },
+  {
+    "seed": 9,
+    "username": "guavaken",
+    "osu_id": 19266993,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 322938,
+        "acc": "96.27%"
+      },
+      {
+        "label": "NM2",
+        "score": 508575,
+        "acc": "81.42%"
+      },
+      {
+        "label": "NM3",
+        "score": 281136,
+        "acc": "89.97%"
+      },
+      {
+        "label": "NM4",
+        "score": 251771,
+        "acc": "87.94%"
+      },
+      {
+        "label": "HD1",
+        "score": 317591,
+        "acc": "93.97%"
+      },
+      {
+        "label": "HD2",
+        "score": 304808,
+        "acc": "88.52%"
+      },
+      {
+        "label": "HR1",
+        "score": 240108,
+        "acc": "91.04%"
+      },
+      {
+        "label": "HR2",
+        "score": 217015,
+        "acc": "89.46%"
+      },
+      {
+        "label": "DT1",
+        "score": 576027,
+        "acc": "93.09%"
+      },
+      {
+        "label": "DT2",
+        "score": 426987,
+        "acc": "92.11%"
+      },
+      {
+        "label": "DT3",
+        "score": 757071,
+        "acc": "94.65%"
+      }
+    ]
+  },
+  {
+    "seed": 10,
+    "username": "ImKozuru",
+    "osu_id": 16587447,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 235648,
+        "acc": "92.38%"
+      },
+      {
+        "label": "NM2",
+        "score": 294203,
+        "acc": "84.10%"
+      },
+      {
+        "label": "NM3",
+        "score": 315913,
+        "acc": "93.00%"
+      },
+      {
+        "label": "NM4",
+        "score": 238941,
+        "acc": "86.10%"
+      },
+      {
+        "label": "HD1",
+        "score": 187687,
+        "acc": "89.48%"
+      },
+      {
+        "label": "HD2",
+        "score": 129660,
+        "acc": "83.20%"
+      },
+      {
+        "label": "HR1",
+        "score": 280403,
+        "acc": "89.57%"
+      },
+      {
+        "label": "HR2",
+        "score": 434923,
+        "acc": "90.81%"
+      },
+      {
+        "label": "DT1",
+        "score": 416874,
+        "acc": "91.96%"
+      },
+      {
+        "label": "DT2",
+        "score": 590821,
+        "acc": "93.09%"
+      },
+      {
+        "label": "DT3",
+        "score": 802378,
+        "acc": "93.19%"
+      }
+    ]
+  },
+  {
+    "seed": 11,
+    "username": "suger 1",
+    "osu_id": 35562789,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 380403,
+        "acc": "93.18%"
+      },
+      {
+        "label": "NM2",
+        "score": 444308,
+        "acc": "90.51%"
+      },
+      {
+        "label": "NM3",
+        "score": 233598,
+        "acc": "91.76%"
+      },
+      {
+        "label": "NM4",
+        "score": 334205,
+        "acc": "89.43%"
+      },
+      {
+        "label": "HD1",
+        "score": 196262,
+        "acc": "91.36%"
+      },
+      {
+        "label": "HD2",
+        "score": 49185,
+        "acc": "65.37%"
+      },
+      {
+        "label": "HR1",
+        "score": 277333,
+        "acc": "89.15%"
+      },
+      {
+        "label": "HR2",
+        "score": 222168,
+        "acc": "89.26%"
+      },
+      {
+        "label": "DT1",
+        "score": 485125,
+        "acc": "93.62%"
+      },
+      {
+        "label": "DT2",
+        "score": 541677,
+        "acc": "90.90%"
+      },
+      {
+        "label": "DT3",
+        "score": 644088,
+        "acc": "93.08%"
+      }
+    ]
+  },
+  {
+    "seed": 12,
+    "username": "Ablank92",
+    "osu_id": 7242675,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 668457,
+        "acc": "90.39%"
+      },
+      {
+        "label": "NM2",
+        "score": 246119,
+        "acc": "66.88%"
+      },
+      {
+        "label": "NM3",
+        "score": 140008,
+        "acc": "80.29%"
+      },
+      {
+        "label": "NM4",
+        "score": 105294,
+        "acc": "80.61%"
+      },
+      {
+        "label": "HD1",
+        "score": 74040,
+        "acc": "79.75%"
+      },
+      {
+        "label": "HD2",
+        "score": 25011,
+        "acc": "47.85%"
+      },
+      {
+        "label": "HR1",
+        "score": 237479,
+        "acc": "83.15%"
+      },
+      {
+        "label": "HR2",
+        "score": 362545,
+        "acc": "89.59%"
+      },
+      {
+        "label": "DT1",
+        "score": 872702,
+        "acc": "92.54%"
+      },
+      {
+        "label": "DT2",
+        "score": 444747,
+        "acc": "87.00%"
+      },
+      {
+        "label": "DT3",
+        "score": 877121,
+        "acc": "90.23%"
+      }
+    ]
+  },
+  {
+    "seed": 13,
+    "username": "petectro0204",
+    "osu_id": 25873621,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 682606,
+        "acc": "97.39%"
+      },
+      {
+        "label": "NM2",
+        "score": 318300,
+        "acc": "86.80%"
+      },
+      {
+        "label": "NM3",
+        "score": 299358,
+        "acc": "89.86%"
+      },
+      {
+        "label": "NM4",
+        "score": 135227,
+        "acc": "86.62%"
+      },
+      {
+        "label": "HD1",
+        "score": 245360,
+        "acc": "91.31%"
+      },
+      {
+        "label": "HD2",
+        "score": 52928,
+        "acc": "67.69%"
+      },
+      {
+        "label": "HR1",
+        "score": 139223,
+        "acc": "81.21%"
+      },
+      {
+        "label": "HR2",
+        "score": 139182,
+        "acc": "80.57%"
+      },
+      {
+        "label": "DT1",
+        "score": 513234,
+        "acc": "88.07%"
+      },
+      {
+        "label": "DT2",
+        "score": 578193,
+        "acc": "92.31%"
+      },
+      {
+        "label": "DT3",
+        "score": 626894,
+        "acc": "92.27%"
+      }
+    ]
+  },
+  {
+    "seed": 14,
+    "username": "gordonmao_tw",
+    "osu_id": 32824052,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 322088,
+        "acc": "94.99%"
+      },
+      {
+        "label": "NM2",
+        "score": 297654,
+        "acc": "82.70%"
+      },
+      {
+        "label": "NM3",
+        "score": 217856,
+        "acc": "90.35%"
+      },
+      {
+        "label": "NM4",
+        "score": 190731,
+        "acc": "87.89%"
+      },
+      {
+        "label": "HD1",
+        "score": 194653,
+        "acc": "89.99%"
+      },
+      {
+        "label": "HD2",
+        "score": 37276,
+        "acc": "61.95%"
+      },
+      {
+        "label": "HR1",
+        "score": 64266,
+        "acc": "73.81%"
+      },
+      {
+        "label": "HR2",
+        "score": 113000,
+        "acc": "78.56%"
+      },
+      {
+        "label": "DT1",
+        "score": 223829,
+        "acc": "82.05%"
+      },
+      {
+        "label": "DT2",
+        "score": 430541,
+        "acc": "79.30%"
+      },
+      {
+        "label": "DT3",
+        "score": 640916,
+        "acc": "91.40%"
+      }
+    ]
+  },
+  {
+    "seed": 15,
+    "username": "Rainbow_Peter",
+    "osu_id": 25621688,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 130813,
+        "acc": "83.73%"
+      },
+      {
+        "label": "NM2",
+        "score": 201546,
+        "acc": "66.65%"
+      },
+      {
+        "label": "NM3",
+        "score": 146778,
+        "acc": "72.55%"
+      },
+      {
+        "label": "NM4",
+        "score": 73758,
+        "acc": "74.43%"
+      },
+      {
+        "label": "HD1",
+        "score": 36201,
+        "acc": "70.14%"
+      },
+      {
+        "label": "HD2",
+        "score": 15686,
+        "acc": "27.80%"
+      },
+      {
+        "label": "HR1",
+        "score": 115794,
+        "acc": "78.22%"
+      },
+      {
+        "label": "HR2",
+        "score": 270262,
+        "acc": "87.52%"
+      },
+      {
+        "label": "DT1",
+        "score": 204003,
+        "acc": "84.37%"
+      },
+      {
+        "label": "DT2",
+        "score": 978448,
+        "acc": "93.19%"
+      },
+      {
+        "label": "DT3",
+        "score": 597794,
+        "acc": "91.95%"
+      }
+    ]
+  },
+  {
+    "seed": 16,
+    "username": "howard122",
+    "osu_id": 37575590,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 215174,
+        "acc": "86.22%"
+      },
+      {
+        "label": "NM2",
+        "score": 91939,
+        "acc": "65.05%"
+      },
+      {
+        "label": "NM3",
+        "score": 181584,
+        "acc": "82.90%"
+      },
+      {
+        "label": "NM4",
+        "score": 152258,
+        "acc": "80.39%"
+      },
+      {
+        "label": "HD1",
+        "score": 153153,
+        "acc": "86.24%"
+      },
+      {
+        "label": "HD2",
+        "score": 38552,
+        "acc": "59.43%"
+      },
+      {
+        "label": "HR1",
+        "score": 110134,
+        "acc": "78.24%"
+      },
+      {
+        "label": "HR2",
+        "score": 172957,
+        "acc": "79.22%"
+      },
+      {
+        "label": "DT1",
+        "score": 369583,
+        "acc": "88.69%"
+      },
+      {
+        "label": "DT2",
+        "score": 433519,
+        "acc": "86.90%"
+      },
+      {
+        "label": "DT3",
+        "score": 357527,
+        "acc": "84.12%"
+      }
+    ]
+  },
+  {
+    "seed": 17,
+    "username": "Fine Motion",
+    "osu_id": 16367021,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 91616,
+        "acc": "83.71%"
+      },
+      {
+        "label": "NM2",
+        "score": 60042,
+        "acc": "68.62%"
+      },
+      {
+        "label": "NM3",
+        "score": 117380,
+        "acc": "82.58%"
+      },
+      {
+        "label": "NM4",
+        "score": 138062,
+        "acc": "82.19%"
+      },
+      {
+        "label": "HD1",
+        "score": 121449,
+        "acc": "85.76%"
+      },
+      {
+        "label": "HD2",
+        "score": 32174,
+        "acc": "56.52%"
+      },
+      {
+        "label": "HR1",
+        "score": 38023,
+        "acc": "70.85%"
+      },
+      {
+        "label": "HR2",
+        "score": 59280,
+        "acc": "74.11%"
+      },
+      {
+        "label": "DT1",
+        "score": 221552,
+        "acc": "87.73%"
+      },
+      {
+        "label": "DT2",
+        "score": 312623,
+        "acc": "81.88%"
+      },
+      {
+        "label": "DT3",
+        "score": 487841,
+        "acc": "91.98%"
+      }
+    ]
+  },
+  {
+    "seed": 18,
+    "username": "alanpan100",
+    "osu_id": 21465518,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 48285,
+        "acc": "68.43%"
+      },
+      {
+        "label": "NM2",
+        "score": 180851,
+        "acc": "76.02%"
+      },
+      {
+        "label": "NM3",
+        "score": 40336,
+        "acc": "62.12%"
+      },
+      {
+        "label": "NM4",
+        "score": 42591,
+        "acc": "65.09%"
+      },
+      {
+        "label": "HD1",
+        "score": 83843,
+        "acc": "75.52%"
+      },
+      {
+        "label": "HD2",
+        "score": 15330,
+        "acc": "25.20%"
+      },
+      {
+        "label": "HR1",
+        "score": 37678,
+        "acc": "69.35%"
+      },
+      {
+        "label": "HR2",
+        "score": 48325,
+        "acc": "61.79%"
+      },
+      {
+        "label": "DT1",
+        "score": 137726,
+        "acc": "79.60%"
+      },
+      {
+        "label": "DT2",
+        "score": 129186,
+        "acc": "75.37%"
+      },
+      {
+        "label": "DT3",
+        "score": 199005,
+        "acc": "80.90%"
+      }
+    ]
+  },
+  {
+    "seed": 19,
+    "username": "_Mutsumi",
+    "osu_id": 37738921,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 60896,
+        "acc": "75.81%"
+      },
+      {
+        "label": "NM2",
+        "score": 18884,
+        "acc": "47.14%"
+      },
+      {
+        "label": "NM3",
+        "score": 20861,
+        "acc": "60.52%"
+      },
+      {
+        "label": "NM4",
+        "score": 24217,
+        "acc": "53.42%"
+      },
+      {
+        "label": "HD1",
+        "score": 14312,
+        "acc": "54.77%"
+      },
+      {
+        "label": "HD2",
+        "score": 19256,
+        "acc": "41.33%"
+      },
+      {
+        "label": "HR1",
+        "score": 9928,
+        "acc": "39.68%"
+      },
+      {
+        "label": "HR2",
+        "score": 16714,
+        "acc": "42.82%"
+      },
+      {
+        "label": "DT1",
+        "score": 14596,
+        "acc": "44.07%"
+      },
+      {
+        "label": "DT2",
+        "score": 24313,
+        "acc": "54.15%"
+      },
+      {
+        "label": "DT3",
+        "score": 19637,
+        "acc": "53.07%"
+      }
+    ]
+  },
+  {
+    "seed": 20,
+    "username": "Josh Lin",
+    "osu_id": 22358638,
+    "maps": [
+      {
+        "label": "NM1",
+        "score": 14448,
+        "acc": "53.11%"
+      },
+      {
+        "label": "NM2",
+        "score": 27142,
+        "acc": "52.29%"
+      },
+      {
+        "label": "NM3",
+        "score": 19150,
+        "acc": "57.36%"
+      },
+      {
+        "label": "NM4",
+        "score": 14227,
+        "acc": "41.05%"
+      },
+      {
+        "label": "HD1",
+        "score": 4591,
+        "acc": "29.54%"
+      },
+      {
+        "label": "HD2",
+        "score": 7891,
+        "acc": "22.10%"
+      },
+      {
+        "label": "HR1",
+        "score": 6548,
+        "acc": "33.74%"
+      },
+      {
+        "label": "HR2",
+        "score": 20529,
+        "acc": "41.47%"
+      },
+      {
+        "label": "DT1",
+        "score": 13081,
+        "acc": "40.47%"
+      },
+      {
+        "label": "DT2",
+        "score": 26498,
+        "acc": "52.19%"
+      },
+      {
+        "label": "DT3",
+        "score": 19780,
+        "acc": "49.79%"
+      }
     ]
   }
 ]

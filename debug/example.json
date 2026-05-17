@@ -226,10 +226,21 @@
         "right": 1
       },
       "bools": {
-        "scoreVisible": true,
+        "scoreVisible": false,
         "starsVisible": true
       },
-      "chat": [],
+      "chat": [
+        {
+          "time": "12:03",
+          "name": "pdpd123",
+          "messageBody": "Good luck!"
+        },
+        {
+          "time": "12:04",
+          "name": "luke920118",
+          "messageBody": "好笑嗎"
+        }
+      ],
       "gameplay": {
         "score": {
           "left": 17046,
